@@ -1,0 +1,45 @@
+{
+  "name": "re-entrega-passport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "engine": "^1.0.0",
+    "exphbs": "^1.2.0",
+    "express": "^4.18.2",
+    "express-handlebars": "^5.3.0",
+    "express-session": "^1.17.3",
+    "firebase-admin": "^11.4.1",
+    "log4js": "^6.7.1",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.7.5",
+    "nodemailer": "^6.8.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "twilio": "^3.84.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrtegaSebastian/TercerPreEntrega.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OrtegaSebastian/TercerPreEntrega/issues"
+  },
+  "homepage": "https://github.com/OrtegaSebastian/TercerPreEntrega#readme",
+  "devDependencies": {
+    "@types/express-handlebars": "^6.0.0"
+  }
+}

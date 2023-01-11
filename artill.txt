@@ -1,0 +1,14 @@
+artillery quick \
+    --count 50 \
+    --num 40 \
+    http://localhost:8080/?max=50
+    > result fork.txt
+
+//$ artillery quick \
+>     --count 50 \
+>     --num 40 \
+>     > result pruebas.txt    https://localhost:8080/login
+
+
+
+

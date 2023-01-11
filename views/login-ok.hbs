@@ -1,0 +1,35 @@
+<div class="container text-center my-3">
+        <ul>
+        <li><a href="../public/productos.html">Productos</a></li>
+        <li><a href="../public/carrito.html">Carrito</a></li>        
+        <li><button class="btn btn-danger my-5" onclick="logout()">LOGOUT</button></li> 
+        </ul>
+    <div class="jumbotron" style="background-color: green;color: white;">
+        <h1>USER OK LOGIN!</h1>
+        <h2><i>Bienvenido {{usuario}}</i></h2>
+        <br>
+        <h3><i>Nombre: {{nombre}}</i></h3>
+        <br>
+        <h3>Apellido: {{apellido}}</h3>
+        <br>
+        <h3>Email: {{email}}</h3>
+        <br>
+       
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    function redireccionar(pagina) {
+        location.href = pagina;
+    } 
+
+    function logout() {
+        console.log('logout');
+        redireccionar('/logout')
+    }
+</script>
