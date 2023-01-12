@@ -4,7 +4,7 @@ function getRoot(req, res) {
 
 const logger = require('./helpers/log4js')
 
-const loggerUser = require('./helpers/log4js')
+// const loggerUser = require('./helpers/log4js')
 
 
 //nodemailer aun no lo pruebo////////////////////////////////////////////
@@ -86,11 +86,8 @@ function getLogin(req, res) {
         var user = req.user;
         res.render('login-ok', {
             usuario: user.username,
-            password:user.password,
-            nombre: user.firstName,
-            age:user.age,  
+            nombre: user.firstName,              
             apellido: user.lastName,        
-            avatar:user.uploaded_file,            
             email: user.email
         });
     }
@@ -127,7 +124,7 @@ function getFailLogin(req, res) {
     console.log('error en login');
     res.render('login-error', {
     });
-    loggerUser()
+    // loggerUser()
 }
 
 function getFailsignup(req, res) {

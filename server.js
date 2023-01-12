@@ -10,6 +10,8 @@ const port = 8080;
 const routerCarritos = require("./src/routes/carritos");
 const routerProductos = require("./src/routes/productos");
 
+
+
 // configuro el servidor
 
 app.use(express.json());
@@ -36,7 +38,7 @@ const { Strategy: LocalStrategy } = require("passport-local");
 const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
-const Users = require("./models");
+const User = require("./models");
 
 //configuraciones
 const config = require("./config");
@@ -45,7 +47,12 @@ const routes = require("./routes");
 
 // Configuracion de las vistas
 // TODO: express handlebars utiliza el import entero ahora
-app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main" }));
+
+app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
+
+///NO
+
+
 app.set("view engine", ".hbs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/views"));
@@ -84,43 +91,43 @@ passport.use(
     {
       passReqToCallback: true,
     },
-    // los parametros de username y password que le pasamos a passport son los que se definen en la plantilla signup.html en el atributo name, debe ser el mismo nombre de lo contrario nos va dar error
-    (req, username, password, done) => {
+     // los parametros de username y password que le pasamos a passport son los que se definen en la plantilla signup.html en el atributo name, debe ser el mismo nombre de lo contrario nos va dar error
+     (req, username, password, done) => {
+
       // hacemos la busqueda en la DB y validamos si el usuario existe
-      Users.findOne({ username: username }, (err, user) => {
-        if (err) {
-          return done(err);
-        }
-
-        // si el user ya exite cortamos el flujo
-        if (user) {
-          return done(null, false);
-        }
-
-        // Si llegamos a este punto, quiere decir que el usuario no existe, entonces le damos de alta al usuario
-        const newUser = {
-          username: username,
-          password: createHash(password), //usamos bCrypt para encriptar la contraseña
-        };
-
-        // insertamos en mongo el nuevo usuario que creamos y validamos
-        Users.create(newUser, (err, userWithId) => {
+      User.findOne({ 'username': username }, (err, user) => {
           if (err) {
-            return done(err);
+              return done(err);
+          };
+
+          // si el user ya exite cortamos el flujo
+          if (user) {
+              return done(null, false);
           }
-          return done(null, userWithId);
-        });
+
+          // Si llegamos a este punto, quiere decir que el usuario no existe, entonces le damos de alta al usuario
+          const newUser = {
+              username: username,
+              password: createHash(password), //usamos bCrypt para encriptar la contraseña          
+          };
+
+          // insertamos en mongo el nuevo usuario que creamos y validamos
+          User.create(newUser, (err, userWithId) => {
+              if (err) {
+                  return done(err);
+              }
+              return done(null, userWithId);
+          })
       });
-    }
-  )
-);
+  }
+));
 // validamos si el usuario existe y ademas si la contraseña conincide
 passport.use(
   "login",
   new LocalStrategy(
     { passReqToCallback: true },
     (req, username, password, done) => {
-      Users.findOne({ username }, (err, user) => {
+      User.findOne({ username }, (err, user) => {
         if (err) {
           return done(err);
         }
@@ -136,7 +143,7 @@ passport.use(
         return done(null, user);
       });
     }
-  )
+  ),  
 );
 
 passport.serializeUser((user, done) => {
