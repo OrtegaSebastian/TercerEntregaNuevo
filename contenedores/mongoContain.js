@@ -115,7 +115,7 @@ class contenedorUsuariosMongo {
   constructor(Users, esquema) {
     this.db = mongoose.model(Users, esquema);
   }
-  async saveUser(newDoc) {
+  async createUser(newDoc) {
     try {
       const doc = await this.db.create(newDoc);
       return doc;
@@ -123,7 +123,15 @@ class contenedorUsuariosMongo {
       throw new Error(e);
     }
   }
-
+  async saveUser(newDoc) {
+    try {
+      const doc = await this.db.save(newDoc);
+      return doc;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+  
   async getbyUserId(id) {
     try {
       const data = await this.db.findOne({ _id: id });
@@ -132,6 +140,8 @@ class contenedorUsuariosMongo {
       throw new Error(e);
     }
   }  
+
+
 }
 
 

@@ -1,18 +1,17 @@
 const { contenedorUsuariosMongo } = require("../../contenedores/mongoContain");
+const mongoose = require('mongoose');
 
-class DAOUserMongo extends contenedorUsuariosMongo {
+module.exports = class DAOUserMongo extends contenedorUsuariosMongo {
     constructor() {
-    // *super = padre/mongocarrito
+    // *super 
     super("Users", {
-    username: String,
-    password: String,
-    firstName: String,
-    age:Number,        
-    lastName: String,
-    uploaded_file:String,
-    email: String
+    username: { type: String, required: true },
+    password:{ type: String, required: true },
+    firstName: { type: String, required: true },
+    age:{ type: Number, required: true },
+    lastName: { type: String, required: true },
+    uploaded_file:{ type: String, required: true },
+    email: { type: String, required: true },
     });
 }
 }
-
-module.exports = DAOUserMongo;

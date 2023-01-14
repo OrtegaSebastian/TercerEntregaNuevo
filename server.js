@@ -39,6 +39,9 @@ const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
 const User = require("./models");
+const Users= require("./daos/usuarios/usuarioDao")
+
+// const findOne = require('./contenedores/mongoContain')
 
 //configuraciones
 const config = require("./config");
@@ -92,10 +95,10 @@ passport.use(
       passReqToCallback: true,
     },
      // los parametros de username y password que le pasamos a passport son los que se definen en la plantilla signup.html en el atributo name, debe ser el mismo nombre de lo contrario nos va dar error
-     (req, username, password, done) => {
+    (req, username, password, done) => {
 
       // hacemos la busqueda en la DB y validamos si el usuario existe
-      User.findOne({ 'username': username }, (err, user) => {
+      Users.findOne({ 'username': username }, (err, user) => {
           if (err) {
               return done(err);
           };
@@ -112,7 +115,7 @@ passport.use(
           };
 
           // insertamos en mongo el nuevo usuario que creamos y validamos
-          User.create(newUser, (err, userWithId) => {
+          Users.create(newUser, (err, userWithId) => {
               if (err) {
                   return done(err);
               }
@@ -127,7 +130,7 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true },
     (req, username, password, done) => {
-      User.findOne({ username }, (err, user) => {
+      Users.findOne({ username }, (err, user) => {
         if (err) {
           return done(err);
         }
