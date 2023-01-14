@@ -11,8 +11,7 @@ class DAOProdMongo extends contenedorProductosMongo {
       foto: { type: String, require: true },
       precio: { type: Number, require: true },
       stock: { type: Number, require: true },
-      // TODO: revisar mongoose doc, para cambiar el timestamp
-      //   TODO: timestamp: true,
+    
     });
   }
 }

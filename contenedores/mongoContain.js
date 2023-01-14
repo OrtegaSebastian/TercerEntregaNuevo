@@ -109,6 +109,32 @@ class contenedorProductosMongo {
   }
 }
 
-module.exports = { contenedorCarritoMongo, contenedorProductosMongo };
+class contenedorUsuariosMongo {
+  // * get, post, put, delete
+  // * CRUD
+  constructor(Users, esquema) {
+    this.db = mongoose.model(Users, esquema);
+  }
+  async saveUser(newDoc) {
+    try {
+      const doc = await this.db.create(newDoc);
+      return doc;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async getbyUserId(id) {
+    try {
+      const data = await this.db.findOne({ _id: id });
+      return data;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }  
+}
+
+
+module.exports = { contenedorCarritoMongo, contenedorProductosMongo,contenedorUsuariosMongo };
 
 
