@@ -1,16 +1,19 @@
-//express
+//express y config server
 const express = require("express");
 const app = express();
 const bCrypt = require("bcrypt");
 const session = require("express-session");
 const port = 8080;
+const dotenv = require("dotenv");
+dotenv.config("./src/.env");
 
-/////////////////////////////////////////
-
+//carritos y productos
 const routerCarritos = require("./src/routes/carritos");
 const routerProductos = require("./src/routes/productos");
+const isValidPassword = require("./helpers/encrip")
 
-
+//encriptador de clave
+const createHash = require("./helpers/encrip")
 
 // configuro el servidor
 
@@ -18,14 +21,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.use("/api/productos", routerProductos);
-app.use("/api/carritos", routerCarritos);
 
-const dotenv = require("dotenv");
 
-dotenv.config("./src/.env");
 
-//////////////////////////////////
+
 
 //hbs
 
@@ -39,7 +38,7 @@ const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
 const User = require("./models");
-const Users= require("./daos/usuarios/usuarioDao")
+// const Users= require("./daos/usuarios/usuarioDao")
 
 // const findOne = require('./contenedores/mongoContain')
 
@@ -80,14 +79,8 @@ app.use(
   })
 );
 
-// funcion para encriptar la Clave
-function createHash(password) {
-  return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-}
-// funcion para validar la Clave que se encripto con bCrypt
-function isValidPassword(user, password) {
-  return bCrypt.compareSync(password, user.password);
-}
+
+
 passport.use(
   "signup",
   new LocalStrategy(
@@ -99,6 +92,7 @@ passport.use(
 
       // hacemos la busqueda en la DB y validamos si el usuario existe
       Users.findOne({ 'username': username }, (err, user) => {
+       
           if (err) {
               return done(err);
           };
@@ -130,6 +124,7 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true },
     (req, username, password, done) => {
+      console.log(Users)
       Users.findOne({ username }, (err, user) => {
         if (err) {
           return done(err);
@@ -154,12 +149,16 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(function (id, done) {
-  Users.findById(id, done);
+  User.findById(id, done);
 });
 
 //inicializamos passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use("/api/productos", routerProductos);
+app.use("/api/carritos", routerCarritos);
 
 //LOGIN
 app.get("/login", routes.getLogin);

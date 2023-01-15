@@ -87,8 +87,8 @@ function getLogin(req, res) {
         res.render('login-ok', {
             usuario: user.username,
             nombre: user.firstName,              
-            apellido: user.lastName,        
-            email: user.email
+            // apellido: user.lastName,        
+            // email: user.email
         });
     }
     else {
