@@ -11,7 +11,7 @@ switch (process.env.PERS) {
     // TODO: mal nombre del archivo. verificar
     const CarritosDaoMongoDb = require("./carritos/CarritosDaoMongo");
 
-    const DAOUserMongo = require("./usuarios/usuarioDao")
+    const DAOUserMongo = require("./usuarios/usuarioDao.js")
 
     productosDao = new ProductosDaoMongoDb();
     carritosDao = new CarritosDaoMongoDb();

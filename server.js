@@ -22,23 +22,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 
-
-
-
-
 //hbs
-
-// TODO: express handlebars utiliza el import entero ahora
 const exphbs = require("express-handlebars");
 const ex = require("express-handlebars");
+
 //passport
 const passport = require("passport");
 const { Strategy: LocalStrategy } = require("passport-local");
 const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
-const User = require("./models");
-// const Users= require("./daos/usuarios/usuarioDao")
+// const User = require("./models");
+const Users= require("./daos/usuarios/usuarioDao")
 
 // const findOne = require('./contenedores/mongoContain')
 
@@ -83,16 +78,10 @@ app.use(
 
 passport.use(
   "signup",
-  new LocalStrategy(
-    {
-      passReqToCallback: true,
-    },
-     // los parametros de username y password que le pasamos a passport son los que se definen en la plantilla signup.html en el atributo name, debe ser el mismo nombre de lo contrario nos va dar error
+  new LocalStrategy({passReqToCallback: true,},
     (req, username, password, done) => {
-
-      // hacemos la busqueda en la DB y validamos si el usuario existe
-      Users.findOne({ 'username': username }, (err, user) => {
-       
+    Users.createUser({ 'username': username }, (err, user) => {
+      
           if (err) {
               return done(err);
           };
@@ -109,7 +98,7 @@ passport.use(
           };
 
           // insertamos en mongo el nuevo usuario que creamos y validamos
-          Users.create(newUser, (err, userWithId) => {
+          Users.saveUser(newUser, (err, userWithId) => {
               if (err) {
                   return done(err);
               }
@@ -125,7 +114,7 @@ passport.use(
     { passReqToCallback: true },
     (req, username, password, done) => {
       console.log(Users)
-      Users.findOne({ username }, (err, user) => {
+      Users.getbyUserId({ username }, (err, user) => {
         if (err) {
           return done(err);
         }

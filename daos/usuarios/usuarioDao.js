@@ -1,7 +1,7 @@
 const { contenedorUsuariosMongo } = require("../../contenedores/mongoContain");
-const mongoose = require('mongoose');
 
-module.exports = class DAOUserMongo extends contenedorUsuariosMongo {
+
+class DAOUserMongo extends contenedorUsuariosMongo {
     constructor() {
     // *super 
     super("Users", {
@@ -15,3 +15,4 @@ module.exports = class DAOUserMongo extends contenedorUsuariosMongo {
     });
 }
 }
+module.exports = DAOUserMongo
