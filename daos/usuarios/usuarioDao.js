@@ -1,4 +1,5 @@
 const { contenedorUsuariosMongo } = require("../../contenedores/mongoContain");
+const mongoose = require ('mongoose')
 
 
 class DAOUserMongo extends contenedorUsuariosMongo {
@@ -12,7 +13,9 @@ class DAOUserMongo extends contenedorUsuariosMongo {
     lastName: { type: String, required: true },
     uploaded_file:{ type: String, required: true },
     email: { type: String, required: true },
-    });
+    },);
+    
 }
 }
 module.exports = DAOUserMongo
+

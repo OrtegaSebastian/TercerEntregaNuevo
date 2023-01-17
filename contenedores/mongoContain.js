@@ -1,8 +1,7 @@
 const Config = require("../src/config");
 
 const mongoose = require("mongoose");
-// TODO: cnxStr verificar. solo conectar una vez a la DB.
-// mongoose.connect(Config.mongoDB.cnxStr, Config.mongoDB.options);
+
 
 class contenedorCarritoMongo {
   // * get, post, put, delete

@@ -32,10 +32,10 @@ const { Strategy: LocalStrategy } = require("passport-local");
 const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
-// const User = require("./models");
+
 const Users= require("./daos/usuarios/usuarioDao")
 
-// const findOne = require('./contenedores/mongoContain')
+
 
 //configuraciones
 const config = require("./config");
@@ -47,7 +47,6 @@ const routes = require("./routes");
 
 app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
 
-///NO
 
 
 app.set("view engine", ".hbs");
@@ -80,8 +79,14 @@ passport.use(
   "signup",
   new LocalStrategy({passReqToCallback: true,},
     (req, username, password, done) => {
+      const {firstname}= req.body
+      const {age}= req.body
+      const {lastName}= req.body
+      const {email}= req.body
+      const {phone}=req.body
     Users.createUser({ 'username': username }, (err, user) => {
       
+
           if (err) {
               return done(err);
           };
@@ -112,8 +117,9 @@ passport.use(
   "login",
   new LocalStrategy(
     { passReqToCallback: true },
-    (req, username, password, done) => {
-      console.log(Users)
+    
+    (req, username, password, done) => {     
+      
       Users.getbyUserId({ username }, (err, user) => {
         if (err) {
           return done(err);
