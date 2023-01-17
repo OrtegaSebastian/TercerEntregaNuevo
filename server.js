@@ -36,7 +36,6 @@ const cookieParser = require("cookie-parser");
 const Users= require("./daos/usuarios/usuarioDao")
 
 
-
 //configuraciones
 const config = require("./config");
 const controllersdb = require("./controllersdb");
@@ -92,7 +91,7 @@ passport.use(
           };
 
           // si el user ya exite cortamos el flujo
-          if (user) {
+          if (username) {
               return done(null, false);
           }
 

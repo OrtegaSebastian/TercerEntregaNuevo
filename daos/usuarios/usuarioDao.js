@@ -19,3 +19,4 @@ class DAOUserMongo extends contenedorUsuariosMongo {
 }
 module.exports = DAOUserMongo
 
+

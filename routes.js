@@ -83,7 +83,7 @@ const logger = require('./helpers/log4js')
 function getLogin(req, res) {
     if (req.isAuthenticated()) {
 
-        var user = req.user;
+        let user = req.user;
         res.render('login-ok', {
             usuario: user.username,
             nombre: user.firstName,              
