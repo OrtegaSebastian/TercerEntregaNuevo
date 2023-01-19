@@ -34,7 +34,7 @@ const cookieParser = require("cookie-parser");
 //importaciones otros archivos
 
 const DAOUserMongo = require ('./daos/usuarios/usuarioDao')
-// const Users= new DAOUserMongo()
+const Users= new DAOUserMongo()
 
 
 //configuraciones
@@ -84,9 +84,9 @@ passport.use(
       const {lastName}= req.body
       const {email}= req.body
       const {phone}=req.body
-      DAOUserMongo.findOne({ username }, (err, user) => {
+    Users.findOne({ username }, (err, user) => {
       if (user) return done(null, false);
-      DAOUserMongo.create({
+      Users.create({
         firstname,
         age,
         lastName,
@@ -111,7 +111,7 @@ passport.use(
           };
 
           // insertamos en mongo el nuevo usuario que creamos y validamos
-          DAOUserMongo.saveUser(newUser, (err, userWithId) => {
+          Users.saveUser(newUser, (err, userWithId) => {
               if (err) {
                   return done(err);
               }
@@ -124,7 +124,7 @@ passport.use(
 passport.use(
   "login",
   new Strategy({}, (username, password, done) => {
-    DAOUserMongo.findOne({ username }, (err, user) => {
+    Users.findOne({ username }, (err, user) => {
       if (err) return done(err);
       if (!user) return done(null, false);
       if (!validatePass(password, user.password)) return done(null, false);
