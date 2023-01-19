@@ -28,13 +28,13 @@ const ex = require("express-handlebars");
 
 //passport
 const passport = require("passport");
-const { Strategy: LocalStrategy } = require("passport-local");
+const { Strategy } = require("passport-local");
 const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
 
 const DAOUserMongo = require ('./daos/usuarios/usuarioDao')
-const Users= new DAOUserMongo()
+// const Users= new DAOUserMongo()
 
 
 //configuraciones
@@ -77,15 +77,23 @@ app.use(
 
 passport.use(
   "signup",
-  new LocalStrategy({passReqToCallback: true,},
+  new Strategy({passReqToCallback: true,},
     (req, username, password, done) => {
       const {firstname}= req.body
       const {age}= req.body
       const {lastName}= req.body
       const {email}= req.body
       const {phone}=req.body
-    Users.createUser({ 'username': username }, (err, user) => {
-      
+      DAOUserMongo.findOne({ username }, (err, user) => {
+      if (user) return done(null, false);
+      DAOUserMongo.create({
+        firstname,
+        age,
+        lastName,
+        email,
+        phone
+          })
+
 
           if (err) {
               return done(err);
@@ -103,7 +111,7 @@ passport.use(
           };
 
           // insertamos en mongo el nuevo usuario que creamos y validamos
-          Users.saveUser(newUser, (err, userWithId) => {
+          DAOUserMongo.saveUser(newUser, (err, userWithId) => {
               if (err) {
                   return done(err);
               }
@@ -115,36 +123,22 @@ passport.use(
 // validamos si el usuario existe y ademas si la contraseña conincide
 passport.use(
   "login",
-  new LocalStrategy(
-    { passReqToCallback: true },
-    
-    (req, username, password, done) => {     
-      
-      Users.getbyUserId({ username }, (err, user) => {
-        if (err) {
-          return done(err);
-        }
-
-        if (!user) {
-          return done(null, false);
-        }
-
-        if (!isValidPassword(user, password)) {
-          return done(null, false);
-        }
-
-        return done(null, user);
-      });
-    }
-  ),  
+  new Strategy({}, (username, password, done) => {
+    DAOUserMongo.findOne({ username }, (err, user) => {
+      if (err) return done(err);
+      if (!user) return done(null, false);
+      if (!validatePass(password, user.password)) return done(null, false);
+      return done(null, user);
+    });
+  }) 
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user._id);
+passport.serializeUser((userObj, done) => {
+  done(null, userObj._id);
 });
 
-passport.deserializeUser(function (id, done) {
-  User.findById(id, done);
+passport.deserializeUser((id, done) => {
+  Users.findById(id, done);
 });
 
 //inicializamos passport
