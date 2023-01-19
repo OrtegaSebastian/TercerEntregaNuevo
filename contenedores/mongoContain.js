@@ -133,7 +133,7 @@ class contenedorUsuariosMongo {
   
   async getbyUserId(id) {
     try {
-      const data = await this.db.findOne({ _id: id });
+      const data = await this.db.findOne({ id: id });
       return data;
     } catch (e) {
       throw new Error(e);

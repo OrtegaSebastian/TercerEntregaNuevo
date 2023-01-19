@@ -33,7 +33,8 @@ const cookieParser = require("cookie-parser");
 
 //importaciones otros archivos
 
-const Users= require("./daos/usuarios/usuarioDao")
+const DAOUserMongo = require ('./daos/usuarios/usuarioDao')
+const Users= new DAOUserMongo()
 
 
 //configuraciones

@@ -47,20 +47,19 @@
           <input name='email' placeholder="Email" class="form-control" type="email" required>
         </div>
         <div class="container">
-        <form id="login" onsubmit="process(event)">
           <label for="phone"><h4>Phone Number</h4></label>
           <input id="phone" type="tel" name="phone" />      
         </form>
         </div>   
-        <div class="form-group">
-          <input class="btn btn-success my-3" type="submit"  onclick="location.href = '/login'" value="Singup">
-        </div>
+        <button type="submit" class="btn btn-dark btn-lg" id="login" onclick="location.href='/login'">Ir al
+          Login</button>
       </form>
 
     </div>
   </div>
 
 </body>
+<script src="./scripts/register.js"></script>
 <script>
   const phoneInputField = document.querySelector("#phone");
   const phoneInput = window.intlTelInput(phoneInputField, {
@@ -77,6 +76,8 @@ const phoneNumber = phoneInput.getNumber();
 info.style.display = "";
 info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
 }
+
+
 </script>
 </html>
 

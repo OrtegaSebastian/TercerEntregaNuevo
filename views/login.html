@@ -17,7 +17,7 @@
     <div class=jumbotron>
       <h1>LOGIN</h1>
       <br>
-      <form class="form" role="form" action="/login" method="post" autocomplete="off">
+      <form class="form" name="form" role="form" action="/login" method="post" autocomplete="off">
 
         <div class="form-group">
           <input name='username' placeholder="Nombre" class="form-control" type="text" required>
@@ -32,19 +32,22 @@
       </form>
 
       <hr>
-      <div class="text-center"></div>
-      <button class="btn btn-success my-3" onclick="goSignup()">SIGNUP</button>
-    </div>
+      <button class="btn btn-dark btn-lg" id="register" onclick="location.href='/signup'">Ir al
+        Registro</button>
   </div>
 
   <script>
-    function redireccionar(pagina) {
-      location.href = pagina;
-    }
+  const form = document.querySelector("#form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    fetch("/signup", {
+      method: "POST",
+      body: formData,
+    });
+    form.reset();
+  });
 
-    function goSignup() {
-      redireccionar('/signup');
-    }
   </script>
 
 
