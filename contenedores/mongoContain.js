@@ -1,149 +1,226 @@
 const Config = require("../src/config");
-
 const mongoose = require("mongoose");
+const logger = require('../config/log4js')
+
+mongoose.set('strictQuery',true)
+await mongoose.connect(Config.mongodb.cnxStr)
 
 
-class contenedorCarritoMongo {
-  // * get, post, put, delete
-  // * CRUD
-  constructor(collecionCarrito, esquema) {
-    this.db = mongoose.model(collecionCarrito, esquema);
+class ContenedorMongoDb {
+  constructor(coleccion, esquema) {
+    this.col = mongoose.model(coleccion, esquema);
   }
-  async saveCarrito(newDoc) {
+
+  async traerTodos() {
     try {
-      const doc = await this.db.create(newDoc);
-      return doc;
-    } catch (e) {
-      throw new Error("carrito no encontrado", e);
-    }
-  }
-  async getAllCarritos() {
-    try {
-      const data = await this.db.find({});
-      return data;
-    } catch (e) {
-      throw new Error("no se encontro carrito", e);
+      const objets = await this.col.find();
+      return objets;
+    } catch (err) {
+      logger.error(`Error en Ruta Get: ${err}`);
     }
   }
 
-  async getbyCarritoId(id) {
+  async traerPorId(id) {
     try {
-      const data = await this.db.findOne({ _id: id });
-      return data;
-    } catch (e) {
-      throw new Error(e);
+      const objets = await this.col.findOne({ _id: id });
+      return objets;
+    } catch (err) {
+      logger.error(`Error en Ruta get by Id: ${err}`);
     }
   }
 
-  // * PUT
-  async updateCarrito(elem) {
+  async guardar(objet) {
     try {
-      this.db.replaceOne({ _id: elem._id }, elem);
-      return elem;
-    } catch (e) {
-      throw new Error(e);
+      await this.col.create(objet);
+      const newId = await this.col
+        .find({}, { _id: 1 })
+        .sort({ _id: -1 })
+        .limit(1);
+      return newId;
+    } catch (err) {
+      logger.error(`Error en Ruta post: ${err}`);
     }
   }
-  async borrarCarrito(id) {
+
+  async cambiarPorId(elem) {
+    const { id } = elem;
     try {
-      await this.db.deleteOne({ _id: id });
-    } catch (e) {
-      throw new Error(e);
+      const found = await this.col.find({ _id: id });
+
+      if (!found) {
+        found = null;
+      } else {
+        await this.col.replaceOne({ _id: id }, elem);
+      }
+      return found;
+    } catch (err) {
+      logger.error(`Error en Ruta change by ID: ${err}`);
     }
   }
-  async borrarTodosCarrito() {
-    await this.db.deleteMany({});
+
+  async borrarPorId(id) {
+    let found = await this.col.find({ _id: id });
+    try {
+      if (!found) {
+        found = null;
+      } else {
+        await this.col.deleteOne({ _id: id });
+      }
+      return found;
+    } catch (err) {
+      logger.error(`Error en Ruta delete by Id: ${err}`);
+    }
   }
 }
-class contenedorProductosMongo {
-  // * get, post, put, delete
-  // * CRUD
-  constructor(collecionCarrito, esquema) {
-    this.db = mongoose.model(collecionCarrito, esquema);
-  }
-  async saveProd(newDoc) {
-    try {
-      const doc = await this.db.create(newDoc);
-      return doc;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-  async getAllProducts() {
-    try {
-      const data = await this.db.find({});
-      return data;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
+module.exports = {ContenedorMongoDb};
 
-  async getbyProdId(id) {
-    try {
-      const data = await this.db.findOne({ _id: id });
-      return data;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
 
-  // * PUT
-  async updateProducto(elem) {
-    try {
-      this.db.replaceOne({ _id: elem._id }, elem);
-      return elem;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-  async borrarProducto(id) {
-    try {
-      await this.db.deleteOne({ _id: id });
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-  async borrarTodosProductos() {
-    await this.db.deleteMany({});
-  }
-}
 
-class contenedorUsuariosMongo {
-  // * get, post, put, delete
-  // * CRUD
-  constructor(Users, esquema) {
-    this.db = mongoose.model(Users, esquema);
-  }
-  async createUser(newDoc) {
-    try {
-      const doc = await this.db.create(newDoc);
-      return doc;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-  async saveUser(newDoc) {
-    try {
-      const doc = await this.db.save(newDoc);
-      return doc;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
+
+
+
+
+// class contenedorCarritoMongo {
+//   // * get, post, put, delete
+//   // * CRUD
+//   constructor(collecionCarrito, esquema) {
+//     this.db = mongoose.model(collecionCarrito, esquema);
+//   }
+//   async saveCarrito(newDoc) {
+//     try {
+//       const doc = await this.db.create(newDoc);
+//       return doc;
+//     } catch (e) {
+//       throw new Error("carrito no encontrado", e);
+//     }
+//   }
+//   async getAllCarritos() {
+//     try {
+//       const data = await this.db.find({});
+//       return data;
+//     } catch (e) {
+//       throw new Error("no se encontro carrito", e);
+//     }
+//   }
+
+//   async getbyCarritoId(id) {
+//     try {
+//       const data = await this.db.findOne({ _id: id });
+//       return data;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+
+//   // * PUT
+//   async updateCarrito(elem) {
+//     try {
+//       this.db.replaceOne({ _id: elem._id }, elem);
+//       return elem;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async borrarCarrito(id) {
+//     try {
+//       await this.db.deleteOne({ _id: id });
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async borrarTodosCarrito() {
+//     await this.db.deleteMany({});
+//   }
+// }
+// class contenedorProductosMongo {
+//   // * get, post, put, delete
+//   // * CRUD
+//   constructor(collecionCarrito, esquema) {
+//     this.db = mongoose.model(collecionCarrito, esquema);
+//   }
+//   async saveProd(newDoc) {
+//     try {
+//       const doc = await this.db.create(newDoc);
+//       return doc;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async getAllProducts() {
+//     try {
+//       const data = await this.db.find({});
+//       return data;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+
+//   async getbyProdId(id) {
+//     try {
+//       const data = await this.db.findOne({ _id: id });
+//       return data;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+
+//   // * PUT
+//   async updateProducto(elem) {
+//     try {
+//       this.db.replaceOne({ _id: elem._id }, elem);
+//       return elem;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async borrarProducto(id) {
+//     try {
+//       await this.db.deleteOne({ _id: id });
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async borrarTodosProductos() {
+//     await this.db.deleteMany({});
+//   }
+// }
+
+// class contenedorUsuariosMongo {
+//   // * get, post, put, delete
+//   // * CRUD
+//   constructor(Users, esquema) {
+//     this.db = mongoose.model(Users, esquema);
+//   }
+//   async createUser(newDoc) {
+//     try {
+//       const doc = await this.db.create(newDoc);
+//       return doc;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
+//   async saveUser(newDoc) {
+//     try {
+//       const doc = await this.db.save(newDoc);
+//       return doc;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }
   
-  async getbyUserId(id) {
-    try {
-      const data = await this.db.findOne({ id: id });
-      return data;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }  
+//   async getbyUserId(id) {
+//     try {
+//       const data = await this.db.findOne({ id: id });
+//       return data;
+//     } catch (e) {
+//       throw new Error(e);
+//     }
+//   }  
 
 
-}
+// }
 
 
-module.exports = { contenedorCarritoMongo, contenedorProductosMongo,contenedorUsuariosMongo };
+// module.exports = { contenedorCarritoMongo, contenedorProductosMongo,contenedorUsuariosMongo };
 
 

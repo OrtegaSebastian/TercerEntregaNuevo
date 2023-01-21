@@ -1,15 +1,9 @@
 const Config = {
-  fileSystem: {
-    path: "./DB",
-  },
-  mongoDB: {
-    cnxStr: "mongodb://127.0.0.1/ecommerce",
-    options: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000,
-    },
-  },
+  mongodb: {
+    cnxStr:"mongodb+srv://sebasindahouse:Mosi0310@cluster0.epscnqt.mongodb.net/sesiones",
+},
 };
-// TODO: exportat solo el config
-module.exports = Config;
+
+module.exports  = Config;
+     
+    
