@@ -1,4 +1,4 @@
-const { contenedorCarritoMongo } = require("../../contenedores/mongoContain");
+const { ContenedorMongoDb } = require("../../contenedores/mongoContain");
 const {Schema} = require('mongoose')
 const logger = require('../../config/log4js')
 
@@ -14,7 +14,7 @@ const productos = new Schema({
 });
 
 
-class CarritoDaoMongoDb extends ContenedorMongoDB {
+class CarritoDaoMongoDb extends ContenedorMongoDb {
   constructor() {
     super("carritos", {
       timestamp: { type: Date, required: true },
@@ -78,7 +78,7 @@ class CarritoDaoMongoDb extends ContenedorMongoDB {
   }
 }
 
-export default CarritoDaoMongoDb;
+module.exports = CarritoDaoMongoDb;
 
 
 

@@ -1,44 +1,44 @@
 const form = document.querySelector("#form");
 
-const select = document.querySelector("#codeSelect");
-const code = document.querySelector("#code");
+const select = document.querySelector("#codigoSelect");
+const codigo = document.querySelector("#codigo");
 
 const preview = document.querySelector("#preview");
 const file = document.querySelector("#myFile");
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  fetchCountryCodes();
+  fetchCountrycodigos();
 });
 
 //CODIGOS INTERNACIONALES -----------------------------------
-const fetchCountryCodes = async () => {
+const fetchCountrycodigos = async () => {
   try {
-    const res = await fetch("../../helpers/countryCodes.json");
+    const res = await fetch("../../helpers/countrycodigos.json");
     const data = await res.json();
-    cargarCodes(data);
+    cargarcodigos(data);
   } catch (error) {
     console.log(error);
   }
 };
 
-const cargarCodes = (data) => {
+const cargarcodigos = (data) => {
   select.textContent = "Codigo Pais";
   data.forEach((pais) => {
     let opt = document.createElement("option");
-    opt.value = pais.dial_code;
+    opt.value = pais.dial_codigo;
     opt.text = pais.name;
     select.appendChild(opt);
   });
 };
 
-const seleccionarCode = () => {
+const seleccionarcodigo = () => {
   const indice = select.selectedIndex;
   if (indice === -1) return;
   const paiSeleccionado = select.options[indice];
-  code.value = paiSeleccionado.value;
+  codigo.value = paiSeleccionado.value;
 };
 
-select.addEventListener("change", seleccionarCode);
+select.addEventListener("change", seleccionarcodigo);
 
 //IMAGENES -----------------------------------
 const renderImage = (formData) => {

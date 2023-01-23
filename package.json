@@ -1,7 +1,7 @@
 {
   "name": "re-entrega-passport",
   "version": "1.0.0",
-  "description": "",
+  "descripcion": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -25,6 +25,7 @@
     "log4js": "^6.7.1",
     "mongodb": "^4.13.0",
     "mongoose": "^6.7.5",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",

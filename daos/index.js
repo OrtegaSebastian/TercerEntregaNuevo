@@ -1,3 +1,35 @@
+let CarritoDaoMongoDb = require('./carritos/CarritosDaoMongo')
+let DAOProdMongo = require('./productos/ProductosDaoMongoDb')
+let usuariosDAODb = require("./usuarios/usuarioDao")
+
+const dotenv = requier('dotenv')
+dotenv.config()
+
+const TIPO = process.env.TIPO;
+
+let ProductosDao;
+let CarritosDao;
+let usuariosDAO;
+
+switch (TIPO) {
+  
+  case "archivos":
+    ProductosDao = new DAOProdMongo();
+    CarritosDao = new CarritoDaoMongoDb();
+    usuariosDAO= new usuariosDAODb();
+
+    break;
+  case "mongodb":
+    ProductosDao = new DAOProdMongo();
+    CarritosDao = new CarritoDaoMongoDb();
+    usuariosDAO = new usuariosDAODb()
+    break;
+
+}
+
+module.exports = {ProductosDao,CarritosDao, usuariosDAO}
+
+
 // let carritosDao;
 // let productosDao;
 // let usuariosDAO;

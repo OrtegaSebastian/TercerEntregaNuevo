@@ -18,7 +18,7 @@ const createHash = require("./helpers/encrip")
 // configuro el servidor
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencodigod({ extended: true }));
 app.use(express.static("public"));
 
 
@@ -50,7 +50,7 @@ app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
 
 
 app.set("view engine", ".hbs");
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencodigod({ extended: true }));
 app.use(express.static(__dirname + "/views"));
 
 //session
