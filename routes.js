@@ -7,17 +7,17 @@ const logger = require('./helpers/log4js')
 // const loggerUser = require('./helpers/log4js')
 
 
-//nodemailer aun no lo pruebo////////////////////////////////////////////
+//nodcorreoer aun no lo pruebo////////////////////////////////////////////
 
 
 //ACA DEBO PONER CORREO ETHEREAL Y DESCOMENTAR 
 
 
-// const {createTransport}= require('nodemailer')
-// const TEST_MAIL='xxxxxx@ethereal.email'
+// const {createTransport}= require('nodcorreoer')
+// const TEST_MAIL='xxxxxx@ethereal.correo'
 
 // const transporter = createTransport({
-//     host:'smtp.ethereal.email',
+//     host:'smtp.ethereal.correo',
 //     port:587,
 //     auth:{
 //         user: TEST_MAIL,
@@ -88,7 +88,7 @@ function getLogin(req, res) {
             usuario: user.username,
             nombre: user.firstName,              
             // apellido: user.lastName,        
-            // email: user.email
+            // correo: user.correo
         });
     }
     else {
@@ -110,7 +110,7 @@ function postLogin(req, res) {
 function postSignup(req, res) {
     const user = req.user;
     console.log(user);
-    //Parte de nodemailer
+    //Parte de nodcorreoer
 //     try{const info = transporter.sendMail(mailOptions)
 //     console.log(info)
 // }

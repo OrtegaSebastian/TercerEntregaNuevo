@@ -54,7 +54,7 @@ passport.use(
     const { codigo } = req.body;
     const { telefono } = req.body;
     const { filename } = req.file;
-    const phone = `${code}${number}`;
+    const tel = `${code}${telefono}`;
     const imgUrl = `${host}:${port}/images/${filename}`;
     Users.findOne({ username }, (err, user) => {
       if (user) return done(null, false);
@@ -65,7 +65,7 @@ passport.use(
           nombre,
           direccion,
           edad,
-          telefono,
+          tel,
           imgUrl,
         },
         (err, user) => {
@@ -145,7 +145,7 @@ homeRouter.post(
   upload.single("myFile"),
   passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
   (req, res, next) => {
-    res.render(path.join(process.cwd(), "/views/pages/register.ejs"), {
+    res.render(path.join(process.cwd(), "/views/signup"), {
       okRegister: "¡Usuario registrado con éxito! Puede iniciar sesión",
     });
   }
@@ -165,34 +165,34 @@ homeRouter.get("/datos", authMw, (req, res) => {
 
 homeRouter.get("/carrito", authMw, (req, res) => {
   const nombre = req.user.nombre;
-  res.render("pages/carrito.ejs", { nombre: nombre });
+  res.render("/carrito.html", { nombre: nombre });
 });
 
 homeRouter.get("/cuenta", authMw, (req, res) => {
   const nombre = req.user.nombre;
   const imagen = req.user.imgUrl;
-  const direccion = req.user.address;
-  const edad = req.user.age;
-  const email = req.user.username;
-  const telefono = req.user.phone;
+  const direccion = req.user.direccion;
+  const edad = req.user.edad;
+  const correo = req.user.username;
+  const telefono = req.user.telefono;
 
-  res.render("pages/cuenta.ejs", { nombre,
+  res.render("/cuenta.hbs", { nombre,
     imagen,
     nombre: nombre,
     direccion,
     edad,
-    email,
+    correo,
     telefono,
     });
 });
 
 homeRouter.get("/logout", (req, res) => {
-  const name = req.user.name;
+  const nombre = req.user.name;
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    res.render("/login", { name: name });
+    res.render("/login", { nombre: nombre });
   });
 });
 

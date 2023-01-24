@@ -79,18 +79,18 @@ passport.use(
   "signup",
   new Strategy({passReqToCallback: true,},
     (req, username, password, done) => {
-      const {firstname}= req.body
-      const {age}= req.body
-      const {lastName}= req.body
-      const {email}= req.body
+      const {nombre}= req.body
+      const {edad}= req.body
+      const {apellido}= req.body
+      const {correo}= req.body
       const {phone}=req.body
     Users.findOne({ username }, (err, user) => {
       if (user) return done(null, false);
       Users.create({
-        firstname,
-        age,
-        lastName,
-        email,
+        nombre,
+        edad,
+        apellido,
+        correo,
         phone
           })
 

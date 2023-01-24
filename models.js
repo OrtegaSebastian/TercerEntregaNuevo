@@ -7,6 +7,6 @@
 //     age:Number,        
 //     lastName: String,
 //     uploaded_file:String,
-//     email: String
+//     correo: String
 // });
 
