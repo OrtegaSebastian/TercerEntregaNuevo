@@ -24,7 +24,7 @@ class CarritoDaoMongoDb extends ContenedorMongoDb {
     });
   }
 
-  async saveProducts(
+  async guardaProductos(
     id,
     id_prod,
     timestamp,
@@ -55,11 +55,11 @@ class CarritoDaoMongoDb extends ContenedorMongoDb {
     }
   }
 
-  async deleteProdById(id, id_prod) {
+  async borrarProdporId(id, id_prod) {
     try {
       await this.col.updateOne(
         { _id: id },
-        { $pull: { products: { _id: id_prod } } }
+        { $pull: { productos: { _id: id_prod } } }
       );
     } catch (err) {
       logger.error(`Error en Api Carritos: ${err}`);

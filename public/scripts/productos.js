@@ -243,7 +243,7 @@ const fetchAgregarProductos = async (objeto) => {
 //                     <tr>
 //                     <td><a type="button" onclick="llenarFormulario('${prod.nombre}', '${prod.precio}','${prod.thumbnail}')" nombre="copiar a formulario...">${prod.nombre}</a></td>
 //                     <td>$${prod.precio}</td>
-//                     <td><img width="50" src=${prod.thumbnail} alt="not found"></td>
+//                     <td><img width="50" src=${prod.thumbnail} alt="not encontrado"></td>
 //                     <td><a type="button" onclick="borrarProducto('${prod.id}')">borrar</a></td>
 //                     <td><a type="button" onclick="actualizarProducto('${prod.id}')">actualizar</a></td>
 //                     </tr>`

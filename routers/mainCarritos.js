@@ -1,17 +1,18 @@
-import { Router } from "express";
-import { CarritosDao } from "../daos/index.js";
+const {Router} = require('express')
+
+const {CarritosDao} = require('../daos/index')
 
 const router = Router();
 
-const carsArte = CarritosDao;
+const carritoEmpresa = CarritosDao;
 
 router.post("/", async (req, res) => {
   try {
     //const { id_user } = req.params;
     const timestamp = new Date();
     const id_user = `63bdb1548fd434ca0a9605d5`;
-    const products = [];
-    const newId = await carsArte.save({ timestamp, id_user, products });
+    const productos = [];
+    const newId = await carritoEmpresa.save({ timestamp, id_user, productos });
     res.send("El Id del nuevo carrito es:" + " " + newId);
   } catch (error) {
     res.send({ error: true });
@@ -21,8 +22,8 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const found = await carsArte.deleteById(id);
-    if (found) {
+    const encontrado = await carritoEmpresa.deleteById(id);
+    if (encontrado) {
       res.send("Carrito Eliminado");
     } else {
       res.send({ error: "Carrito no encontrado" });
@@ -35,10 +36,10 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id/productos", async (req, res) => {
   try {
     const { id } = req.params;
-    let found = await carsArte.getById(id);
-    if (found) {
-      const { products } = found;
-      res.send(products);
+    let encontrado = await carritoEmpresa.getById(id);
+    if (encontrado) {
+      const { productos } = encontrado;
+      res.send(productos);
     } else {
       res.send({ error: "Carrito no encontrado" });
     }
@@ -53,22 +54,22 @@ router.post("/:id/productos", async (req, res) => {
     const {
       id_prod,
       timestamp,
-      title,
-      description,
-      code,
+      nombre,
+      descripcion,
+      codigo,
       thumbnail,
-      price,
+      precio,
       stock,
     } = req.body;
-    await carsArte.saveProducts(
+    await carritoEmpresa.guardaProductos(
       id,
       id_prod,
       timestamp,
-      title,
-      description,
-      code,
+      nombre,
+      descripcion,
+      codigo,
       thumbnail,
-      price,
+      precio,
       stock
     );
     return res.send("Producto Cargado");
@@ -80,8 +81,8 @@ router.post("/:id/productos", async (req, res) => {
 router.delete("/:id/productos/:id_prod", async (req, res) => {
   try {
     const { id, id_prod } = req.params;
-    const found = await carsArte.deleteProdById(id, id_prod);
-    if (found) {
+    const encontrado = await carritoEmpresa.borrarProdporId(id, id_prod);
+    if (encontrado) {
       res.send("Producto Eliminado");
     } else {
       res.send({ error: "producto no encontrado" });
@@ -94,9 +95,9 @@ router.delete("/:id/productos/:id_prod", async (req, res) => {
 router.get("/idCarrito/:id_user", async (req, res) => {
   try {
     const { id_user } = req.params;
-    let found = await carsArte.getCarritoByUsuario(id_user);
-    if (found) {
-      const { _id } = found;
+    let encontrado = await carritoEmpresa.getCarritoByUsuario(id_user);
+    if (encontrado) {
+      const { _id } = encontrado;
       res.send(_id);
     } else {
       res.send(null);

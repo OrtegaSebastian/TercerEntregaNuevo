@@ -194,7 +194,7 @@ const fetchMostrarCarrito = async () => {
 //                     <tr>
 //                     <td>${prod.nombre}</td>
 //                     <td>$${prod.precio}</td>
-//                     <td><img width="50" src=${prod.thumbnail} alt="not found"></td>
+//                     <td><img width="50" src=${prod.thumbnail} alt="not encontrado"></td>
 //                     <td><a type="button" onclick="quitarDelCarrito('${prod.id}')">borrar</a></td>
 //                     </tr>`
 //         }

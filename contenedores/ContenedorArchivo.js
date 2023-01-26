@@ -23,11 +23,11 @@ class ContenedorArchivo {
     try {
         const objetos = await fs.promises.readFile(`${this.archivo}`, "utf-8");
         const objetsParse = JSON.parse(objetos);
-        let found = objetsParse.find((objeto) => objeto.id === id);
-        if (!found) {
-            found = null;
+        let encontrado = objetsParse.find((objeto) => objeto.id === id);
+        if (!encontrado) {
+            encontrado = null;
         }
-        return found;
+        return encontrado;
         } catch (err) {
         console.error(err);
         }
@@ -72,16 +72,16 @@ class ContenedorArchivo {
     async borrarById(id) {
     const objets = await fs.promises.readFile(`${this.archivo}`, "utf-8");
     let objetsParse = JSON.parse(objets);
-    let found = objetsParse.find((objet) => objet.id === id);
+    let encontrado = objetsParse.find((objet) => objet.id === id);
     try {
-        if (!found) {
-        found = null;
+        if (!encontrado) {
+        encontrado = null;
         } else {
         objetsParse = objetsParse.filter((objet) => objet.id != id);
         const objetsString = JSON.stringify(objetsParse);
         await fs.promises.writeFile(`${this.archivo}`, objetsString);
         }
-        return found;
+        return encontrado;
     } catch (err) {
         console.error(err);
     }

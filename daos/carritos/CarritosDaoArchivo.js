@@ -8,7 +8,7 @@ constructor() {
     super("./data/carts.json");
 }
 
-async saveProducts(
+async guardaProductos(
     id,
     id_prod,
     timestamp,
@@ -22,8 +22,8 @@ async saveProducts(
     try {
     const cars = await fs.promises.readFile(`${this.archivo}`, "utf-8");
     const carsParse = JSON.parse(cars);
-    let found = carsParse.find((car) => car.id === id);
-    const index = carsParse.indexOf(found);
+    let encontrado = carsParse.find((car) => car.id === id);
+    const index = carsParse.indexOf(encontrado);
     const newProduct = {
         id: id_prod,
         timestamp,
@@ -34,7 +34,7 @@ async saveProducts(
         precio,
         stock,
     };
-    carsParse[index].products.push(newProduct);
+    carsParse[index].productos.push(newProduct);
     const carsString = JSON.stringify(carsParse);
     await fs.promises.writeFile(`${this.archivo}`, carsString);
     } catch (err) {
@@ -42,12 +42,12 @@ async saveProducts(
     }
 }
 
-async deleteProdById(id, id_prod) {
+async borrarProdporId(id, id_prod) {
     try {
     const cars = await fs.promises.readFile(`${this.archivo}`, "utf-8");
     let carsParse = JSON.parse(cars);
-    let found = carsParse.find((car) => car.id === id);
-    const index = carsParse.indexOf(found);
+    let encontrado = carsParse.find((car) => car.id === id);
+    const index = carsParse.indexOf(encontrado);
     carsParse[index].productos = carsParse[index].productos.filter(
         (productos) => productos.id != id_prod
     );

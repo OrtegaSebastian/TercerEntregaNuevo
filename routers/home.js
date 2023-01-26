@@ -54,8 +54,8 @@ passport.use(
     const { codigo } = req.body;
     const { telefono } = req.body;
     const { filename } = req.file;
-    const tel = `${code}${telefono}`;
-    const imgUrl = `${host}:${port}/images/${filename}`;
+    const tel = `${codigo}${telefono}`;
+    const imagen = `${host}:${port}/images/${filename}`;
     Users.findOne({ username }, (err, user) => {
       if (user) return done(null, false);
       Users.create(
@@ -66,7 +66,7 @@ passport.use(
           direccion,
           edad,
           tel,
-          imgUrl,
+          imagen,
         },
         (err, user) => {
           if (err) return done(err);

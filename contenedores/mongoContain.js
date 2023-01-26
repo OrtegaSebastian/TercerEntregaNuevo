@@ -45,28 +45,28 @@ class ContenedorMongoDb {
   async cambiarPorId(elem) {
     const { id } = elem;
     try {
-      const found = await this.col.find({ _id: id });
+      const encontrado = await this.col.find({ _id: id });
 
-      if (!found) {
-        found = null;
+      if (!encontrado) {
+        encontrado = null;
       } else {
         await this.col.replaceOne({ _id: id }, elem);
       }
-      return found;
+      return encontrado;
     } catch (err) {
       logger.error(`Error en Ruta change by ID: ${err}`);
     }
   }
 
   async borrarPorId(id) {
-    let found = await this.col.find({ _id: id });
+    let encontrado = await this.col.find({ _id: id });
     try {
-      if (!found) {
-        found = null;
+      if (!encontrado) {
+        encontrado = null;
       } else {
         await this.col.deleteOne({ _id: id });
       }
-      return found;
+      return encontrado;
     } catch (err) {
       logger.error(`Error en Ruta delete by Id: ${err}`);
     }
@@ -146,7 +146,7 @@ module.exports = {ContenedorMongoDb};
 //       throw new Error(e);
 //     }
 //   }
-//   async getAllProducts() {
+//   async getAllproductos() {
 //     try {
 //       const data = await this.db.find({});
 //       return data;
