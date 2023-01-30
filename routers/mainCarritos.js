@@ -1,6 +1,6 @@
 const {Router} = require('express')
 
-const {CarritosDao} = require('../daos/index')
+const {CarritosDao} = require('../daos/factory')
 
 const router = Router();
 

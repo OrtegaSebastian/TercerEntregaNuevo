@@ -8,7 +8,7 @@ const db_user = process.env.DB_USER_MONGO;
 const db_pass = process.env.DB_PASS_MONGO;
 const db_name = process.env.DB_NAME_MONGO;
 
-export function DBConnect(cb) {
+function DBConnect(cb) {
   mongoose.connect(
     `mongodb+srv://${db_user}:${db_pass}@cluster0.epscnqt.mongodb.net/${db_name}?retryWrites=true&w=majority`,
     { useNewUrlParser: true },
@@ -22,7 +22,7 @@ export function DBConnect(cb) {
   );
 }
 
-export const Users = mongoose.model("users", {
+const Users = mongoose.model("users", {
   username: String,
   password: String,
   nombre: String,
@@ -31,3 +31,5 @@ export const Users = mongoose.model("users", {
   imgUrl: String,
   telefono: String,
 });
+
+module.exports={Users,DBConnect}

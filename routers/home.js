@@ -209,4 +209,10 @@ homeRouter.get("/idUsuario", (req, res) => {
   res.send(idUsuario);
 });
 
-export default homeRouter;
+
+module.exports = {
+homeRouter
+}
+
+
+
