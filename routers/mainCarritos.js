@@ -1,8 +1,8 @@
-const {Router} = require('express')
-
+// const Router = require('express')
+const express = require('express')
 const {CarritosDao} = require('../daos/factory')
 
-const router = Router();
+const router = express.Router();
 
 const carritoEmpresa = CarritosDao;
 

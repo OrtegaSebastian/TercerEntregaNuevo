@@ -13,7 +13,7 @@ const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const {DBConnect} = require('./config/mongoconf')
 
-const {homeRouter} = require('./routers/home')
+const {router} = require('./routers/home')
 const mainProductos =require('./routers/mainProductos')
 const mainCarritos = require('./routers/mainCarritos')
 
@@ -63,7 +63,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //RUTAS -----------------------------------------------------------
-app.use(homeRouter);
+app.use("/",router);
 app.use("/api/productos", mainProductos);
 app.use("/api/carrito", mainCarritos);
 

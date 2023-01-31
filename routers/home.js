@@ -1,4 +1,7 @@
-const {Router}= require('express')
+const express = require('express')
+const router = express.Router();
+
+// const {Router}= require('express')
 
 const path = require('path')
 const {dirname, extname, join} = require('path')
@@ -19,7 +22,7 @@ const {Users} = require('../config/mongoconf')
 
 const {fileURLToPath} =require ('url')
 
-const homeRouter = new Router();
+// const homeRouter = new Router();
 
 //MULTER ----------------------------
 
@@ -116,7 +119,7 @@ const authMw = (req, res, next) => {
 
 //RUTAS ------------------------------
 
-homeRouter.get("/", (req, res) => {
+router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     const nombre = req.user.nombre;
     res.render(path.join(process.cwd(), "/views/pages/home.ejs"), {
@@ -127,7 +130,7 @@ homeRouter.get("/", (req, res) => {
   }
 });
 
-homeRouter.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/");
   } else {
@@ -135,13 +138,13 @@ homeRouter.get("/login", (req, res) => {
   }
 });
 
-homeRouter.get("/signup", (req, res) => {
+router.get("/signup", (req, res) => {
   res.render(path.join(process.cwd(), "/views/pages/register.ejs"), {
     okRegister: " ",
   });
 });
 
-homeRouter.post(
+router.post(
   "/signup",
   upload.single("myFile"),
   passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
@@ -152,7 +155,7 @@ homeRouter.post(
   }
 );
 
-homeRouter.post(
+router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/errorLogin" }),
   (req, res) => {
@@ -160,16 +163,16 @@ homeRouter.post(
   }
 );
 
-homeRouter.get("/datos", authMw, (req, res) => {
+router.get("/datos", authMw, (req, res) => {
   res.send({ data: req.user });
 });
 
-homeRouter.get("/carrito", authMw, (req, res) => {
+router.get("/carrito", authMw, (req, res) => {
   const nombre = req.user.nombre;
   res.render("/carrito.html", { nombre: nombre });
 });
 
-homeRouter.get("/cuenta", authMw, (req, res) => {
+router.get("/cuenta", authMw, (req, res) => {
   const nombre = req.user.nombre;
   const imagen = req.user.imgUrl;
   const direccion = req.user.direccion;
@@ -187,7 +190,7 @@ homeRouter.get("/cuenta", authMw, (req, res) => {
     });
 });
 
-homeRouter.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   const nombre = req.user.name;
   req.logout((err) => {
     if (err) {
@@ -197,20 +200,20 @@ homeRouter.get("/logout", (req, res) => {
   });
 });
 
-homeRouter.get("/errorLogin", (req, res) => {
+router.get("/errorLogin", (req, res) => {
   res.render(path.join(process.cwd(), "./views/login-error"));
 });
 
-homeRouter.get("/errorRegister", (req, res) => {
+router.get("/errorRegister", (req, res) => {
   res.render(path.join(process.cwd(), "./views/signup-error"));
 });
 
-homeRouter.get("/idUsuario", (req, res) => {
+router.get("/idUsuario", (req, res) => {
   const idUsuario = req.user._id;
   res.send(idUsuario);
 });
 
-module.exports= homeRouter
+module.exports= router
 
 
 
