@@ -1,8 +1,8 @@
-// const Router = require('express')
-const express = require('express')
+const {Router} = require('express')
+const router = Router();
 const {CarritosDao} = require('../daos/factory')
 
-const router = express.Router();
+
 
 const carritoEmpresa = CarritosDao;
 
@@ -106,5 +106,5 @@ router.get("/idCarrito/:id_user", async (req, res) => {
     res.send({ error: true });
   }
 });
+module.exports = {router};
 
-module.exports = router;
