@@ -122,7 +122,7 @@ const authMw = (req, res, next) => {
 router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     const nombre = req.user.nombre;
-    res.render(path.join(process.cwd(), "/views/pages/home.ejs"), {
+    res.render(path.join(process.cwd(), "/views/home.hbs"), {
       nombre: nombre,
     });
   } else {
@@ -134,12 +134,12 @@ router.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/");
   } else {
-    res.render(path.join(process.cwd(), "/views/pages/login.ejs"));
+    res.render(path.join(process.cwd(), "/views/login.hbs"));
   }
 });
 
 router.get("/signup", (req, res) => {
-  res.render(path.join(process.cwd(), "/views/pages/register.ejs"), {
+  res.render(path.join(process.cwd(), "/views/signup.hbs"), {
     okRegister: " ",
   });
 });
@@ -169,7 +169,7 @@ router.get("/datos", authMw, (req, res) => {
 
 router.get("/carrito", authMw, (req, res) => {
   const nombre = req.user.nombre;
-  res.render("/carrito.html", { nombre: nombre });
+  res.render("/carrito.hbs", { nombre: nombre });
 });
 
 router.get("/cuenta", authMw, (req, res) => {
@@ -213,7 +213,7 @@ router.get("/idUsuario", (req, res) => {
   res.send(idUsuario);
 });
 
-module.exports= router
+module.exports = {router};
 
 
 

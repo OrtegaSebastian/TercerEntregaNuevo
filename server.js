@@ -63,9 +63,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //RUTAS -----------------------------------------------------------
-app.use("/",router);
-app.use("/api/productos", mainProductos);
-app.use("/api/carrito", mainCarritos);
+app.use(router);
+// app.use("/api/productos", mainProductos);
+// app.use("/api/carrito", mainCarritos);
 
 // CONTROL RUTAS INVALIDAS ---------------------------------------------
 app.all("*", (req, res) => {
@@ -101,7 +101,7 @@ if (MODO === "CLUSTER") {
     });
   } else {
     DBConnect(() => {
-      const connectedServer = httpServer.listen(PORT, () => {
+      const connectedServer = Server.listen(PORT, () => {
         console.log(
           `Servidor http escuchando en el puerto ${
             connectedServer.address().port
@@ -115,7 +115,7 @@ if (MODO === "CLUSTER") {
   }
 } else {
   DBConnect(() => {
-    const connectedServer = httpServer.listen(PORT, () => {
+    const connectedServer = Server.listen(PORT, () => {
       console.log(
         `Servidor http escuchando en el puerto ${
           connectedServer.address().port
