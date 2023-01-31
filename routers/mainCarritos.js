@@ -106,5 +106,5 @@ router.get("/idCarrito/:id_user", async (req, res) => {
     res.send({ error: true });
   }
 });
-module.exports = {router};
+module.exports = router;
 
