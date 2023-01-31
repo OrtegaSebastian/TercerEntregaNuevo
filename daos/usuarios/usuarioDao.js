@@ -1,8 +1,8 @@
-const { contenedorUsuariosMongo } = require("../../contenedores/mongoContain");
+const { ContenedorMongoDb } = require("../../contenedores/mongoContain");
 const mongoose = require ('mongoose')
 
 
-class usuariosDAODb extends contenedorUsuariosMongo {
+class usuariosDAODb extends ContenedorMongoDb {
     constructor() {
     // *super 
     super("Users", {

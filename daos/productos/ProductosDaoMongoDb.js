@@ -1,6 +1,6 @@
-const  {contenedorProductosMongo}  = require("../../contenedores/mongoContain");
+const  {ContenedorMongoDb}  = require("../../contenedores/mongoContain");
 
-class DAOProdMongo extends contenedorProductosMongo {
+class DAOProdMongo extends ContenedorMongoDb {
   constructor() {
     // *super = padre/mongoProducto
     super("productos", {

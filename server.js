@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
-const {Server } = require('http')
+let {Server } = require('http')
 
 const session = require('express-session')
 const cluster = require('cluster')

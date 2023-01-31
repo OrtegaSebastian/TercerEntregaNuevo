@@ -107,4 +107,4 @@ router.get("/idCarrito/:id_user", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

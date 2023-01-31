@@ -2,8 +2,29 @@ const Config = require("../src/config");
 const mongoose = require("mongoose");
 const logger = require('../config/log4js')
 
-mongoose.set('strictQuery',true)
-await mongoose.connect(Config.mongodb.cnxStr)
+// mongoose.set('strictQuery',true)
+// mongoose.connect(Config.mongodb.cnxStr)
+
+// let baseDeDatosConectada = false;
+
+function conectarDB(url, cb) {
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
+    if(!err) {
+    baseDeDatosConectada = true;
+    }
+    if(cb != null) {
+    cb(err);
+    }
+});
+}
+
+
+
+
+
+
+
+
 
 
 class ContenedorMongoDb {
@@ -72,7 +93,9 @@ class ContenedorMongoDb {
     }
   }
 }
-module.exports = {ContenedorMongoDb};
+module.exports = {
+conectarDB,ContenedorMongoDb
+}
 
 
 

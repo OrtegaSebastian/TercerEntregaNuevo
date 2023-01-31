@@ -2,7 +2,7 @@ let CarritoDaoMongoDb = require('./carritos/CarritosDaoMongo')
 let DAOProdMongo = require('./productos/ProductosDaoMongoDb')
 let usuariosDAODb = require("./usuarios/usuarioDao")
 
-const dotenv = requier('dotenv')
+const dotenv = require('dotenv')
 dotenv.config()
 
 const TIPO = process.env.TIPO;

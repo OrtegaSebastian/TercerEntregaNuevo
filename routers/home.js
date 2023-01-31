@@ -23,7 +23,8 @@ const homeRouter = new Router();
 
 //MULTER ----------------------------
 
-const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
+const CURRENT_DIR = __dirname
+// const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
 const MIMETYPES = ["image/jpg", "image/png"];
 
 const storage = multer.diskStorage({
@@ -209,10 +210,9 @@ homeRouter.get("/idUsuario", (req, res) => {
   res.send(idUsuario);
 });
 
+module.exports= homeRouter
 
-module.exports = {
-homeRouter
-}
+
 
 
 
