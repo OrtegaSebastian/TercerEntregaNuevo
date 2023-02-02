@@ -1,11 +1,7 @@
-const Config = require("../src/config");
 const mongoose = require("mongoose");
 const logger = require('../config/log4js')
 
-// mongoose.set('strictQuery',true)
-// mongoose.connect(Config.mongodb.cnxStr)
 
-// let baseDeDatosConectada = false;
 
 function conectarDB(url, cb) {
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
@@ -17,13 +13,6 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err =
     }
 });
 }
-
-
-
-
-
-
-
 
 
 

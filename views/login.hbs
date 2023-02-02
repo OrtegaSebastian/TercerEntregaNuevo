@@ -37,20 +37,6 @@
         Registro</button>
   </div>
 
-  <script>
-  const form = document.querySelector("#form");
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    fetch("/signup", {
-      method: "POST",
-      body: formData,
-    });
-    form.reset();
-  });
-
-  </script>
-
 
 
 </body>

@@ -196,7 +196,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.render("/login", { nombre: nombre });
+    res.render("/login.hbs", { nombre: nombre });
   });
 });
 
