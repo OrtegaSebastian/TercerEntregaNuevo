@@ -148,6 +148,7 @@ router.post(
   upload.single("myFile"),
   passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
   (req, res, next) => {
+    req.session.user= req.body.username;
     res.render(path.join(process.cwd(), "/views/signup"), {
       okRegister: "¡Usuario registrado con éxito! Puede iniciar sesión",
     });
@@ -158,6 +159,7 @@ router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/errorLogin" }),
   (req, res) => {
+    req.session.user = req.body.username
     res.redirect("/");
   }
 );
