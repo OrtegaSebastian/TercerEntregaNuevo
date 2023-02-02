@@ -22,12 +22,11 @@ const {Users} = require('../config/mongoconf')
 
 const {fileURLToPath} =require ('url')
 
-// const homeRouter = new Router();
+
 
 //MULTER ----------------------------
 
 const CURRENT_DIR = __dirname
-// const CURRENT_DIR = dirname(fileURLToPath(import.meta.url));
 const MIMETYPES = ["image/jpg", "image/png"];
 
 const storage = multer.diskStorage({
@@ -57,9 +56,9 @@ passport.use(
     const { edad } = req.body;
     const { codigo } = req.body;
     const { telefono } = req.body;
-    const { filename } = req.file;
+    // const { filename } = req.file;
     const tel = `${codigo}${telefono}`;
-    const imagen = `${host}:${port}/images/${filename}`;
+    // const imagen = `${host}:${port}/images/${filename}`;
     Users.findOne({ username }, (err, user) => {
       if (user) return done(null, false);
       Users.create(
