@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // Realizar una petición GET para obtener una lista de usuarios
-axios.get('http://localhost:8080/sesiones')
+axios.get('http://localhost/sesiones')
   .then(function (response) {
     console.log(response.data);
   })
@@ -10,7 +10,7 @@ axios.get('http://localhost:8080/sesiones')
   });
 
 // Realizar una petición POST para crear un nuevo usuario
-axios.post('http://localhost:8080/sesiones', {
+axios.post('http://localhost/sesiones', {
     username: 'sebas123',
     password: 'password1234',
     nombre: 'sebastian',
@@ -27,7 +27,7 @@ axios.post('http://localhost:8080/sesiones', {
   });
 
 // Realizar una petición PUT para actualizar un usuario existente
-axios.put('http://localhost:8080/sesiones/1', {
+axios.put('http://localhost/sesiones/1', {
     username: 'sebas123',
     password: 'password456',
     nombre: 'John',
@@ -44,7 +44,7 @@ axios.put('http://localhost:8080/sesiones/1', {
   });
 
 // Realizar una petición DELETE para eliminar un usuario
-axios.delete('http://localhost:8080/sesiones/1')
+axios.delete('http://localhost/sesiones/1')
   .then(function (response) {
     console.log(response.data);
   })
