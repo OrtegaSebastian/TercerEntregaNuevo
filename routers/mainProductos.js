@@ -1,22 +1,32 @@
-const {Router} = require('express')
+const { Router } = require("express");
+const jwt = require("jsonwebtoken");
+const { ProductosDao } = require("../daos/factory");
 
-const {ProductosDao} = require('../daos/factory')
-
+require('dotenv').config();
+const secretKey = process.env.PASS_SEC;
 
 const router = Router();
 const productosEmpresa = ProductosDao;
 
-const admin = true;
-
 const authAdmin = (req, res, next) => {
-  if (admin) {
+  const token = req.header("Authorization");
+  if (!token) {
+    return res.status(401).json({
+      error: "No token provided",
+    });
+  }
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    if (decoded.role !== "admin") {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+    req.user = decoded;
     next();
-  } else {
-    const route = req.originalUrl;
-    const method = req.method;
-    res.status(401).json({
-      error: -2,
-      descripcion: `Ruta: ${route} Método: ${method}  No autorizada`,
+  } catch (error) {
+    return res.status(401).json({
+      error: "Invalid token",
     });
   }
 };
@@ -24,9 +34,15 @@ const authAdmin = (req, res, next) => {
 router.get("/", async (req, res) => {
   try {
     const productos = await productosEmpresa.getAll();
-    res.send(productos);
+    res.json({
+      success: true,
+      data: productos,
+    });
   } catch (error) {
-    res.send({ error: true });
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 });
 
@@ -35,12 +51,21 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const encontrado = await productosEmpresa.getById(id);
     if (encontrado) {
-      res.send(encontrado);
+      res.json({
+        success: true,
+        data: encontrado,
+      });
     } else {
-      res.send({ error: "Producto no encontrado" });
+      res.status(404).json({
+        success: false,
+        error: "Product not found",
+      });
     }
   } catch (error) {
-    res.send({ error: true });
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 });
 
@@ -57,49 +82,55 @@ router.post("/", authAdmin, async (req, res) => {
       precio,
       stock,
     });
-    res.send(`Se agregó el producto: ${nombre} con ID ${id}`);
+    res.json({
+      success: true,
+      message: `Product added: ${nombre} with ID ${id}`,
+    });
   } catch (error) {
-    res.send({ error: true });
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 });
 
 router.put("/:id", authAdmin, async (req, res) => {
   try {
-    const { id } = req.params;
-    const { timestamp, nombre, descripcion, codigo, thumbnail, precio, stock } =
-      req.body;
-    const encontrado = await productosEmpresa.changeById({
-      id,
-      timestamp,
-      nombre,
-      descripcion,
-      codigo,
-      thumbnail,
-      precio,
-      stock,
-    });
-    if (encontrado) {
-      res.send("Producto Modificado");
-    } else {
-      res.send({ error: "Producto no encontrado" });
-    }
-  } catch (error) {
-    res.send({ error: true });
+  const { id } = req.params;
+  const { timestamp, nombre, descripcion, codigo, thumbnail, precio, stock } =
+  req.body;
+  const encontrado = await productosEmpresa.changeById({
+  id,
+  timestamp,
+  nombre,
+  descripcion,
+  codigo,
+  thumbnail,
+  precio,
+  stock,
+  });
+  if (encontrado) {
+  res.status(200).send("Producto Modificado");
+  } else {
+  res.status(404).send({ error: "Producto no encontrado" });
   }
-});
-
-router.delete("/:id", authAdmin, async (req, res) => {
+  } catch (error) {
+  res.status(500).send({ error: true });
+  }
+  });
+  
+  router.delete("/:id", authAdmin, async (req, res) => {
   try {
-    const { id } = req.params;
-    const encontrado = await productosEmpresa.deleteById(id);
-    if (encontrado) {
-      res.send("Producto Eliminado");
-    } else {
-      res.send({ error: "producto no encontrado" });
-    }
-  } catch (error) {
-    res.send({ error: true });
+  const { id } = req.params;
+  const encontrado = await productosEmpresa.deleteById(id);
+  if (encontrado) {
+  res.status(200).send("Producto Eliminado");
+  } else {
+  res.status(404).send({ error: "producto no encontrado" });
   }
-});
+  } catch (error) {
+  res.status(500).send({ error: true });
+  }
+  });
 
 module.exports = router;

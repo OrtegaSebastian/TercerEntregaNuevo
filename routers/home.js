@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router();
+const CryptoJS = require("crypto-js");
+const jwt = require("jsonwebtoken");
 
 // const {Router}= require('express')
 
@@ -22,34 +24,9 @@ const {Users} = require('../config/mongoconf')
 
 const {fileURLToPath} =require ('url')
 
-
-
-//MULTER ----------------------------
-
-const CURRENT_DIR = __dirname
-const MIMETYPES = ["image/jpg", "image/png"];
-
-const storage = multer.diskStorage({
-  destination: join(CURRENT_DIR, "../public/images"),
-  filename: (req, file, cb) => {
-    const fileExtension = extname(file.originalname);
-    const fileName = file.originalname.split(fileExtension)[0];
-    cb(null, `${fileName}-${Date.now()}${fileExtension}`);
-  },
-  fileFilter: (req, file, cb) => {
-    if (MIMETYPES.includes(file.mimetype)) cb(null, true);
-    else cb(new Error(`Solo permitidos los archivos ${MIMETYPES.join(" ")}`));
-  },
-  limits: {
-    fieldSize: 10000000,
-  },
-});
-
-const upload = multer({ storage });
-
 // ESTRATEGIAS -------------
 passport.use(
-  "signup",
+  "registro",
   new Strategy({ passReqToCallback: true }, (req, username, password, done) => {
     const { nombre } = req.body;
     const { direccion } = req.body;
@@ -59,36 +36,40 @@ passport.use(
     // const { filename } = req.file;
     const tel = `${codigo}${telefono}`;
     // const imagen = `${host}:${port}/images/${filename}`;
-    Users.findOne({ username }, (err, user) => {
+    try {
+      const user =  Users.findOne({ username });
       if (user) return done(null, false);
-      Users.create(
-        {
-          username,
-          password: hasPassword(password),
-          nombre,
-          direccion,
-          edad,
-          tel,
-          imagen,
-        },
-        (err, user) => {
-          if (err) return done(err);
-          return done(null, user);
-        }
-      );
-    });
-  })
-);
+
+      const hashedPassword =  hasPassword(password);
+      const newUser =  Users.create({
+        username,
+        password: hashedPassword,
+        nombre,
+        direccion,
+        edad,
+        tel,
+      });
+      return done(null, newUser);
+    } catch (err) {
+      return done(err);
+    }
+  }
+))
 
 passport.use(
   "login",
-  new Strategy({}, (username, password, done) => {
-    Users.findOne({ username }, (err, user) => {
-      if (err) return done(err);
+  new Strategy({}, async (username, password, done) => {
+    try {
+      const user = await Users.findOne({ username });
       if (!user) return done(null, false);
-      if (!validatePass(password, user.password)) return done(null, false);
+
+      const isValid = await validatePass(password, user.password);
+      if (!isValid) return done(null, false);
+
       return done(null, user);
-    });
+    } catch (err) {
+      return done(err);
+    }
   })
 );
 
@@ -101,14 +82,13 @@ passport.deserializeUser((id, done) => {
 });
 
 // ENCRIPTACIÓN ----------------
-const hasPassword = (pass) => {
-  // ocultar
-  return bcrypt.hashSync(pass, bcrypt.genSaltSync(10), null);
+const hasPassword = async (pass) => {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(pass, salt);
 };
 
-const validatePass = (pass, hashedPass) => {
-  // validar
-  return bcrypt.compareSync(pass, hashedPass);
+const validatePass =async (pass, hashedPass) => {
+  return bcrypt.compare(pass, hashedPass);
 };
 
 //AUTENTICACIÓN ------------------
@@ -137,32 +117,121 @@ router.get("/login", (req, res) => {
   }
 });
 
-router.get("/signup", (req, res) => {
-  res.render(path.join(process.cwd(), "/views/signup.hbs"), {
+router.get("/registro", (req, res) => {
+  res.render(path.join(process.cwd(), "/views/registro.hbs"), {
     okRegister: " ",
   });
 });
 
-router.post(
-  "/signup",
-  upload.single("myFile"),
-  passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
-  (req, res, next) => {
-    req.session.user= req.body.username;
-    res.render(path.join(process.cwd(), "/views/signup"), {
-      okRegister: "¡Usuario registrado con éxito! Puede iniciar sesión",
-    });
-  }
-);
+
+/// anterior//////////////////////////////////////////////////////
+
+
+// router.post(
+//   "/signup",
+//   upload.single("myFile"),
+//   passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
+//   (req, res, next) => {
+//     req.session.user= req.body.username;
+//     res.render(path.join(process.cwd(), "/views/signup"), {
+//       okRegister: "¡Usuario registrado con éxito! Puede iniciar sesión",
+//     });
+//   }
+// );
+
+// router.post(
+//   "/login",
+//   passport.authenticate("login", { failureRedirect: "/errorLogin" }),
+//   (req, res) => {
+//     req.session.user = req.body.username
+//     res.redirect("/");
+//   }
+// );
+
+////////////////////////////////////////////////////////////////////
+router.post("/registro", async (req, res, next) => {
+  try {
+  const { nombre } = req.body;
+  const { direccion } = req.body;
+  const { edad } = req.body;
+  const { codigo } = req.body;
+  const { telefono } = req.body;
+  const { username } = req.body;
+  const { password } = req.body;
+  const tel = `${codigo}${telefono}`;
+
+const user = await Users.findOne({ username });
+if (user) return res.send({ error: "El nombre de usuario ya existe" });
+
+const hashedPassword = await hasPassword(password);
+const newUser = await Users.create({
+  username,
+  password: hashedPassword,
+  nombre,
+  direccion,
+  edad,
+  tel,
+});
+req.login(newUser, (err) => {
+  if (err) return next(err);
+  return res.render(path.join(process.cwd(), "/views/signup.hbs"), {
+    okRegister: "¡Usuario registrado con éxito!",
+  });
+});
+} catch (err) {
+next(err);
+}
+});
 
 router.post(
   "/login",
-  passport.authenticate("login", { failureRedirect: "/errorLogin" }),
-  (req, res) => {
-    req.session.user = req.body.username
-    res.redirect("/");
-  }
-);
+  passport.authenticate("login", {
+  successRedirect: "/",
+  failureRedirect: "/errorLogin",
+  })
+  );
+
+// router.post('/login', async (req, res) => {
+//   try{
+//       const user = await Users.findOne(
+//           {
+//               username: req.body.user_name
+//           }
+//       );
+
+//       !user && res.status(401).json("Wrong User Name");
+
+//       const hashedPassword = CryptoJS.AES.decrypt(
+//           user.password,
+//           process.env.PASS_SEC
+//       );
+
+
+//       const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+
+//       const inputPassword = req.body.password;
+      
+//       originalPassword != inputPassword && 
+//           res.status(401).json("Wrong Password");
+
+//       const accessToken = jwt.sign(
+//       {
+//           id: user._id,
+//           isAdmin: user.isAdmin,
+//       },
+//       process.env.JWT_SEC,
+//           {expiresIn:"3d"}
+//       );
+
+//       const { password, ...others } = user._doc;  
+//       res.status(200).json({...others, accessToken});
+
+//   }catch(err){
+//       res.status(500).json(err);
+//   }
+
+// });
+
 
 router.get("/datos", authMw, (req, res) => {
   res.send({ data: req.user });
@@ -170,8 +239,9 @@ router.get("/datos", authMw, (req, res) => {
 
 router.get("/carrito", authMw, (req, res) => {
   const nombre = req.user.nombre;
-  res.render("/carrito.hbs", { nombre: nombre });
-});
+  // res.render("/.hbs", { nombre: nombre });
+  return res.render(path.join(process.cwd(), "/views/carrito.hbs"))})
+
 
 router.get("/cuenta", authMw, (req, res) => {
   const nombre = req.user.nombre;
@@ -197,7 +267,8 @@ router.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.render("/login.hbs", { nombre: nombre });
+    return res.render(path.join(process.cwd(), "/views/login.hbs"), {     
+    });
   });
 });
 
@@ -205,8 +276,8 @@ router.get("/errorLogin", (req, res) => {
   res.render(path.join(process.cwd(), "./views/login-error"));
 });
 
-router.get("/errorRegister", (req, res) => {
-  res.render(path.join(process.cwd(), "./views/signup-error"));
+router.get("/errorRegistro", (req, res) => {
+  res.render(path.join(process.cwd(), "./views/registro-error"));
 });
 
 router.get("/idUsuario", (req, res) => {
@@ -218,5 +289,27 @@ module.exports = {router};
 
 
 
+// VERRRRRRRRRRRRRRRRRRRRRR LUEGO
 
+// //MULTER ----------------------------
 
+// const CURRENT_DIR = __dirname
+// const MIMETYPES = ["image/jpg", "image/png"];
+
+// const storage = multer.diskStorage({
+//   destination: join(CURRENT_DIR, "../public/images"),
+//   filename: (req, file, cb) => {
+//     const fileExtension = extname(file.originalname);
+//     const fileName = file.originalname.split(fileExtension)[0];
+//     cb(null, `${fileName}-${Date.now()}${fileExtension}`);
+//   },
+//   fileFilter: (req, file, cb) => {
+//     if (MIMETYPES.includes(file.mimetype)) cb(null, true);
+//     else cb(new Error(`Solo permitidos los archivos ${MIMETYPES.join(" ")}`));
+//   },
+//   limits: {
+//     fieldSize: 10000000,
+//   },
+// });
+
+// const upload = multer({ storage });

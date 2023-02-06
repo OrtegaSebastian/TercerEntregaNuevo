@@ -50,7 +50,7 @@ const renderImage = (formData) => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
-  fetch("/signup", {
+  fetch("/registro", {
     method: "POST",
     body: formData,
   });
