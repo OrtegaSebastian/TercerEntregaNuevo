@@ -45,7 +45,7 @@ app.use(
   session({
     store: MongoStore.create({
       mongoUrl:
-      "mongodb+srv://sebasindahouse:Mosi0310@cluster0.epscnqt.mongodb.net/shop",
+      "mongodb+srv://sebasindahouse:Mosi0310@cluster0.epscnqt.mongodb.net/sesiones",
       //ttl: 600000
     }),
 

@@ -174,7 +174,7 @@ const newUser = await Users.create({
 });
 req.login(newUser, (err) => {
   if (err) return next(err);
-  return res.render(path.join(process.cwd(), "/views/signup.hbs"), {
+  return res.render(path.join(process.cwd(), "/views/registro.hbs"), {
     okRegister: "¡Usuario registrado con éxito!",
   });
 });
@@ -191,7 +191,6 @@ router.post(
   })
   );
 
-// router.post('/login', async (req, res) => {
 //   try{
 //       const user = await Users.findOne(
 //           {
@@ -286,30 +285,3 @@ router.get("/idUsuario", (req, res) => {
 });
 
 module.exports = {router};
-
-
-
-// VERRRRRRRRRRRRRRRRRRRRRR LUEGO
-
-// //MULTER ----------------------------
-
-// const CURRENT_DIR = __dirname
-// const MIMETYPES = ["image/jpg", "image/png"];
-
-// const storage = multer.diskStorage({
-//   destination: join(CURRENT_DIR, "../public/images"),
-//   filename: (req, file, cb) => {
-//     const fileExtension = extname(file.originalname);
-//     const fileName = file.originalname.split(fileExtension)[0];
-//     cb(null, `${fileName}-${Date.now()}${fileExtension}`);
-//   },
-//   fileFilter: (req, file, cb) => {
-//     if (MIMETYPES.includes(file.mimetype)) cb(null, true);
-//     else cb(new Error(`Solo permitidos los archivos ${MIMETYPES.join(" ")}`));
-//   },
-//   limits: {
-//     fieldSize: 10000000,
-//   },
-// });
-
-// const upload = multer({ storage });
