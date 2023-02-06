@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router();
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
-
-// const {Router}= require('express')
+const ContenedorMongoDb = require("../contenedores/mongoContain")
 
 const path = require('path')
 const {dirname, extname, join} = require('path')
@@ -123,41 +122,18 @@ router.get("/registro", (req, res) => {
   });
 });
 
-
-/// anterior//////////////////////////////////////////////////////
-
-
-// router.post(
-//   "/signup",
-//   upload.single("myFile"),
-//   passport.authenticate("signup", { failureRedirect: "/errorRegister" }),
-//   (req, res, next) => {
-//     req.session.user= req.body.username;
-//     res.render(path.join(process.cwd(), "/views/signup"), {
-//       okRegister: "¡Usuario registrado con éxito! Puede iniciar sesión",
-//     });
-//   }
-// );
-
-// router.post(
-//   "/login",
-//   passport.authenticate("login", { failureRedirect: "/errorLogin" }),
-//   (req, res) => {
-//     req.session.user = req.body.username
-//     res.redirect("/");
-//   }
-// );
-
-////////////////////////////////////////////////////////////////////
 router.post("/registro", async (req, res, next) => {
   try {
   const { nombre } = req.body;
+  const { apellido } = req.body;
   const { direccion } = req.body;
+  const { correo } = req.body;
   const { edad } = req.body;
   const { codigo } = req.body;
   const { telefono } = req.body;
   const { username } = req.body;
   const { password } = req.body;
+  const { imgUrl } = req.body;
   const tel = `${codigo}${telefono}`;
 
 const user = await Users.findOne({ username });
@@ -168,9 +144,13 @@ const newUser = await Users.create({
   username,
   password: hashedPassword,
   nombre,
+  apellido,
   direccion,
+  correo,
+  telefono,
   edad,
   tel,
+  imgUrl
 });
 req.login(newUser, (err) => {
   if (err) return next(err);
@@ -191,45 +171,6 @@ router.post(
   })
   );
 
-//   try{
-//       const user = await Users.findOne(
-//           {
-//               username: req.body.user_name
-//           }
-//       );
-
-//       !user && res.status(401).json("Wrong User Name");
-
-//       const hashedPassword = CryptoJS.AES.decrypt(
-//           user.password,
-//           process.env.PASS_SEC
-//       );
-
-
-//       const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-
-//       const inputPassword = req.body.password;
-      
-//       originalPassword != inputPassword && 
-//           res.status(401).json("Wrong Password");
-
-//       const accessToken = jwt.sign(
-//       {
-//           id: user._id,
-//           isAdmin: user.isAdmin,
-//       },
-//       process.env.JWT_SEC,
-//           {expiresIn:"3d"}
-//       );
-
-//       const { password, ...others } = user._doc;  
-//       res.status(200).json({...others, accessToken});
-
-//   }catch(err){
-//       res.status(500).json(err);
-//   }
-
-// });
 
 
 router.get("/datos", authMw, (req, res) => {
@@ -241,6 +182,17 @@ router.get("/carrito", authMw, (req, res) => {
   // res.render("/.hbs", { nombre: nombre });
   return res.render(path.join(process.cwd(), "/views/carrito.hbs"))})
 
+router.get("/productos", authMw, (req, res) => {
+  ContenedorMongoDb.find({})
+  .then((productos) => {
+  res.render(path.join(process.cwd(), "/views/productos.hbs"), {
+  productos,
+  });
+  })
+  .catch((error) => {
+  next(error);
+  });
+  });
 
 router.get("/cuenta", authMw, (req, res) => {
   const nombre = req.user.nombre;
@@ -250,7 +202,8 @@ router.get("/cuenta", authMw, (req, res) => {
   const correo = req.user.username;
   const telefono = req.user.telefono;
 
-  res.render("/cuenta.hbs", { nombre,
+  
+  return res.render(path.join(process.cwd(), "/views/cuenta.hbs"), { nombre,
     imagen,
     nombre: nombre,
     direccion,
@@ -261,13 +214,14 @@ router.get("/cuenta", authMw, (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  const nombre = req.user.name;
+  if (req.user) {
+    const nombre = req.user.nombre;
+  }
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    return res.render(path.join(process.cwd(), "/views/login.hbs"), {     
-    });
+    return res.redirect("/");
   });
 });
 

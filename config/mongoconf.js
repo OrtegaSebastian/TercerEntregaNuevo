@@ -26,10 +26,12 @@ const Users = mongoose.model("users", {
   username: String,
   password: String,
   nombre: String,
+  apellido:String,//1
+  correo:String,//2
   direccion: String,
   edad: String,
-  imgUrl: String,
-  telefono: String,
+  imgUrl: String,//3
+  telefono: String,//4
 });
 
 module.exports={Users,DBConnect}
