@@ -195,6 +195,7 @@ router.get("/productos", authMw, (req, res) => {
   });
 
 router.get("/cuenta", authMw, (req, res) => {
+  const username = req.user.username
   const nombre = req.user.nombre;
   const imagen = req.user.imgUrl;
   const direccion = req.user.direccion;
@@ -204,6 +205,7 @@ router.get("/cuenta", authMw, (req, res) => {
 
   
   return res.render(path.join(process.cwd(), "/views/cuenta.hbs"), { nombre,
+    username,
     imagen,
     nombre: nombre,
     direccion,

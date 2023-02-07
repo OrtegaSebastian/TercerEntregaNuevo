@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const jwt = require("jsonwebtoken");
-const { ProductosDao } = require("../daos/factory");
+const { DAOProdMongo } = require("../daos/factory");
 
 require('dotenv').config();
 const secretKey = process.env.PASS_SEC;
 
 const router = Router();
-const productosEmpresa = ProductosDao;
+const productosEmpresa = DAOProdMongo;
 
 const authAdmin = (req, res, next) => {
   const token = req.header("Authorization");

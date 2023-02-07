@@ -22,7 +22,7 @@ integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+f
 <div class="container w-75 p-2 border mt-3">
     <li class="list-group-item d-flex justify-content-between align-items-center">
     <div>
-        <h2>Bienvenido, {nombre}
+        <h2>Bienvenido, {{nombre}}
         </h2>
     </div>
     <div>
@@ -49,39 +49,39 @@ integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+f
 </div>
 <div class="container w-75 p-3 border mt-2">
     <h3 class="text-white bg-dark">Mi Cuenta</h3>
-    {{!-- <div>
-    <img width="200" src="<{imagen}>" alt="Foto / Avatar">
-    </div> --}}
+    <div width="200" >
+    {{imagen}}
+    </div>
     <ul>
     <li>
         <strong>Nombre:</strong>
         <p>
-        {nombre}          
+        {{nombre}}         
         </p>
     </li>
     <li>
         <strong>Direccion:</strong>
         <p>
-        {direccion}
+        {{direccion}}
         
         </p>
     </li>
     <li>
         <strong>Edad:</strong>
         <p>
-            {edad}           
+            {{edad}}         
         </p>
     </li>
     <li>
         <strong>Correo:</strong>
         <p>
-            {correo}            
+            {{correo}}      
         </p>
     </li>
     <li>
         <strong>Telefono:</strong>
         <p>
-                {telefono}  
+                {{telefono}}
         
         </p>
     </li>
