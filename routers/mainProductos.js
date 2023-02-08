@@ -1,12 +1,15 @@
 const { Router } = require("express");
 const jwt = require("jsonwebtoken");
-const { DAOProdMongo } = require("../daos/factory");
+
+const {Productos} = require('../config/mongoconf')
+const authMw = require ('./home')
+
 
 require('dotenv').config();
 const secretKey = process.env.PASS_SEC;
 
 const router = Router();
-const productosEmpresa = DAOProdMongo;
+const productosEmpresa = Productos;
 
 const authAdmin = (req, res, next) => {
   const token = req.header("Authorization");
@@ -69,6 +72,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+ 
+
 router.post("/", authAdmin, async (req, res) => {
   const timestamp = new Date();
   try {
@@ -119,6 +124,21 @@ router.put("/:id", authAdmin, async (req, res) => {
   }
   });
   
+
+  
+router.get("/productos", authMw, (req, res) => {
+  Productos.find({})
+  .then((productos) => {
+  res.render(path.join(process.cwd(), "/views/productos.hbs"), {
+  productos,
+  });
+  })
+  .catch((error) => {
+  next(error);
+  });
+  });
+
+
   router.delete("/:id", authAdmin, async (req, res) => {
   try {
   const { id } = req.params;

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
-const ContenedorMongoDb = require("../contenedores/mongoContain")
+// const ContenedorMongoDb = require("../contenedores/mongoContain")
 
 const path = require('path')
 const {dirname, extname, join} = require('path')
@@ -182,17 +182,6 @@ router.get("/carrito", authMw, (req, res) => {
   // res.render("/.hbs", { nombre: nombre });
   return res.render(path.join(process.cwd(), "/views/carrito.hbs"))})
 
-router.get("/productos", authMw, (req, res) => {
-  ContenedorMongoDb.find({})
-  .then((productos) => {
-  res.render(path.join(process.cwd(), "/views/productos.hbs"), {
-  productos,
-  });
-  })
-  .catch((error) => {
-  next(error);
-  });
-  });
 
 router.get("/cuenta", authMw, (req, res) => {
   const username = req.user.username
@@ -240,4 +229,4 @@ router.get("/idUsuario", (req, res) => {
   res.send(idUsuario);
 });
 
-module.exports = {router};
+module.exports = {router,authMw};

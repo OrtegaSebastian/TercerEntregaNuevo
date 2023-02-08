@@ -2,16 +2,7 @@ const { ContenedorMongoDb } = require("../../contenedores/mongoContain");
 const {Schema} = require('mongoose')
 const logger = require('../../config/log4js')
 
-const productos = new Schema({
-  id: { type: String, required: true },
-  timestamp: { type: Date, required: true },
-  nombre: { type: String, required: true },
-  descripcion: { type: String, required: true },
-  codigo: { type: Number, required: true },
-  thumbnail: { type: String, required: true },
-  precio: { type: Number, required: true },
-  stock: { type: Number, required: true },
-});
+const {Productos} = require('../../config/mongoconf')
 
 
 class CarritoDaoMongoDb extends ContenedorMongoDb {
@@ -82,25 +73,4 @@ module.exports = CarritoDaoMongoDb;
 
 
 
-
-
-
-
-
-// class DAOcarroMongo extends contenedorCarritoMongo {
-//   constructor() {
-//     // *super = padre/mongocarrito
-//     super("collecionCarrito", {
-//       nombre: { type: String, required: true },
-//       descripcion: { type: String, required: true },
-//       codigo: { type: String, required: true },
-//       foto: { type: String, required: true },
-//       precio: { type: Number, required: true },
-//       // TODO: revisar mongoose doc, para cambiar el timestamp
-//       //   TODO: timestamp: true,
-//     });
-//   }
-// }
-
-// module.exports = DAOcarroMongo;
 

@@ -47,23 +47,16 @@
     <hr>
     <div class="row mt-3" id="items"></div>
   </section>
+  <form>
+        <h3  class="col-10">Productos disponibles:</h3>
+        <select  class="my-2" id="seleccionProducto" onchange="getComboA(this)">
+          <optgroup label = "Elija un producto">
+        </select>
+        <input id="productoComprado" type="text" placeholder="Nombre Producto" class= "form-control my-2" readonly>
+        <input id="cantidadComprada" type="number" placeholder="Cantidad" class= "form-control my-2">
+        <button id="boton" class="btn btn-success" type="reset" onclick="cargarCarrito();">Agregar</button>
+  </form>
 
-  <template id="template-card">
-    <div class="col-12 mb-2 col-md-4">
-      <div class="card">
-        <img src="" class="card-img-top" alt="Producto">
-        <div class="card-body">
-          <h5>nombre</h5>
-          <p class="descripcion"></p>
-          <p class="codigo">Código: <span></span></p>
-          <p class="time">Date: <span></span></p>
-          <h6 class="precio">$ <span></span></h6>
-          <p class="stock">Stock: <span></span></p>
-          <button class="btn btn-dark">Agregar Producto</button>
-        </div>
-      </div>
-    </div>
-  </template>
 
  <script src="./scripts/productos.js"></script>
 </body>

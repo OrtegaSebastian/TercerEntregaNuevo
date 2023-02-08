@@ -14,8 +14,6 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err =
 });
 }
 
-
-
 class ContenedorMongoDb {
   constructor(coleccion, esquema) {
     this.col = mongoose.model(coleccion, esquema);

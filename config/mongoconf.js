@@ -26,12 +26,40 @@ const Users = mongoose.model("users", {
   username: String,
   password: String,
   nombre: String,
-  apellido:String,//1
-  correo:String,//2
+  apellido:String,
+  correo:String,
   direccion: String,
   edad: String,
-  imgUrl: String,//3
-  telefono: String,//4
+  imgUrl: String,
+  telefono: String,
 });
 
-module.exports={Users,DBConnect}
+const Productos = mongoose.model("productos", {
+  id: String,
+  nombre: String,
+  descripcion: String,
+  codigo:String,
+  thumbnail:String,
+  precio: String, 
+  imgUrl: String,
+  stock: String,
+});
+
+
+const Carrito = mongoose.model("Carrito", {
+  timestamp: Date,
+  nombre: String,
+  descripcion: String,
+  codigo:String,
+  thumbnail:String,
+  precio: String, 
+  imgUrl: String,
+  cantidad: String,
+});
+  
+  
+
+
+
+
+module.exports={Users,Productos,Carrito,DBConnect}
