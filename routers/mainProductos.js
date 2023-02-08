@@ -9,7 +9,7 @@ require('dotenv').config();
 const secretKey = process.env.PASS_SEC;
 
 const router = Router();
-const productosEmpresa = Productos;
+
 
 const authAdmin = (req, res, next) => {
   const token = req.header("Authorization");
@@ -36,7 +36,7 @@ const authAdmin = (req, res, next) => {
 
 router.get("/", async (req, res) => {
   try {
-    const productos = await productosEmpresa.getAll();
+    const productos = await Productos.getAll();
     res.json({
       success: true,
       data: productos,
@@ -52,7 +52,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const encontrado = await productosEmpresa.getById(id);
+    const encontrado = await Productos.getById(id);
     if (encontrado) {
       res.json({
         success: true,
@@ -78,7 +78,7 @@ router.post("/", authAdmin, async (req, res) => {
   const timestamp = new Date();
   try {
     const { nombre, descripcion, codigo, thumbnail, precio, stock } = req.body;
-    const id = await productosEmpresa.save({
+    const id = await Productos.save({
       timestamp,
       nombre,
       descripcion,
@@ -104,7 +104,7 @@ router.put("/:id", authAdmin, async (req, res) => {
   const { id } = req.params;
   const { timestamp, nombre, descripcion, codigo, thumbnail, precio, stock } =
   req.body;
-  const encontrado = await productosEmpresa.changeById({
+  const encontrado = await Productos.changeById({
   id,
   timestamp,
   nombre,
@@ -125,24 +125,26 @@ router.put("/:id", authAdmin, async (req, res) => {
   });
   
 
-  
-router.get("/productos", authMw, (req, res) => {
-  Productos.find({})
-  .then((productos) => {
-  res.render(path.join(process.cwd(), "/views/productos.hbs"), {
-  productos,
-  });
-  })
-  .catch((error) => {
-  next(error);
-  });
-  });
+  router.get("/", async function (req, res) {
+    try {
+    const productos = await Productos.getAll();
+    res.json({
+    success: true,
+    data: productos,
+    });
+    } catch (error) {
+    res.status(500).json({
+    success: false,
+    error: error.message,
+    });
+    }
+    });
 
 
   router.delete("/:id", authAdmin, async (req, res) => {
   try {
   const { id } = req.params;
-  const encontrado = await productosEmpresa.deleteById(id);
+  const encontrado = await Productos.deleteById(id);
   if (encontrado) {
   res.status(200).send("Producto Eliminado");
   } else {

@@ -13,6 +13,7 @@ class DAOProdMongo extends ContenedorMongoDb {
       stock: { type: Number, required: true }, 
     });
   }
+  
 }
 
 

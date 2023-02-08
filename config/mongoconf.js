@@ -34,6 +34,7 @@ const Users = mongoose.model("users", {
   telefono: String,
 });
 
+
 const Productos = mongoose.model("productos", {
   id: String,
   nombre: String,
