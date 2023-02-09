@@ -46,7 +46,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+
+router.get("/:id",  async (req, res) => {
   try {
     const { id } = req.params;
     const encontrado = await Productos.findById(id);
@@ -74,19 +75,20 @@ router.get("/:id", async (req, res) => {
 router.post("/", authAdmin, async (req, res) => {
   const timestamp = new Date();
   try {
-    const { nombre, descripcion, codigo, thumbnail, precio, stock } = req.body;
-    const id = await Productos.save({
+    const { nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
+    const producto = new Productos({
       timestamp,
       nombre,
       descripcion,
       codigo,
-      thumbnail,
+      imgUrl,
       precio,
       stock,
     });
+    const savedProduct = await producto.save();
     res.json({
       success: true,
-      message: `Product added: ${nombre} with ID ${id}`,
+      message: `Product added: ${nombre} with ID ${savedProduct._id}`,
     });
   } catch (error) {
     res.status(500).json({
@@ -98,58 +100,55 @@ router.post("/", authAdmin, async (req, res) => {
 
 router.put("/:id", authAdmin, async (req, res) => {
   try {
-  const { id } = req.params;
-  const { timestamp, nombre, descripcion, codigo, thumbnail, precio, stock } =
-  req.body;
-  const encontrado = await Productos.changeById({
-  id,
-  timestamp,
-  nombre,
-  descripcion,
-  codigo,
-  thumbnail,
-  precio,
-  stock,
-  });
-  if (encontrado) {
-  res.status(200).send("Producto Modificado");
-  } else {
-  res.status(404).send({ error: "Producto no encontrado" });
-  }
+    const { id } = req.params;
+    const { timestamp, nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
+    const encontrado = await Productos.changeById({
+      id,
+      timestamp,
+      nombre,
+      descripcion,
+      codigo,
+      imgUrl,
+      precio,
+      stock,
+    });
+    if (encontrado) {
+      res.status(200).send({ message: "Producto Modificado" });
+    } else {
+      res.status(404).send({ error: "Producto no encontrado" });
+    }
   } catch (error) {
-  res.status(500).send({ error: true });
+    res.status(500).send({ error: "Ocurrió un error en el servidor" });
   }
-  });
-  
+});
 
-  router.get("/", async function (req, res) {
-    try {
+router.get("/", async function (req, res) {
+  try {
     const productos = await Productos.getAll();
     res.json({
-    success: true,
-    data: productos,
+      success: true,
+      data: productos,
     });
-    } catch (error) {
-    res.status(500).json({
-    success: false,
-    error: error.message,
-    });
-    }
-    });
-
-
-  router.delete("/:id", authAdmin, async (req, res) => {
-  try {
-  const { id } = req.params;
-  const encontrado = await Productos.deleteById(id);
-  if (encontrado) {
-  res.status(200).send("Producto Eliminado");
-  } else {
-  res.status(404).send({ error: "producto no encontrado" });
-  }
   } catch (error) {
-  res.status(500).send({ error: true });
+    res.status(500).json({
+      success: false,
+      error: "Ocurrió un error en el servidor",
+    });
   }
-  });
+});
+
+router.delete("/:id", authAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const encontrado = await Productos.deleteById(id);
+    if (encontrado) {
+      res.status(200).send({ message: "Producto Eliminado" });
+    } else {
+      res.status(404).send({ error: "producto no encontrado" });
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Ocurrió un error en el servidor" });
+  }
+});
 
 module.exports = router;
