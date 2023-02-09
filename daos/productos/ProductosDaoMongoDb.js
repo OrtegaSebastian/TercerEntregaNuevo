@@ -8,7 +8,7 @@ class DAOProdMongo extends ContenedorMongoDb {
       nombre: { type: String, required: true },
       descripcion: { type: String, required: true },
       codigo: { type: String, required: true },
-      thumbnail: { type: String, required: true },
+      imgUrl: { type: String, required: true },
       precio: { type: Number, required: true },
       stock: { type: Number, required: true }, 
     });

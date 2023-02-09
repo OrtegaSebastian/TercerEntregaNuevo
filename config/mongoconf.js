@@ -36,13 +36,12 @@ const Users = mongoose.model("users", {
 
 
 const Productos = mongoose.model("productos", {
-  id: String,
+  timestamp:Date,
   nombre: String,
   descripcion: String,
   codigo:String,
-  thumbnail:String,
-  precio: String, 
   imgUrl: String,
+  precio: String,   
   stock: String,
 });
 
