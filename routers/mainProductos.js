@@ -8,9 +8,6 @@ const authMw = require ('./home')
 require('dotenv').config();
 
 
-
-
-
 const authAdmin = (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) {

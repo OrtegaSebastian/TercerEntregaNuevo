@@ -16,37 +16,44 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err =
 
 class ContenedorMongoDb {
   constructor(coleccion, esquema) {
-    this.col = mongoose.model(coleccion, esquema);
+    let modelo = mongoose.models[coleccion];
+    if (!modelo) {
+      modelo = mongoose.model(coleccion, esquema);
+    }
+    this.col = modelo;
   }
+// class ContenedorMongoDb {
+//   constructor(coleccion, esquema) {
+//     this.col = mongoose.model(coleccion, esquema);
+//   }
 
   async traerTodos() {
     try {
-      const objets = await this.col.find();
-      return objets;
+      const objects = await this.col.find();
+      return objects;
     } catch (err) {
       logger.error(`Error en Ruta Get: ${err}`);
+      return err;
     }
   }
 
   async traerPorId(id) {
     try {
-      const objets = await this.col.findOne({ _id: id });
-      return objets;
+      const objects = await this.col.findOne({ _id: id });
+      return objects;
     } catch (err) {
       logger.error(`Error en Ruta get by Id: ${err}`);
+      return err;
     }
   }
 
-  async guardar(objet) {
+  async guardar(object) {
     try {
-      await this.col.create(objet);
-      const newId = await this.col
-        .find({}, { _id: 1 })
-        .sort({ _id: -1 })
-        .limit(1);
-      return newId;
+      const nuevo = await this.col.create(object);
+      return nuevo;
     } catch (err) {
       logger.error(`Error en Ruta post: ${err}`);
+      return err;
     }
   }
 
@@ -56,13 +63,14 @@ class ContenedorMongoDb {
       const encontrado = await this.col.find({ _id: id });
 
       if (!encontrado) {
-        encontrado = null;
+        return { error: "No se encontró el objeto a cambiar" };
       } else {
         await this.col.replaceOne({ _id: id }, elem);
+        return encontrado;
       }
-      return encontrado;
     } catch (err) {
       logger.error(`Error en Ruta change by ID: ${err}`);
+      return err;
     }
   }
 
