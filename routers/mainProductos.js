@@ -1,14 +1,14 @@
-const { Router } = require("express");
 const jwt = require("jsonwebtoken");
-
+const express = require('express')
+const router = express.Router();
+const secretKey = process.env.PASS_SEC;
 const {Productos} = require('../config/mongoconf')
 const authMw = require ('./home')
 
-
 require('dotenv').config();
-const secretKey = process.env.PASS_SEC;
 
-const router = Router();
+
+
 
 
 const authAdmin = (req, res, next) => {
@@ -36,7 +36,7 @@ const authAdmin = (req, res, next) => {
 
 router.get("/", async (req, res) => {
   try {
-    const productos = await Productos.getAll();
+    const productos = await Productos.find();
     res.json({
       success: true,
       data: productos,
@@ -52,7 +52,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const encontrado = await Productos.getById(id);
+    const encontrado = await Productos.findById(id);
     if (encontrado) {
       res.json({
         success: true,
