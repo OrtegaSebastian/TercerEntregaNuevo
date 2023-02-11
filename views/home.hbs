@@ -56,9 +56,37 @@
         <input id="cantidadComprada" type="number" placeholder="Cantidad" class= "form-control my-2">
         <button id="boton" class="btn btn-success" type="reset" onclick="cargarCarrito();">Agregar</button>
   </form>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Código</th>
+      <th>Imagen</th>
+      <th>Precio</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each productos}}
+<div class="producto">
+  <h3>{{nombre}}</h3>
+  <p>{{descripcion}}</p>
+  <p>Código: {{codigo}}</p>
+  <p>Precio: {{precio}}</p>
+  <p>Stock: {{stock}}</p>
+  <img src="{{imgUrl}}" alt="Imagen del producto">
+</div>
+{{/each}}
+  </tbody>
+</table>
 
 
- <script src="./scripts/productos.js"></script>
+
+
+
+
+ <script src="../public/scripts/productos.js"></script>
 </body>
 
 </html>

@@ -95,7 +95,7 @@ const fetchAgregarProductos = async (objeto) => {
       nombre: objeto.querySelector("h5").textContent,
       descripcion: objeto.querySelector(".descripcion").textContent,
       codigo: objeto.querySelector(".codigo").textContent,
-      thumbnail: objeto.querySelector(".time").textContent,
+      imgUrl: objeto.querySelector(".time").textContent,
       precio: objeto.querySelector(".precio span").textContent,
       stock: objeto.querySelector(".stock").textContent,
     };
@@ -113,7 +113,7 @@ const fetchAgregarProductos = async (objeto) => {
   }
 };
 
-
+ 
 
 
 
