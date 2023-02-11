@@ -369,3 +369,8 @@
 [2023-02-09T18:17:12.589] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
 [2023-02-09T18:17:12.820] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
 [2023-02-09T18:18:19.031] [WARN] default - Ruta Inexistente: Método POST Ruta: /logout
+[2023-02-11T09:49:23.308] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-11T09:55:38.937] [WARN] default - Ruta Inexistente: Método POST Ruta: /api/carritos
+[2023-02-11T09:55:42.778] [WARN] default - Ruta Inexistente: Método GET Ruta: /api/carritos
+[2023-02-11T09:55:44.952] [WARN] default - Ruta Inexistente: Método GET Ruta: /api/carritos
+[2023-02-11T09:56:10.265] [WARN] default - Ruta Inexistente: Método GET Ruta: /api/carrito

@@ -8,28 +8,28 @@ const authMw = require ('./home')
 require('dotenv').config();
 
 
-const authAdmin = (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) {
-    return res.status(401).json({
-      error: "No token provided",
-    });
-  }
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    if (decoded.role !== "admin") {
-      return res.status(401).json({
-        error: "Unauthorized",
-      });
-    }
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({
-      error: "Invalid token",
-    });
-  }
-};
+// const authAdmin = (req, res, next) => {
+//   const token = req.header("Authorization");
+//   if (!token) {
+//     return res.status(401).json({
+//       error: "No token provided",
+//     });
+//   }
+//   try {
+//     const decoded = jwt.verify(token, secretKey);
+//     if (decoded.role !== "admin") {
+//       return res.status(401).json({
+//         error: "Unauthorized",
+//       });
+//     }
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     return res.status(401).json({
+//       error: "Invalid token",
+//     });
+//   }
+// };
 
 router.get("/", async (req, res) => {
   try {
@@ -71,8 +71,8 @@ router.get("/:id",  async (req, res) => {
 });
 
  
-
-router.post("/", authAdmin, async (req, res) => {
+// quite authAdmin
+router.post("/",  async (req, res) => {
   const timestamp = new Date();
   try {
     const { nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
@@ -98,7 +98,8 @@ router.post("/", authAdmin, async (req, res) => {
   }
 });
 
-router.put("/:id", authAdmin, async (req, res) => {
+//quite authAdmin
+router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { timestamp, nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
@@ -137,7 +138,8 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.delete("/:id", authAdmin, async (req, res) => {
+//quite authAdmin
+router.delete("/:id",  async (req, res) => {
   try {
     const { id } = req.params;
     const encontrado = await Productos.deleteById(id);
