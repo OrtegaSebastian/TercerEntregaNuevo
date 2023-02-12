@@ -11,7 +11,7 @@ require('dotenv').config();
 
 router.get("/", async function (req, res) {
   try {
-    const productos = await Productos.find();
+    const productos = await Productos.find().lean();
     if (productos.length > 0) {
       res.render("home", {
         productos: productos
