@@ -196,13 +196,14 @@ router.get("/cuenta", authMw, (req, res) => {
   return res.render(path.join(process.cwd(), "/views/cuenta.hbs"), { nombre,
     username,
     imagen,
-    nombre: nombre,
     direccion,
     edad,
     correo,
     telefono,
     });
 });
+
+
 
 router.get("/logout", (req, res) => {
   if (req.user) {

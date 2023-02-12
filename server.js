@@ -34,10 +34,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("views", "./views");
 app.set("view engine", "hbs");
-
+// const handlebars = require("handlebars");
+// handlebars.allowProtoPropertiesByDefault = true;
 const exphbs = require("express-handlebars");
 const ex = require("express-handlebars");
 app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
+
 
 
 //SERVIDOR -----------------------------------------

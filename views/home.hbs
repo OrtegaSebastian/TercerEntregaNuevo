@@ -18,12 +18,12 @@
         <h2>Bienvenid@, {{nombre}} </h2>
       </div>
       <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/'">
+        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/api/productos'">
           Productos
         </button>
       </div>
       <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/carrito'">
+        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/api/carrito'">
           Carrito
         </button>
       </div>
@@ -42,51 +42,148 @@
 
   <!-- PRODUCTOS BD -->
 
-  <section class="container mt-3">
-    <h4>PRODUCTOS</h4>
-    <hr>
-    <div class="row mt-3" id="items"></div>
-  </section>
+  <div class="container mt-3">
+    <h3>Productos disponibles:</h3>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Código</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Imagen</th>
+          <th>Agregar al carrito</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each productos}}
+        <tr>
+          <td>{{nombre}}</td>
+          <td>{{descripcion}}</td>
+          <td>{{codigo}}</td>
+          <td>{{precio}}</td>
+          <td>{{stock}}</td>
+          <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
+          <td><button class="btn btn-success" onclick="agregarAlCarrito({{id}})">Agregar</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+ <!-- CARRITO -->
+  <div class="container mt-3">
+    <h3>Carrito:</h3>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each carrito}}
+        <tr>
+          <td>{{nombre}}</td>
+          <td>{{cantidad}}</td>
+          <td>{{total}}</td>
+          <td><button class="btn btn-danger" onclick="eliminarDelCarrito({{id}})">Eliminar</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <h3>Total: {{totalCarrito}}</h3>
+  </div>
+
+
+
+
+
+{{!-- 
   <form>
-        <h3  class="col-10">Productos disponibles:</h3>
-        <select  class="my-2" id="seleccionProducto" onchange="getComboA(this)">
-          <optgroup label = "Elija un producto">
-        </select>
-        <input id="productoComprado" type="text" placeholder="Nombre Producto" class= "form-control my-2" readonly>
-        <input id="cantidadComprada" type="number" placeholder="Cantidad" class= "form-control my-2">
-        <button id="boton" class="btn btn-success" type="reset" onclick="cargarCarrito();">Agregar</button>
+    <h3 class="col-10">Productos disponibles:</h3>
+    <select class="my-2" id="seleccionProducto" onchange="getComboA(this)">
+      <optgroup label="Elija un producto">
+    </select>
+    <input id="productoComprado" type="text" placeholder="Nombre Producto" class="form-control my-2" readonly>
+    <input id="cantidadComprada" type="number" placeholder="Cantidad" class="form-control my-2">
+    <button id="boton" class="btn btn-success" type="reset" onclick="cargarCarrito();">Agregar</button>
   </form>
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Código</th>
-      <th>Imagen</th>
-      <th>Precio</th>
-      <th>Stock</th>
-    </tr>
+  <div class="container">
+    <h3>Carrito:</h3>
+    <table class="table" id="carrito">
+      <thead class="thead-inverse">
+        <tr>
+          {{#each productos}}
+          <h3>Nombre:{{nombre}}</h3>
+          <p>Descripcion: {{descripcion}}</p>
+          <p>Código: {{codigo}}</p>
+          <p>Precio: {{precio}}</p>
+          <p>Stock: {{stock}}</p>
+          <img src="{{imgUrl}}" alt="Imagen del producto">
+           {{/each}}
+  </div>
+       
+  <th>Producto</th>
+  <th>Cantidad</th>
+  <th>Total</th>
+  <th></th>
+  </tr>
   </thead>
-  <tbody>
-    {{#each productos}}
-<div class="producto">
-  <h3>{{nombre}}</h3>
-  <p>{{descripcion}}</p>
-  <p>Código: {{codigo}}</p>
-  <p>Precio: {{precio}}</p>
-  <p>Stock: {{stock}}</p>
-  <img src="{{imgUrl}}" alt="Imagen del producto">
-</div>
-{{/each}}
+  </table>
+  <hr>
+  <h3>Total Comprado:</h3>
+  <input id="total" type="text" placeholder="Total" class="form-control my-2" value=0 readonly>
+  <input type="button" value="Actualizar" onclick="location.reload()" />
+</body>
+
+
+
+ --}}
+
+
+{{!--
+<section class="container mt-3">
+  <h4>PRODUCTOS</h4>
+  <hr>
+  <div class="row mt-3" id="items"></div>
+</section>
+{{#each productos}}
+<form>
+  <h3 class="col-10">Productos disponibles:</h3>
+  <select class="my-2" id="seleccionProducto" onchange="items">
+    <optgroup label="Elija un producto">
+  </select>
+  <input id="productoComprado" type="text" placeholder="Nombre Producto" class="form-control my-2" readonly>
+  <input id="cantidadComprada" type="number" placeholder="Cantidad" class="form-control my-2">
+  <button id="boton" class="btn btn-success" type="reset" onclick="cargarCarrito();">Agregar</button>
+</form>
+<table>
+
+  <div class="items">
+    <h3>Nombre:{{nombre}}</h3>
+    <p>Descripcion: {{descripcion}}</p>
+    <p>Código: {{codigo}}</p>
+    <p>Precio: {{precio}}</p>
+    <p>Stock: {{stock}}</p>
+    <img src="{{imgUrl}}" alt="Imagen del producto">
+  </div>
+  {{/each}}
   </tbody>
 </table>
+--}}
 
 
 
 
 
+<script src="../public/scripts/registro.js"></script>
+<script src="../public/scripts/productos.js"></script>
+<script src="../public/scripts/carrito.js"></script>
 
- <script src="../public/scripts/productos.js"></script>
 </body>
 
 </html>

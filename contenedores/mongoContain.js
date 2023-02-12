@@ -22,10 +22,7 @@ class ContenedorMongoDb {
     }
     this.col = modelo;
   }
-// class ContenedorMongoDb {
-//   constructor(coleccion, esquema) {
-//     this.col = mongoose.model(coleccion, esquema);
-//   }
+
 
   async traerTodos() {
     try {
