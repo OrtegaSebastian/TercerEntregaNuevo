@@ -42,6 +42,9 @@ app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
 
 
 
+
+
+
 //SERVIDOR -----------------------------------------
 app.use(
   session({

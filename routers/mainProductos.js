@@ -12,14 +12,19 @@ require('dotenv').config();
 router.get("/", async function (req, res) {
   try {
     const productos = await Productos.find();
-    res.render("home", {
-      productos: productos
-    });
+    if (productos.length > 0) {
+      res.render("home", {
+        productos: productos
+      });
+    } else {
+      res.render("home", {
+        productos: []
+      });
+    }
   } catch (error) {
     res.render('error: '+ error);
   }
 });
-
 
 router.get("/:id",  async (req, res) => {
   try {

@@ -59,11 +59,11 @@
       <tbody>
         {{#each productos}}
         <tr>
-          <td>{{nombre}}</td>
-          <td>{{descripcion}}</td>
-          <td>{{codigo}}</td>
-          <td>{{precio}}</td>
-          <td>{{stock}}</td>
+          <td>{{this.nombre}}</td>
+          <td>{{this.descripcion}}</td>
+          <td>{{this.codigo}}</td>
+          <td>{{this.precio}}</td>
+          <td>{{this.stock}}</td>
           <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
           <td><button class="btn btn-success" onclick="agregarAlCarrito({{id}})">Agregar</button></td>
         </tr>
