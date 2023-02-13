@@ -51,9 +51,8 @@ const Carrito = mongoose.model("Carrito", {
   nombre: String,
   descripcion: String,
   codigo:String,
-  thumbnail:String,
+  imgUrl:String,
   precio: String, 
-  imgUrl: String,
   cantidad: String,
 });
   

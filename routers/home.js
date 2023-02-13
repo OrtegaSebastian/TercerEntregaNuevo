@@ -1,8 +1,8 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
-// const ContenedorMongoDb = require("../contenedores/mongoContain")
+
 
 const path = require('path')
 const {dirname, extname, join} = require('path')
@@ -32,9 +32,8 @@ passport.use(
     const { edad } = req.body;
     const { codigo } = req.body;
     const { telefono } = req.body;
-    // const { filename } = req.file;
-    const tel = `${codigo}${telefono}`;
-    // const imagen = `${host}:${port}/images/${filename}`;
+    const { imgUrl } = req.body;
+    const tel = `${codigo}${telefono}`;   
     try {
       const user =  Users.findOne({ username });
       if (user) return done(null, false);
@@ -47,10 +46,11 @@ passport.use(
         direccion,
         edad,
         tel,
+        imgUrl,
       });
       return done(null, newUser);
     } catch (err) {
-      return done(err);
+      return done(err, false, { message: 'Error en el registro' });
     }
   }
 ))
@@ -92,7 +92,11 @@ const validatePass =async (pass, hashedPass) => {
 
 //AUTENTICACIÓN ------------------
 const authMw = (req, res, next) => {
-  req.isAuthenticated() ? next() : res.send({ error: "sin session" });
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(401).send({ error: "No autorizado" });
+  }
 };
 
 //RUTAS ------------------------------
@@ -195,6 +199,7 @@ router.get("/cuenta", authMw, (req, res) => {
   
   return res.render(path.join(process.cwd(), "/views/cuenta.hbs"), { nombre,
     username,
+    nombre,
     imagen,
     direccion,
     edad,

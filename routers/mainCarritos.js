@@ -1,18 +1,21 @@
 const {Router} = require('express')
 const router = Router();
 const {CarritosDao} = require('../daos/factory')
+const {Carrito} = require('../config/mongoconf')
+const { ContenedorMongoDb } = require("../contenedores/mongoContain");
+const mongoose = require('mongoose');
 
 
 const carritoEmpresa = CarritosDao;
 
 router.post("/", async (req, res) => {
   try {
-    //const { id_user } = req.params;
     const timestamp = new Date();
     const id_user = req.body.id_user;
     const productos = [];
-    const newId = await carritoEmpresa.save({ timestamp, id_user, productos });
-    res.send("El Id del nuevo carrito es:" + " " + newId);
+    const nuevoCarrito = new Carrito({ timestamp, id_user, productos });
+    const newId = await nuevoCarrito.save();
+    res.send("El Id del nuevo carrito es:" + " " + newId._id);
   } catch (error) {
     res.send({ error: true });
   }
@@ -21,7 +24,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const encontrado = await carritoEmpresa.deleteById(id);
+    const encontrado = await Carrito.findByIdAndDelete(id);
     if (encontrado) {
       res.send("Carrito Eliminado");
     } else {
@@ -35,14 +38,14 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id/productos", async (req, res) => {
   try {
     const { id } = req.params;
-    let encontrado = await carritoEmpresa.getById(id);
+    let encontrado = await Carrito.findById(id);
     if (encontrado) {
       const { productos } = encontrado;
       res.send(productos);
     } else {
       res.send({ error: "Carrito no encontrado" });
     }
-  } catch {
+  } catch (error) {
     res.send({ error: true });
   }
 });
@@ -55,21 +58,29 @@ router.post("/:id/productos", async (req, res) => {
       nombre,
       descripcion,
       codigo,
-      thumbnail,
+      imgUrl,
       precio,
       stock,
+      cantidad
     } = req.body;
     const timestamp = new Date();
-    await carritoEmpresa.guardaProductos(
+    await Carrito.findByIdAndUpdate(
       id,
-      id_prod,
-      timestamp,
-      nombre,
-      descripcion,
-      codigo,
-      thumbnail,
-      precio,
-      stock
+      {
+        $push: {
+          productos: {
+            id_prod,
+            timestamp,
+            nombre,
+            descripcion,
+            codigo,
+            imgUrl,
+            precio,
+            stock,
+            cantidad
+          }
+        }
+      }
     );
     return res.send("Producto Cargado");
   } catch (error) {
@@ -79,31 +90,55 @@ router.post("/:id/productos", async (req, res) => {
 
 router.delete("/:id/productos/:id_prod", async (req, res) => {
   try {
-  const { id, id_prod } = req.params;
-  const encontrado = await carritoEmpresa.borrarProdporId(id, id_prod);
-  if (encontrado) {
-  res.send("Producto Eliminado");
-  } else {
-  res.send({ error: "producto no encontrado" });
-  }
-  } catch (error) {
-  res.send({ error: true });
-  }
-  });
-
-  router.get("/idCarrito/:id_user", async (req, res) => {
-    try {
-    const { id_user } = req.params;
-    let encontrado = await carritoEmpresa.getCarritoByUsuario(id_user);
-    if (encontrado) {
-    const { _id } = encontrado;
-    res.send({ id: _id });
+    const { id, id_prod } = req.params;
+    const producto = await Carrito.findOneAndUpdate({ _id: id, 'productos._id': id_prod }, { $pull: { productos: { _id: id_prod } } });
+    if (producto) {
+      res.send("Producto Eliminado");
     } else {
-    res.send({ error: "carrito no encontrado" });
+      res.send({ error: "producto no encontrado" });
     }
-    } catch (error) {
+  } catch (error) {
     res.send({ error: true });
-    }
+  }
 });
+
+router.get("/idCarrito/:id_user", async (req, res) => {
+  try {
+    const { id_user } = req.params;
+    const carrito = await Carrito.findOne({ usuario: id_user });
+    if (carrito) {
+      res.send({ id: carrito._id });
+    } else {
+      res.send({ error: "carrito no encontrado" });
+    }
+  } catch (error) {
+    res.send({ error: true });
+  }
+});
+
+
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const carrito = await Carrito.findById(id);
+    
+    if (!carrito) {
+      return res.status(404).send({ error: "El carrito no existe" });
+    }
+    
+    //actualización de los datos del carrito
+    carrito.nombre = req.body.nombre;
+    carrito.precio = req.body.precio;
+    carrito.cantidad = req.body.cantidad;
+    carrito.productoId = req.body.productoId;
+    
+    //guardamos los cambios
+    const updatedCarrito = await carrito.save();
+    
+    res.send(updatedCarrito);
+  } catch (error) {
+    res.status(400).send(error);
+  }});
+
 module.exports = router;
 

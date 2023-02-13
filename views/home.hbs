@@ -18,12 +18,12 @@
         <h2>Bienvenid@, {{nombre}} </h2>
       </div>
       <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/api/productos'">
+        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/productos'">
           Productos
         </button>
       </div>
       <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/api/carrito'">
+        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/carrito'">
           Carrito
         </button>
       </div>
@@ -65,7 +65,7 @@
           <td>{{this.precio}}</td>
           <td>{{this.stock}}</td>
           <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
-          <td><button class="btn btn-success" onclick="agregarAlCarrito({{id}})">Agregar</button></td>
+          <td><button class="btn btn-success" onclick="agregarProductoAlCarrito({{id}})">Agregar</button></td>
         </tr>
         {{/each}}
       </tbody>
