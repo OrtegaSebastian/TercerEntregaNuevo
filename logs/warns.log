@@ -348,3 +348,10 @@
 [2023-02-13T18:38:34.480] [WARN] default - Ruta Inexistente: Método GET Ruta: /63eaadb9ceb73c9b5b66b085/63e189701567b5fc9781df90
 [2023-02-13T18:38:51.105] [WARN] default - Ruta Inexistente: Método GET Ruta: /63eaadb9ceb73c9b5b66b085/
 [2023-02-13T18:39:00.614] [WARN] default - Ruta Inexistente: Método GET Ruta: /63eaadb9ceb73c9b5b66b085/
+[2023-02-13T18:47:31.533] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-13T18:47:31.537] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-13T18:47:31.803] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-13T18:47:33.296] [WARN] default - Ruta Inexistente: Método GET Ruta: /foto.jpg
+[2023-02-13T18:47:33.299] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-13T18:47:33.310] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-13T18:47:33.579] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js

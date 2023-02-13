@@ -2,7 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 
 let {Server } = require('http')
-
 const session = require('express-session')
 const cluster = require('cluster')
 const {cpus} = require('os')
@@ -16,6 +15,7 @@ const {DBConnect} = require('./config/mongoconf')
 const {router} = require('./routers/home')
 const mainProductos =require('./routers/mainProductos')
 const mainCarritos = require('./routers/mainCarritos')
+const chat = require('./routers/chat')
 
 
 dotenv.config()
@@ -77,6 +77,10 @@ app.all("*", (req, res) => {
   logger.warn(`Ruta Inexistente: Método ${req.method} Ruta: ${req.url}`);
   res.send({ error: true }).status(500);
 });
+
+
+
+
 
 
 // INICIO SERVIDOR -----------------------------------

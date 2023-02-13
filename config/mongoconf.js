@@ -56,9 +56,32 @@ const Carrito = mongoose.model("Carrito", {
   cantidad: String,
 });
   
-  
+// const Orden = mongoose.model("Orden", {
+//   userId: { type: String, required: true },
+//   productos: [
+//     {
+//       productosId: {
+//         type: String,
+//       },
+//       cantidad: {
+//         type: Number,
+//         default: 1,
+//       },
+//     },
+//   ],
+//   totalCompra: { type: Number, required: true },
+//   direccion: { type: Object, required: true },
+//   estado: { type: String, default: "pendiente" },
+// },
+// { timestamp: Date }
+// );  
+
+const Chat = mongoose.model("chat", {
+  email: String,
+  tipo: String,
+  fechaYHora: Date,
+  cuerpo: String
+});
 
 
-
-
-module.exports={Users,Productos,Carrito,DBConnect}
+module.exports={Users,Productos,Carrito,Chat,DBConnect}
