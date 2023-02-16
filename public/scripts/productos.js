@@ -1,4 +1,4 @@
-window.agregarProductoAlCarrito = agregarProductoAlCarrito;
+// window.agregarProductoAlCarrito = agregarProductoAlCarrito;
 
 // const mostrarProductos = () => {
 //   const select = document.getElementById("seleccionProducto");

@@ -1,12 +1,12 @@
-const express = require('express');
-const {Chat} = require('../config/mongoconf')
+// const express = require('express');
+// const {Chat} = require('../config/mongoconf')
 
-const router = express.Router();
+// const router = express.Router();
 
-const chat = new Chat(router);
+// const chat = new Chat(router);
 
-router.get('/chat', (req, res) => {
-  res.render('chat');
-});
+// router.get('/chat', (req, res) => {
+//   res.render('chat');
+// });
 
-module.exports = router;
+// module.exports = router;

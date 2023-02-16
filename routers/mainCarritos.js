@@ -140,5 +140,25 @@ router.put("/:id", async (req, res) => {
     res.status(400).send(error);
   }});
 
+  router.get('/', async function (req, res) {
+    const carritos = await Carrito.find().lean();
+    try {
+      if (carritos.length > 0) {
+        res.render('carrito', {
+          carritos: carritos,
+        });
+      } else {
+        res.render('home', {
+          carritos: [],
+        });
+      }
+    } catch (error) {
+      res.render('error: ' + error);
+    }
+  });
+  
+
+
+
 module.exports = router;
 
