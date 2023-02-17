@@ -1,6 +1,7 @@
 let CarritoDaoMongoDb = require('./carritos/CarritosDaoMongo')
 let DAOProdMongo = require('./productos/ProductosDaoMongoDb')
 let usuariosDAODb = require("./usuarios/usuarioDao")
+let ChatManager = require("./chat/chat")
 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -23,6 +24,7 @@ switch (TIPO) {
     ProductosDao = new DAOProdMongo();
     CarritosDao = new CarritoDaoMongoDb();
     usuariosDAO = new usuariosDAODb()
+    ChatManager = new usuariosDAODb()
     break;
 
 }

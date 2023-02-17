@@ -33,6 +33,7 @@ async guardaProductos(
         thumbnail,
         precio,
         stock,
+        categoria
     };
     carsParse[index].productos.push(newProduct);
     const carsString = JSON.stringify(carsParse);

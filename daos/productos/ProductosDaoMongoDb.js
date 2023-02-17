@@ -11,6 +11,7 @@ class DAOProdMongo extends ContenedorMongoDb {
       imgUrl: { type: String, required: true },
       precio: { type: Number, required: true },
       stock: { type: Number, required: true }, 
+      categoria: { type: String, required: true },      
     });
   }
   

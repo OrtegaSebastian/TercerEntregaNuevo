@@ -32,7 +32,8 @@ descripcion,
 codigo,
 imgUrl,
 precio,
-stock
+stock,
+categoria
 ) {
 try {
 const newProduct = new this.col({
@@ -44,6 +45,7 @@ codigo,
 imgUrl,
 precio,
 stock,
+categoria
 });
 await this.col.findByIdAndUpdate(
 { _id: id },

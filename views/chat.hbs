@@ -1,0 +1,19 @@
+<!-- chat.hbs -->
+
+<h1>Chat</h1>
+
+<ul id="chat-messages">
+  {{#each messages}}
+    <li>
+      <strong>{{this.email}}</strong> ({{this.tipo}}) - {{this.fechaYHora}}:<br>
+      {{this.cuerpo}}
+    </li>
+  {{/each}}
+</ul>
+
+<form id="chat-form">
+  <input type="text" name="email" placeholder="Email">
+  <input type="text" name="tipo" placeholder="Tipo">
+  <input type="text" name="body" placeholder="Mensaje">
+  <button type="submit">Enviar</button>
+</form>

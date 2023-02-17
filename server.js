@@ -71,6 +71,7 @@ app.use(passport.session());
 app.use(router);
 app.use("/productos", mainProductos);
 app.use("/carrito", mainCarritos);
+app.use("/chat",chat);
 
 // CONTROL RUTAS INVALIDAS ---------------------------------------------
 app.all("*", (req, res) => {

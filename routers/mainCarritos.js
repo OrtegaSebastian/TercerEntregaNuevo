@@ -61,7 +61,8 @@ router.post("/:id/productos", async (req, res) => {
       imgUrl,
       precio,
       stock,
-      cantidad
+      cantidad,
+      categoria
     } = req.body;
     const timestamp = new Date();
     await Carrito.findByIdAndUpdate(
@@ -77,7 +78,8 @@ router.post("/:id/productos", async (req, res) => {
             imgUrl,
             precio,
             stock,
-            cantidad
+            cantidad,
+            categoria
           }
         }
       }
