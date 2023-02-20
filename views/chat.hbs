@@ -1,19 +1,73 @@
-<!-- chat.hbs -->
 
-<h1>Chat</h1>
-
-<ul id="chat-messages">
-  {{#each messages}}
-    <li>
-      <strong>{{this.email}}</strong> ({{this.tipo}}) - {{this.fechaYHora}}:<br>
-      {{this.cuerpo}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+</head>
+<body>
+ <h1>Chat</h1>
+  <!-- BARRA NAVEGACIÓN -->
+  <div class="container w-75 p-2 border mt-3">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <h2>Bienvenid@, {{nombre}} </h2>
+      </div>
+      <div>
+        <button class="btn btn-dark btn-lg" id="productos" onclick="location.href='/productos'">
+          Productos
+        </button>
+      </div>
+     <div>
+        <button class="btn btn-dark btn-lg" id="carrito" onclick="location.href='/carrito'">
+          Carrito
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-dark btn-lg" id="cuenta" onclick="location.href='/cuenta'">
+          Mi cuenta
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/logout'">
+          Desloguear
+        </button>
+      </div>
     </li>
+  </div>
+<div id="chat-container">
+  {{#each messages}}
+    <li class="clearfix">
+  <div class="message-data">
+    <span class="message-data-time">{{this.email}}</span>
+  </div>
+  <div class="message my-message">{{this.cuerpo}}</div>
+  </li>
+  <div id="sent-message" style="display: none;"></div>
   {{/each}}
-</ul>
-
+</div>
 <form id="chat-form">
-  <input type="text" name="email" placeholder="Email">
-  <input type="text" name="tipo" placeholder="Tipo">
-  <input type="text" name="body" placeholder="Mensaje">
+  <label for="email-input">Email:</label>
+  <input id="email-input" name="email" type="email" >
+  <br>
+  <label for="tipo-input">Tipo:</label>
+  <select id="tipo-input" name="tipo" >
+    <option value="texto">Usuario</option>
+    <option value="texto">Sistema</option>
+  </select>
+  <br>
+  <label for="cuerpo-input">Mensaje:</label>
+  <textarea id="cuerpo-input" name="cuerpo" ></textarea>
+  <br>
   <button type="submit">Enviar</button>
 </form>
+</body>
+
+<script src="../public/scripts/chat.js"></script>
+</html>
+
+
+
+

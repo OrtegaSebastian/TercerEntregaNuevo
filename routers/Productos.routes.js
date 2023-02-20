@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router();
 const secretKey = process.env.PASS_SEC;
 const {Productos} = require('../config/mongoconf')
-const authMw = require ('./home')
+const authMw = require ('./Home.routes')
 const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
 

@@ -76,8 +76,8 @@ const Carrito = mongoose.model("Carrito", {
 // { timestamp: Date }
 // );  
 
-const Chat = mongoose.model("chat", {
-  email: String,
+const Chat = mongoose.model("Chat", {
+  correo: String,
   tipo: String,
   fechaYHora: Date,
   cuerpo: String

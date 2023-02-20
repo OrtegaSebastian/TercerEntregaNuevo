@@ -12,10 +12,10 @@ const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const {DBConnect} = require('./config/mongoconf')
 
-const {router} = require('./routers/home')
-const mainProductos =require('./routers/mainProductos')
-const mainCarritos = require('./routers/mainCarritos')
-const chat = require('./routers/chat')
+const {router} = require('./routers/Home.routes')
+const mainProductos =require('./routers/Productos.routes')
+const mainCarritos = require('./routers/Carritos.routes')
+const chat = require('./routers/Chat.routes')
 
 
 dotenv.config()
@@ -34,8 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("views", "./views");
 app.set("view engine", "hbs");
-// const handlebars = require("handlebars");
-// handlebars.allowProtoPropertiesByDefault = true;
+
 const exphbs = require("express-handlebars");
 const ex = require("express-handlebars");
 app.engine(".hbs", exphbs({ extname: ".hbs", defaultLayout: "main.hbs" }));
@@ -137,6 +136,21 @@ if (MODO === "CLUSTER") {
     );
   });
 }
+//io
+const io = require('socket.io')(Server);
+
+io.on('connection', (socket) => {
+  console.log('Nuevo cliente conectado');
+
+  socket.on('mensaje', (data) => {
+    console.log(`Mensaje recibido: ${data}`);
+    socket.emit('mensaje', `Recibí tu mensaje: ${data}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado');
+  });
+});
 
 
 

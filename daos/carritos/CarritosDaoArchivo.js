@@ -62,15 +62,3 @@ async borrarProdporId(id, id_prod) {
 
 module.exports = CarritoDaoArchivo;
 
-
-// class CarritosDaoArchivo extends ContenedorArchivo {
-
-//     constructor() {
-//         super('carritos.json')
-//     }
-    
-//     async guardar(carrito = { productos: [] }) {
-//         return super.guardar(carrito)
-//     }
-//     }
-//     module.exports = CarritosDaoArchivo;

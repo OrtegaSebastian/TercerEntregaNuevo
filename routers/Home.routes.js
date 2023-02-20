@@ -8,14 +8,11 @@ const path = require('path')
 const {dirname, extname, join} = require('path')
 
 const bcrypt  = require ("bcrypt")
-const multer  = require ("multer") 
+
 
 const dotenv = require('dotenv')
 dotenv.config();
 
-
-const host = process.env.HOST;
-const port = process.env.PORT;
 
 const passport = require('passport')
 const {Strategy} = require('passport-local')

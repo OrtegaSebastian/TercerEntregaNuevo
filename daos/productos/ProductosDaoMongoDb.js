@@ -1,8 +1,7 @@
 const  {ContenedorMongoDb}  = require("../../contenedores/mongoContain");
 
 class DAOProdMongo extends ContenedorMongoDb {
-  constructor() {
-    // *super = padre/mongoProducto
+  constructor() {  
     super("productos", {
       timestamp: { type: Date, required: true },
       nombre: { type: String, required: true },

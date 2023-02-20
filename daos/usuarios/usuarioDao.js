@@ -4,7 +4,6 @@ const mongoose = require ('mongoose')
 
 class usuariosDAODb extends ContenedorMongoDb {
     constructor() {
-    // *super 
     super("Users", {
     username: { type: String, required: true },
     password:{ type: String, required: true },

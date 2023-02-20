@@ -26,6 +26,7 @@
     "firebase-admin": "^11.4.1",
     "has-unicode": "^2.0.1",
     "is-fullwidth-code-point": "^4.0.0",
+    "jsdom": "^21.1.0",
     "jsonwebtoken": "^9.0.0",
     "log4js": "^6.7.1",
     "mongodb": "^4.13.0",
@@ -36,6 +37,8 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "socket.io": "^4.6.0",
+    "socket.io-client": "^4.6.0",
+    "socket.io-redis": "^6.1.1",
     "twilio": "^3.84.0"
   },
   "repository": {
