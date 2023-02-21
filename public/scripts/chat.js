@@ -3,7 +3,8 @@ const {
     Chat
 } = require('../../config/mongoconf')
 
-let io
+let io  
+let socket
 
 function startSocketServer(server) {
     io = socketIo(server);
@@ -30,14 +31,14 @@ function startSocketServer(server) {
         socket.on('send message', async (message) => {
             try {
                 const {
-                    email,
+                    correo,
                     tipo,
                     cuerpo
                 } = message;
                 const fechaYHora = new Date();
 
                 const nuevoMensaje = await Chat.create({
-                    email,
+                    correo,
                     tipo,
                     fechaYHora,
                     cuerpo
@@ -56,7 +57,7 @@ function enviarMensaje(event) {
     const msj = document.getElementById("cuerpo-input").value;
     const tipo = document.getElementById("tipo-input").value;
     document.getElementById("cuerpo-input").value = "";
-    socket.emit("new_msg", { email: nombre, cuerpo: msj, tipo: tipo });
+    socket.emit("new_msg", { correo: nombre, cuerpo: msj, tipo: tipo });
     document.getElementById("sent-message").innerHTML = msj;
     document.getElementById("sent-message").style.display = "block";
     setTimeout(function () {

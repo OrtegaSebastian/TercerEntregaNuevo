@@ -12,33 +12,38 @@
 
 <body class="container-fluid">
 
-    <div class="container w-75 p-2 border mt-3">
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-        <h2>Bienvenid@, {{nombre}} </h2>
-        </div>
-        <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/productos'">
-            Productos
-        </button>
-        </div>
-        <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/carrito'">
-            Carrito
-        </button>
-        </div>
-        <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/cuenta'">
-            Mi cuenta
-        </button>
-        </div>
-        <div>
-        <button class="btn btn-dark btn-lg" id="logout" onclick="location.href='/logout'">
-            Desloguear
-        </button>
-        </div>
-    </li>
+ <div class="container w-75 p-2 border mt-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Mi sitio web</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/productos">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/carrito">Carrito</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cuenta">Mi cuenta</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Desloguear</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Bienvenid@, {{nombre}}
+      </span>
     </div>
+  </nav>
+</div>
     <div class="container w-75 p-3 border mt-2">
         <h3 class="text-white bg-dark">Carrito</h3>
         <hr>
