@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     const productos = [];
     const nuevoCarrito = new Carrito({ timestamp, id_user, productos });
     const newId = await nuevoCarrito.save();
-    res.send("El Id del nuevo carrito es:" + " " + newId._id);
+    res.render("carrito");
   } catch (error) {
     res.send({ error: true });
   }
@@ -142,20 +142,17 @@ router.put("/:id", async (req, res) => {
     res.status(400).send(error);
   }});
 
-  router.get('/', async function (req, res) {
-    const carritos = await Carrito.find().lean();
+  router.get('/', async (req, res) => {
     try {
+      const carritos = await Carrito.find().lean();
       if (carritos.length > 0) {
-        res.render('carrito', {
-          carritos: carritos,
-        });
+        res.render('carrito', { carritos });
       } else {
-        res.render('home', {
-          carritos: [],
-        });
+        res.render('home', { carritos: [] });
       }
     } catch (error) {
-      res.render('error: ' + error);
+      console.error(error);
+      res.render('error', { message: 'Ha ocurrido un error en el servidor' });
     }
   });
   

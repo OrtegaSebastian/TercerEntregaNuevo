@@ -2,7 +2,7 @@ let CarritoDaoMongoDb = require('./carritos/CarritosDaoMongo')
 let DAOProdMongo = require('./productos/ProductosDaoMongoDb')
 let usuariosDAODb = require("./usuarios/usuarioDao")
 let ChatMongoDB = require("./chat/ChatDaoMongo")
-
+let DAOOrdenesMongo = require('./ordenes/OrdenesDaoMongoDb')
 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -13,6 +13,7 @@ let ProductosDao;
 let CarritosDao;
 let usuariosDAO;
 let ChatMongoDAO
+let ordenesDAO;
 
 switch (TIPO) {
   
@@ -20,6 +21,7 @@ switch (TIPO) {
     ProductosDao = new DAOProdMongo();
     CarritosDao = new CarritoDaoMongoDb();
     usuariosDAO= new usuariosDAODb();
+    ordenesDAO= new DAOOrdenesMongo();
     
 
     break;
@@ -27,11 +29,12 @@ switch (TIPO) {
     ProductosDao = new DAOProdMongo();
     CarritosDao = new CarritoDaoMongoDb();
     usuariosDAO = new usuariosDAODb()
-    ChatMongoDB = new ChatMongoDB()
+    ChatMongoDAO = new ChatMongoDB()
+    ordenesDAO= new DAOOrdenesMongo();
     
     break;
 
 }
 
-module.exports = {ProductosDao,CarritosDao, usuariosDAO,ChatMongoDAO}
+module.exports = {ProductosDao,CarritosDao, usuariosDAO,ChatMongoDAO,ordenesDAO}
 

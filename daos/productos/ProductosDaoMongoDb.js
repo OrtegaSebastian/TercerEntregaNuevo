@@ -1,4 +1,5 @@
 const  {ContenedorMongoDb}  = require("../../contenedores/mongoContain");
+const mongoose = require('mongoose');
 
 class DAOProdMongo extends ContenedorMongoDb {
   constructor() {  
@@ -9,7 +10,7 @@ class DAOProdMongo extends ContenedorMongoDb {
       codigo: { type: String, required: true },
       imgUrl: { type: String, required: true },
       precio: { type: Number, required: true },
-      stock: { type: Number, required: true }, 
+      cantidad: { type: Number, required: true }, 
       categoria: { type: String, required: true },      
     });
   }

@@ -1,4 +1,7 @@
-window.agregarProductoAlCarrito = agregarProductoAlCarrito;
+
+const productos = require('../../daos/productos/ProductosDaoMongoDb')
+const  {ContenedorMongoDb}  = require("../../contenedores/mongoContain");
+const mongoose = require('mongoose');
 
 const mostrarProductos = () => {
     const select = document.getElementById("seleccionProducto");
@@ -82,10 +85,11 @@ const actualizarTotal = () => {
 const eventos = () => {
     document.getElementById("agregar-producto").addEventListener(
         "click",
-        agregarProducto,
+        cargarCarrito,
     );
     document.getElementById("carrito").addEventListener("input", actualizarTotal);
 };
+
 
 eventos();
 
@@ -133,3 +137,6 @@ const agregarProductoAlCarrito = async () => {
         console.log(error);
     }
 };
+window.agregarProductoAlCarrito = agregarProductoAlCarrito;
+
+
