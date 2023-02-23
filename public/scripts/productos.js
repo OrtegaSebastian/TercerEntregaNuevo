@@ -50,22 +50,22 @@ const cargarCarrito = () => {
 
     fila.appendChild(columnaProducto);
 
-    columnaCantidad.innerHTML = producto.cantidad;
+    columnaCantidad.innerHTML = cantidadInput; 
     fila.appendChild(columnaCantidad);
 
-    columnaTotal.innerHTML = producto.total;
+    columnaTotal.innerHTML = productoSeleccionado.precio * cantidadInput; 
     fila.appendChild(columnaTotal);
 
     let columnaBoton = document.createElement("td");
     let boton = document.createElement("button");
     boton.innerHTML = "Eliminar";
     boton.onclick = function () {
-        eliminarProducto(producto.nombre);
+        eliminarProducto(productoSeleccionado.nombre); 
     };
     columnaBoton.appendChild(boton);
     fila.appendChild(columnaBoton);
 
-    tablaCarrito.appendChild(fila);
+    carrito.appendChild(fila); 
 };
 const actualizarTotal = () => {
     let total = 0;

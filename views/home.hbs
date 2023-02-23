@@ -71,7 +71,7 @@
           <td>{{this.categoria}}</td>
           <td>{{this.stock}}</td>
           <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
-          <td><button class="btn btn-success" method="POST" onclick="agregarProductoAlCarrito({{id}})">Agregar</button></td>
+          <td><button class="btn btn-success" method="POST" onclick="getComboA({{id}})">Agregar</button></td>
         </tr>
         {{/each}}
       </tbody>
@@ -96,7 +96,7 @@
           <td>{{nombre}}</td>
           <td>{{cantidad}}</td>
           <td>{{total}}</td>
-          <td><button class="btn btn-danger" onclick="eliminarDelCarrito({{id}})">Eliminar</button></td>
+          <td><button class="btn btn-danger" onclick="eliminarProducto({{id}})">Eliminar</button></td>
         </tr>
         {{/each}}
       </tbody>
