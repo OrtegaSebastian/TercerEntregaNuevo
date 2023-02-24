@@ -10,16 +10,44 @@ const carritoEmpresa = CarritosDao;
 
 router.post("/", async (req, res) => {
   try {
-    const timestamp = new Date();
-    const id_user = req.body.id_user;
-    const productos = [];
-    const nuevoCarrito = new Carrito({ timestamp, id_user, productos });
-    const newId = await nuevoCarrito.save();
-    res.render("carrito");
+    const { id_user, productos } = req.body;
+    
+    // Buscar si existe un carrito activo para el usuario
+    let carrito = await Carrito.findOne({ id_user, estado: "activo" });
+    
+    // Si no hay un carrito activo, se crea uno nuevo
+    if (!carrito) {
+      carrito = new Carrito({ id_user, estado: "activo" });
+    }
+    
+    // Agregar los productos al carrito
+    productos.forEach(producto => {
+      const { id_prod, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
+      const timestamp = new Date();
+      
+      carrito.productos.push({
+        id_prod,
+        timestamp,
+        nombre,
+        descripcion,
+        codigo,
+        imgUrl,
+        precio,
+        cantidad,
+        categoria
+      });
+    });
+
+    // Guardar los cambios en la base de datos
+    await carrito.save();
+    
+    res.send("Productos agregados al carrito");
   } catch (error) {
-    res.send({ error: true });
+    res.send({ error: true });    
   }
 });
+
+
 
 router.delete("/:id", async (req, res) => {
   try {
@@ -50,7 +78,7 @@ router.get("/:id/productos", async (req, res) => {
   }
 });
 
-router.post("/:id/productos", async (req, res) => {
+router.post(":id/productos", async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -59,8 +87,7 @@ router.post("/:id/productos", async (req, res) => {
       descripcion,
       codigo,
       imgUrl,
-      precio,
-      stock,
+      precio,    
       cantidad,
       categoria
     } = req.body;
@@ -76,8 +103,7 @@ router.post("/:id/productos", async (req, res) => {
             descripcion,
             codigo,
             imgUrl,
-            precio,
-            stock,
+            precio,          
             cantidad,
             categoria
           }

@@ -1,17 +1,16 @@
 const { ContenedorMongoDb } = require("../../contenedores/mongoContain");
 const {Schema} = require('mongoose')
 const logger = require('../../config/log4js')
-
-const ProductosSchema = new Schema({
-id_prod: { type: String, required: true },
-timestamp: { type: Date, required: true },
-nombre: { type: String, required: true },
-descripcion: { type: String, required: true },
-codigo: { type: String, required: true },
-imgUrl: { type: String, required: true },
-precio: { type: Number, required: true },
-stock: { type: Number, required: true },
-});
+const ProductosSchema = require('../productos/ProductosDaoMongoDb')
+// const ProductosSchema = new Schema({
+// id_prod: { type: String, required: true },
+// timestamp: { type: Date, required: true },
+// nombre: { type: String, required: true },
+// descripcion: { type: String, required: true },
+// codigo: { type: String, required: true },
+// imgUrl: { type: String, required: true },
+// precio: { type: Number, required: true },
+// });
 
 class CarritoDaoMongoDb extends ContenedorMongoDb {
 constructor() {

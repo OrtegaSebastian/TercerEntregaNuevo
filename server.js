@@ -9,9 +9,9 @@ const {DBConnect} = require('./config/mongoconf')
 const logger = require("./config/log4js")
 
 const {router} = require('./routers/Home.routes')
-const mainProductos =require('./routers/Productos.routes')
-const mainCarritos = require('./routers/Carritos.routes')
-const chat = require('./routers/Chat.routes')
+const Productos =require('./routers/Productos.routes')
+const Carritos = require('./routers/Carritos.routes')
+const Chat = require('./routers/Chat.routes')
 
 dotenv.config()
 const app = express()
@@ -49,9 +49,9 @@ app.use(passport.session());
 
 //RUTAS -----------------------------------------------------------
 app.use(router);
-app.use("/productos", mainProductos);
-app.use("/carrito", mainCarritos);
-app.use("/chat",chat);
+app.use("/productos", Productos);
+app.use("/carrito", Carritos);
+app.use("/chat",Chat);
 
 // CONTROL RUTAS INVALIDAS ---------------------------------------------
 app.all("*", (req, res) => {
