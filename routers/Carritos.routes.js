@@ -6,7 +6,6 @@ const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
 
 
-const carritoEmpresa = CarritosDao;
 
 router.post("/", async (req, res) => {
   try {
@@ -17,7 +16,9 @@ router.post("/", async (req, res) => {
     
     // Si no hay un carrito activo, se crea uno nuevo
     if (!carrito) {
-      carrito = new Carrito({ id_user, estado: "activo" });
+      // Agrega una verificación adicional para crear un nuevo carrito
+      const nuevoCarrito = new Carrito({ id_user, estado: "activo", productos: [] });
+      carrito = await nuevoCarrito.save();
     }
     
     // Agregar los productos al carrito
@@ -43,9 +44,11 @@ router.post("/", async (req, res) => {
     
     res.send("Productos agregados al carrito");
   } catch (error) {
+    console.error(error); 
     res.send({ error: true });    
   }
 });
+
 
 
 

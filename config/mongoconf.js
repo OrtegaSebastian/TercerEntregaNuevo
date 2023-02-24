@@ -47,15 +47,13 @@ const Productos = mongoose.model("productos", {
 
 
 const Carrito = mongoose.model("Carrito", {
-  timestamp: Date,
-  nombre: String,
-  descripcion: String,
-  codigo:String,
-  imgUrl:String,
-  precio: String, 
-  cantidad: String,
+  id_user: String,
+  estado: { type: String, enum: ["activo", "completado"] },
+  productos: [Productos],
+  timestamp: { type: Date, default: Date.now },
 });
-  
+
+
 const Orden = mongoose.model("Orden", {
   userId: { type: String, required: true },
   timestamp: Date ,
