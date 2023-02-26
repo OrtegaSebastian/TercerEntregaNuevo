@@ -45,11 +45,21 @@ const Productos = mongoose.model("productos", {
   stock: String,
 });
 
+const ProductoSchema = new mongoose.Schema({
+  timestamp: Date,
+  nombre: String,
+  descripcion: String,
+  codigo: String,
+  imgUrl: String,
+  precio: String,
+  cantidad: String,
+  categoria:String
+});
 
 const Carrito = mongoose.model("Carrito", {
   id_user: String,
   estado: { type: String, enum: ["activo", "completado"] },
-  productos: [Productos],
+  productos: [ProductoSchema],
   timestamp: { type: Date, default: Date.now },
 });
 
