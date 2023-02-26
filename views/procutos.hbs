@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Productos por categoría</title>
+  </head>
+  <body>
+    <h1>Productos por categoría: {{categoria}}</h1>
+    {{#if productos}}
+      <ul>
+        {{#each productos}}
+          <li>{{nombre}} - {{descripcion}} - {{precio}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No se encontraron productos en esta categoría.</p>
+    {{/if}}
+  </body>
+</html>

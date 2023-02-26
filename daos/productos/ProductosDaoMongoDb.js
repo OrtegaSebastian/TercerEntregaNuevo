@@ -20,9 +20,9 @@ class DAOProdMongo extends ContenedorMongoDb {
       "nombre":"prod1" ,
       "descripcion": "desc1",
       "codigo":"123asd",
-      "imgUrl2":"notengo",
+      "imgUrl":"notengo",
       "precio":"1000",
-      "stock": "200" 
+      "cantidad": "200" 
 */
 
 module.exports = DAOProdMongo;

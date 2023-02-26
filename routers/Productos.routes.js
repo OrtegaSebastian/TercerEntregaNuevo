@@ -38,7 +38,7 @@
       } else {
         res.status(404).json({
           success: false,
-          error: "Product not found",
+          error: "Producto no encontrado",
         });
       }
     } catch (error) {
@@ -54,7 +54,7 @@
   router.post("/",  async (req, res) => {
     const timestamp = new Date();
     try {
-      const { nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
+      const { nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = req.body;
       const producto = new Productos({
         timestamp,
         nombre,
@@ -62,12 +62,13 @@
         codigo,
         imgUrl,
         precio,
-        stock,
+        cantidad,
+        categoria
       });
       const savedProduct = await producto.save();
       res.json({
         success: true,
-        message: `Product added: ${nombre} with ID ${savedProduct._id}`,
+        message: `Producto agregado: ${nombre} con ID ${savedProduct._id}`,
       });
     } catch (error) {
       res.status(500).json({
@@ -76,13 +77,35 @@
       });
     }
   });
+  
 
+
+  router.get("/:categoria", async (req, res) => {
+    try {
+      const { categoria } = req.params;
+      const productos = await Productos.find({ categoria });
+      if (productos.length > 0) {
+        res.render("productos", { productos, categoria });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: "No se encontraron productos en esta categoria",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+});
+  
 
   //quite authAdmin
   router.put("/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const { timestamp, nombre, descripcion, codigo, imgUrl, precio, stock } = req.body;
+      const { timestamp, nombre, descripcion, codigo, imgUrl, precio, cantidad ,categoria} = req.body;
       const encontrado = await Productos.findByIdAndUpdate(id, {
         timestamp,
         nombre,
@@ -90,7 +113,8 @@
         codigo,
         imgUrl,
         precio,
-        stock,
+        cantidad,
+        categoria
       }, {new: true});
       if (encontrado) {
         res.status(200).send({ message: "Producto Modificado" });
