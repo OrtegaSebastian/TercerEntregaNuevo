@@ -17,6 +17,16 @@ router.get('/', async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 });
+router.get('/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const messages = await Chat.find({ correo: email }).sort({ fechaYHora: 'asc' }).lean();
+    res.render('chat', { messages });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error en el servidor');
+  }
+});
 
 router.post('/', async (req, res) => {
   try {

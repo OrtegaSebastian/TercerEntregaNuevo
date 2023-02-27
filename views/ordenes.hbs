@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Órdenes</title>
+  </head>
+  <body>
+    <h1>Órdenes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Timestamp</th>
+          <th>Productos</th>
+          <th>Total de compra</th>
+          <th>Dirección</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+          <tr>
+            <td>{{this.userId}}</td>
+            <td>{{this.timestamp}}</td>
+            <td>
+              <ul>
+                {{#each this.productos}}
+                  <li>{{this.productosId}} ({{this.cantidad}})</li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>{{this.totalCompra}}</td>
+            <td>{{this.direccion}}</td>
+            <td>{{this.estado}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>

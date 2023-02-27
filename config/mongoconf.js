@@ -42,7 +42,7 @@ const Productos = mongoose.model("productos", {
   codigo:String,
   imgUrl: String,
   precio: String,   
-  stock: String,
+  categoria: String,
 });
 
 const ProductoSchema = new mongoose.Schema({

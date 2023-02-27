@@ -12,6 +12,7 @@ const {router} = require('./routers/Home.routes')
 const Productos =require('./routers/Productos.routes')
 const Carritos = require('./routers/Carritos.routes')
 const Chat = require('./routers/Chat.routes')
+const Ordenes = require('./routers/Ordenes.routes')
 
 dotenv.config()
 const app = express()
@@ -52,6 +53,7 @@ app.use(router);
 app.use("/productos", Productos);
 app.use("/carrito", Carritos);
 app.use("/chat",Chat);
+app.use("/ordenes",Ordenes);
 
 // CONTROL RUTAS INVALIDAS ---------------------------------------------
 app.all("*", (req, res) => {

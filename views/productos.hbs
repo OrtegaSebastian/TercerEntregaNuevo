@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Productos por categoría</title>
+    <link rel="stylesheet" href="/views/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Productos por categoría: {{categoria}}</h1>
+      {{#if productos}}
+        <ul>
+            {{#each productos}}
+      <li class="producto">{{nombre}} - {{descripcion}} - {{imgUrl}}{{precio}}</li>
+    {{/each}}
+
+            </ul>
+      {{else}}
+        <p>No se encontraron productos en esta categoría.</p>
+      {{/if}}    
+    </div>
+  </body>
+</html>

@@ -54,21 +54,20 @@
   router.post("/",  async (req, res) => {
     const timestamp = new Date();
     try {
-      const { nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = req.body;
+      const { nombre, descripcion, codigo, imgUrl, precio, categoria } = req.body;
       const producto = new Productos({
         timestamp,
         nombre,
         descripcion,
         codigo,
         imgUrl,
-        precio,
-        cantidad,
+        precio,        
         categoria
       });
       const savedProduct = await producto.save();
       res.json({
         success: true,
-        message: `Producto agregado: ${nombre} con ID ${savedProduct._id}`,
+        message: `Producto agregado: ${producto.nombre} con ID ${savedProduct._id}`,
       });
     } catch (error) {
       res.status(500).json({
@@ -80,25 +79,31 @@
   
 
 
-  router.get("/:categoria", async (req, res) => {
+  router.get("/categoria/:categoria", async (req, res) => {
     try {
-      const { categoria } = req.params;
-      const productos = await Productos.find({ categoria });
-      if (productos.length > 0) {
-        res.render("productos", { productos, categoria });
-      } else {
-        res.status(404).json({
-          success: false,
-          error: "No se encontraron productos en esta categoria",
-        });
-      }
+        const { categoria } = req.params;
+        const productos = await Productos.find({ categoria: categoria }).lean();
+        
+        if (productos.length > 0) {
+            res.render("productos", {
+                productos: productos,
+                categoria: categoria
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                error: "No se encontraron productos en esta categoria",
+            });
+        }
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        error: error.message,
-      });
+        res.status(500).json({
+            success: false,
+            error: error.message,
+        });
     }
 });
+  
+  
   
 
   //quite authAdmin
