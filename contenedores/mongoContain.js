@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const logger = require('../config/log4js')
 
 
-
 function conectarDB(url, cb) {
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
     if(!err) {

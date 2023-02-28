@@ -19,11 +19,11 @@ switch (TIPO) {
   
   case "local":
     const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/local-db';
-    ProductosDao = new DAOProdMongo(MONGODB_URI);
-    CarritosDao = new CarritoDaoMongoDb(MONGODB_URI);
-    usuariosDAO = new usuariosDAODb(MONGODB_URI)
-    ChatMongoDAO = new ChatMongoDB(MONGODB_URI)
-    ordenesDAO = new DAOOrdenesMongo(MONGODB_URI);
+    ProductosDao = new DAOProdMongo();
+    CarritosDao = new CarritoDaoMongoDb();
+    usuariosDAO = new usuariosDAODb()
+    ChatMongoDAO = new ChatMongoDB()
+    ordenesDAO = new DAOOrdenesMongo();
     break;
  
   case "mongodb":
@@ -31,7 +31,7 @@ switch (TIPO) {
     CarritosDao = new CarritoDaoMongoDb();
     usuariosDAO = new usuariosDAODb()
     ChatMongoDAO = new ChatMongoDB()
-    ordenesDAO= new DAOOrdenesMongo();
+    ordenesDAO = new DAOOrdenesMongo();
     
     break;
     default:
