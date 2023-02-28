@@ -17,8 +17,7 @@ let ordenesDAO;
 
 switch (TIPO) {
   
-  case "local":
-    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/local-db';
+  case "local":    
     ProductosDao = new DAOProdMongo();
     CarritosDao = new CarritoDaoMongoDb();
     usuariosDAO = new usuariosDAODb()
