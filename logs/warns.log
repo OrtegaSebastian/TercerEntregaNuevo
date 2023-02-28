@@ -1532,3 +1532,32 @@
   { nombre: 'Producto 1', precio: 10, cantidad: 2 },
   { nombre: 'Producto 2', precio: 5, cantidad: 1 }
 ]" (type Array) at path "productos" because of "TypeError"
+[2023-02-28T19:25:39.917] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:42.560] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-28T19:25:42.830] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-28T19:25:42.844] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-28T19:25:43.013] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:44.203] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-28T19:25:44.209] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-28T19:25:44.222] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-28T19:25:45.585] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-28T19:25:45.594] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-28T19:25:45.599] [WARN] default - Ruta Inexistente: Método GET Ruta: /style.css
+[2023-02-28T19:25:45.784] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:46.942] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-28T19:25:46.945] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-28T19:25:46.947] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-28T19:25:47.119] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:48.157] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-02-28T19:25:48.162] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-02-28T19:25:48.163] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-02-28T19:25:50.056] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:50.995] [WARN] default - Ruta Inexistente: Método GET Ruta: /style.css
+[2023-02-28T19:25:51.019] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/chat.js
+[2023-02-28T19:25:51.216] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:25:56.152] [WARN] default - Ruta Inexistente: Método GET Ruta: /style.css
+[2023-02-28T19:25:56.157] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/chat.js
+[2023-02-28T19:25:56.354] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-02-28T19:26:01.994] [WARN] default - Ruta Inexistente: Método GET Ruta: /style.css
+[2023-02-28T19:26:01.996] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/chat.js
+[2023-02-28T19:26:02.181] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico

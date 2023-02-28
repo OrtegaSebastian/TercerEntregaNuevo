@@ -11,7 +11,7 @@ const ordenesDAO = new ContenedorMongoDb('ordenes', new mongoose.Schema({
   id_usuario: { type: String, required: true },
   id_carrito: { type: String, required: true },
   fecha: { type: Date, required: true },
-  productos: { type: [Carrito], default: [] },
+  productos: { type: [mongoose.Schema.Types.Mixed], default: [] },
 }));
 
 // Obtener todas las órdenes de un usuario
