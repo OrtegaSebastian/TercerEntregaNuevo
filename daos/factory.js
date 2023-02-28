@@ -17,14 +17,15 @@ let ordenesDAO;
 
 switch (TIPO) {
   
-  case "archivos":
-    ProductosDao = new DAOProdMongo();
-    CarritosDao = new CarritoDaoMongoDb();
-    usuariosDAO= new usuariosDAODb();
-    ordenesDAO= new DAOOrdenesMongo();
-    
-
+  case "local":
+    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/local-db';
+    ProductosDao = new DAOProdMongo(MONGODB_URI);
+    CarritosDao = new CarritoDaoMongoDb(MONGODB_URI);
+    usuariosDAO = new usuariosDAODb(MONGODB_URI)
+    ChatMongoDAO = new ChatMongoDB(MONGODB_URI)
+    ordenesDAO = new DAOOrdenesMongo(MONGODB_URI);
     break;
+ 
   case "mongodb":
     ProductosDao = new DAOProdMongo();
     CarritosDao = new CarritoDaoMongoDb();
@@ -33,7 +34,10 @@ switch (TIPO) {
     ordenesDAO= new DAOOrdenesMongo();
     
     break;
-
+    default:
+      console.log(`Tipo de base de datos desconocido: ${TIPO}`);
+      process.exit(1);
+  
 }
 
 module.exports = {ProductosDao,CarritosDao, usuariosDAO,ChatMongoDAO,ordenesDAO}
