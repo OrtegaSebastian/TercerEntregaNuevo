@@ -150,26 +150,3 @@
   module.exports = router;
 
 
-
-// const authAdmin = (req, res, next) => {
-//   const token = req.header("Authorization");
-//   if (!token) {
-//     return res.status(401).json({
-//       error: "No token provided",
-//     });
-//   }
-//   try {
-//     const decoded = jwt.verify(token, secretKey);
-//     if (decoded.role !== "admin") {
-//       return res.status(401).json({
-//         error: "Unauthorized",
-//       });
-//     }
-//     req.user = decoded;
-//     next();
-//   } catch (error) {
-//     return res.status(401).json({
-//       error: "Invalid token",
-//     });
-//   }
-// };

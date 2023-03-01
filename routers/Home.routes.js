@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const CryptoJS = require("crypto-js");
-const jwt = require("jsonwebtoken");
-
+// const CryptoJS = require("crypto-js");
+// const jwt = require("jsonwebtoken");
+// const {mailOptions} = require('../config/nodemailer')
+// const {transporter} = require('../config/nodemailer')
+// const  sendMail  = require("nodemailer") ;
 
 const path = require('path')
 const {dirname, extname, join} = require('path')
@@ -153,9 +155,18 @@ const newUser = await Users.create({
   tel,
   imgUrl
 });
+// try{
+//   const info = transporter.sendMail(mailOptions)
+//   console.log(info)
+//   }catch(error){
+//       console.log(error)
+//   }
 req.login(newUser, (err) => {
   if (err) return next(err);
-  return res.render(path.join(process.cwd(), "/views/registro.hbs"), {
+  
+
+  return res.render(path.join(process.cwd(), "/views/registro.hbs"),
+  {
     okRegister: "¡Usuario registrado con éxito!",
   });
 });
