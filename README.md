@@ -72,31 +72,27 @@ Código Dummy:
             }
 -Carritos(http://localhost:8080/carrito):
                                        {
-                                        "timestamp": "2022-03-01T12:00:00.000Z",
-                                        "id_user": "user123",
-                                        "estado": "activo",
+                                        "id_user": "63e189701567b5fc9781df90",
                                         "productos": [
                                         {
-                                            "id_prod": "prod123",
-                                            "timestamp": "2022-03-01T12:00:00.000Z",
-                                            "nombre": "Producto 1",
-                                            "descripcion": "Descripción del producto 1",
-                                            "codigo": "ABC123",
-                                            "imgUrl": "https://example.com/producto1.jpg",
-                                            "precio": 100,
-                                            "cantidad": 2,
-                                            "categoria": "Electrónica"
+                                        "id_prod": "001",
+                                        "nombre": "Camiseta",
+                                        "descripcion": "Camiseta de algodón",
+                                        "codigo": "CM001",
+                                        "imgUrl": "https://example.com/camiseta.jpg",
+                                        "precio": 20.99,
+                                        "cantidad": 2,
+                                        "categoria": "Ropa"
                                         },
                                         {
-                                            "id_prod": "prod456",
-                                            "timestamp": "2022-03-01T12:00:00.000Z",
-                                            "nombre": "Producto 2",
-                                            "descripcion": "Descripción del producto 2",
-                                            "codigo": "XYZ789",
-                                            "imgUrl": "https://example.com/producto2.jpg",
-                                            "precio": 50,
-                                            "cantidad": 1,
-                                            "categoria": "Hogar"
+                                        "id_prod": "002",
+                                        "nombre": "Pantalón",
+                                        "descripcion": "Pantalón de mezclilla",
+                                        "codigo": "PT001",
+                                        "imgUrl": "https://example.com/pantalon.jpg",
+                                        "precio": 45.99,
+                                        "cantidad": 1,
+                                        "categoria": "Ropa"
                                         }
                                         ]
                                         }

@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
         totalCompra: req.body.totalCompra,
         direccion: req.body.direccion,
       });
-      
+      console.log(nuevaOrden)
       await nuevaOrden.save();
     }
     
@@ -59,50 +59,6 @@ router.post("/", async (req, res) => {
     res.send({ error: true });    
   }
 });
-
-// router.post("/", async (req, res) => {
-//   try {
-//     const { id_user, productos } = req.body;
-    
-//     // Buscar si existe un carrito activo para el usuario
-//     let carrito = await Carrito.findOne({ id_user, estado: "activo" });
-    
-//     // Si no hay un carrito activo, se crea uno nuevo
-//     if (!carrito) {
-//       // Agrega una verificación adicional para crear un nuevo carrito
-//       const nuevoCarrito = new Carrito({ id_user, estado: "activo", productos: [] });
-//       carrito = await nuevoCarrito.save();
-//     }
-    
-//     // Agregar los productos al carrito
-//     productos.forEach(producto => {
-//       const { id_prod, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
-//       const timestamp = new Date();
-      
-//       carrito.productos.push({
-//         id_prod,
-//         timestamp,
-//         nombre,
-//         descripcion,
-//         codigo,
-//         imgUrl,
-//         precio,
-//         cantidad,
-//         categoria
-//       });
-//     });
-
-//     // Guardar los cambios en la base de datos
-//     await carrito.save();
-    
-//     res.send("Productos agregados al carrito");
-//   } catch (error) {
-//     console.error(error); 
-//     res.send({ error: true });    
-//   }
-// });
-
-
 
 
 router.delete("/:id", async (req, res) => {
