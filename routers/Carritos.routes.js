@@ -8,6 +8,8 @@ const {Orden} = require("../config/mongoconf")
 
 
 router.post("/", async (req, res) => {
+  let nuevaOrden; // Definimos una variable vacía para poder accederla fuera del bloque condicional
+  
   try {
     const { id_user, productos } = req.body;
     
@@ -21,7 +23,7 @@ router.post("/", async (req, res) => {
       carrito = await nuevoCarrito.save();
 
       // Crear una nueva orden con el ID del carrito y otros datos necesarios
-      const nuevaOrden = new Orden({
+      nuevaOrden = new Orden({
         id_usuario: id_user,
         id_carrito: carrito._id,
         productos: productos,
@@ -52,13 +54,14 @@ router.post("/", async (req, res) => {
 
     // Guardar los cambios en el carrito
     await carrito.save();
-    
+    console.log(nuevaOrden) // Podemos imprimir aquí el valor de nuevaOrden si se creó
     res.send("Productos agregados al carrito");
   } catch (error) {
     console.error(error); 
     res.send({ error: true });    
   }
 });
+
 
 
 router.delete("/:id", async (req, res) => {
