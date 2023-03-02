@@ -4,7 +4,7 @@ const {CarritosDao} = require('../daos/factory')
 const {Carrito} = require('../config/mongoconf')
 const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
-
+const {Orden} = require("../config/mongoconf")
 
 
 router.post("/", async (req, res) => {
@@ -19,6 +19,17 @@ router.post("/", async (req, res) => {
       // Agrega una verificación adicional para crear un nuevo carrito
       const nuevoCarrito = new Carrito({ id_user, estado: "activo", productos: [] });
       carrito = await nuevoCarrito.save();
+
+      // Crear una nueva orden con el ID del carrito y otros datos necesarios
+      const nuevaOrden = new Orden({
+        id_usuario: id_user,
+        id_carrito: carrito._id,
+        productos: productos,
+        totalCompra: req.body.totalCompra,
+        direccion: req.body.direccion,
+      });
+      
+      await nuevaOrden.save();
     }
     
     // Agregar los productos al carrito
@@ -39,7 +50,7 @@ router.post("/", async (req, res) => {
       });
     });
 
-    // Guardar los cambios en la base de datos
+    // Guardar los cambios en el carrito
     await carrito.save();
     
     res.send("Productos agregados al carrito");
@@ -48,6 +59,48 @@ router.post("/", async (req, res) => {
     res.send({ error: true });    
   }
 });
+
+// router.post("/", async (req, res) => {
+//   try {
+//     const { id_user, productos } = req.body;
+    
+//     // Buscar si existe un carrito activo para el usuario
+//     let carrito = await Carrito.findOne({ id_user, estado: "activo" });
+    
+//     // Si no hay un carrito activo, se crea uno nuevo
+//     if (!carrito) {
+//       // Agrega una verificación adicional para crear un nuevo carrito
+//       const nuevoCarrito = new Carrito({ id_user, estado: "activo", productos: [] });
+//       carrito = await nuevoCarrito.save();
+//     }
+    
+//     // Agregar los productos al carrito
+//     productos.forEach(producto => {
+//       const { id_prod, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
+//       const timestamp = new Date();
+      
+//       carrito.productos.push({
+//         id_prod,
+//         timestamp,
+//         nombre,
+//         descripcion,
+//         codigo,
+//         imgUrl,
+//         precio,
+//         cantidad,
+//         categoria
+//       });
+//     });
+
+//     // Guardar los cambios en la base de datos
+//     await carrito.save();
+    
+//     res.send("Productos agregados al carrito");
+//   } catch (error) {
+//     console.error(error); 
+//     res.send({ error: true });    
+//   }
+// });
 
 
 
@@ -66,7 +119,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/productos", async (req, res) => {
+router.get("/:id/", async (req, res) => {
   try {
     const { id } = req.params;
     let encontrado = await Carrito.findById(id);
@@ -81,7 +134,7 @@ router.get("/:id/productos", async (req, res) => {
   }
 });
 
-router.post(":id/productos", async (req, res) => {
+router.post("/:id/", async (req, res) => {
   try {
     const { id } = req.params;
     const {

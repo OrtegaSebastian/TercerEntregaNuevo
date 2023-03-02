@@ -72,21 +72,24 @@ timestamp: { type: Date, default: Date.now },
 
 // Creamos el modelo de orden
 const Orden = mongoose.model("Orden",{
-userId: { type: String, required: true },
-id_carrito: { type: mongoose.Types.ObjectId, required: true },
-productos: [
-{
-productosId: { type: mongoose.Types.ObjectId, ref: "Producto" },
-cantidad: {
-type: Number,
-default: 1,
-},
-},
-],
-totalCompra: { type: Number, required: true },
-direccion: { type: Object, required: true },
-estado: { type: String, default: "pendiente" },
-timestamp: { type: Date, default: Date.now },
+  id_usuario: { type: String, required: true },
+  id_carrito: { type: mongoose.Schema.Types.ObjectId, ref: "Carrito", required: true },
+  productos: [
+    {
+      id_prod: { type: String, required: true },
+      nombre: { type: String, required: true },
+      descripcion: { type: String, required: true },
+      codigo: { type: String, required: true },
+      imgUrl: { type: String, required: true },
+      precio: { type: Number, required: true },
+      cantidad: { type: Number, required: true },
+      categoria: { type: String, required: true },
+    },
+  ],
+  totalCompra: { type: Number, required: true },
+  direccion: { type: Object, required: true },
+  estado: { type: String, default: "pendiente" },
+  timestamp: { type: Date, default: Date.now },
 });
 
 // Creamos el modelo de chat
