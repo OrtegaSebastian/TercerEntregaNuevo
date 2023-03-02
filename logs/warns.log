@@ -1706,3 +1706,12 @@
 [2023-03-02T18:29:52.940] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
 [2023-03-02T18:29:52.959] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
 [2023-03-02T18:29:53.139] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-02T18:38:18.354] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-03-02T18:38:18.652] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-03-02T18:38:18.654] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-03-02T18:38:18.851] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-02T18:38:20.632] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-02T18:38:22.929] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-03-02T18:38:22.932] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-03-02T18:38:23.215] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-03-02T18:38:23.399] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
