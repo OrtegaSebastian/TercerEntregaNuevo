@@ -1804,3 +1804,6 @@
 [2023-03-04T10:34:22.600] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
 [2023-03-04T11:10:15.021] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
 [2023-03-04T11:10:28.003] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-04T11:20:34.496] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-04T11:20:36.065] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-03-04T11:20:36.309] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico

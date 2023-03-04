@@ -138,16 +138,15 @@ Finalmente, se inicializa socket.io para habilitar la funcionalidad de chat en t
 
 ## Algunas Ayudas para facilitar su prueba, unicamente una vez logueado el usuario, caso contrario no podrá hacerlo :
 
-METODO GET
-http://localhost:8080/
+# Registro
 
-![App Screenshot](https://imgur.com/a/lqqey2c)     como se utiliza esto si quiero subir imagenes am i readme no lo comprendo
-
+http://localhost:8080/registro
 
 
 Código Dummy para realizar solicitudes a los endpoints con los métodos implementados POST , GET , PUT , DELETE :
 
--Productos(http://localhost:8080/productos):
+# Productos
+(http://localhost:8080/productos):
                                         {
                                         "id_prod": 1,
                                         "timestamp": "2023-02-28T15:20:30.000Z",
@@ -162,7 +161,8 @@ Código Dummy para realizar solicitudes a los endpoints con los métodos impleme
 
 
 
--Carritos(http://localhost:8080/carrito):
+# Carritos
+(http://localhost:8080/carrito):
                                 {
                                 "id_usuario": "63e189701567b5fc9781df90",
                                 "productos": [
@@ -193,15 +193,19 @@ Código Dummy para realizar solicitudes a los endpoints con los métodos impleme
 
 
 
--Chat(http://localhost:8080/chat):
+# Chat 
+(http://localhost:8080/chat):
         {
         "correo": "usuario123@gmail.com",
         "tipo": "mensaje",
         "cuerpo": "Hola, ¿cómo están?Espero que muy bien",
         }
 
-//tenga en cuenta reemplazar id_usuario y numero_orden por los datos que tenga en su base de datos para poder hacer la consulta
--Ordenes(http://localhost:8080/ordenes/:id_usuario/:numero_orden):     
+
+
+# Ordenes
+Tenga en cuenta reemplazar id_usuario y numero_orden por los datos que tenga en su base de datos para poder hacer la consulta
+(http://localhost:8080/ordenes/:id_usuario/:numero_orden):     
                                                 {
                         "estado":"terminada"
                 }
