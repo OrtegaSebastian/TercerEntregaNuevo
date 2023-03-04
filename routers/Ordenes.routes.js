@@ -7,13 +7,11 @@ const {Carrito} =require('../config/mongoconf')
 const {Orden} =require('../config/mongoconf')
 
 
-
-
-// Obtener todas las órdenes de un usuario
-router.get("/:id_usuario", async (req, res) => {
+// Obtener todas las órdenes de un usuario y número de orden
+router.get("/:id_usuario/:numero_orden", async (req, res) => {
   try {
-    const id_usuario = req.params.id_usuario;
-    const ordenes = await Orden.find({ id_usuario });
+    const { id_usuario, numero_orden } = req.params;
+    const ordenes = await Orden.find({ id_usuario, numero_orden });
     res.json(ordenes);
   } catch (error) {
     logger.error(`Error en Ruta Get: ${error}`);
@@ -21,12 +19,12 @@ router.get("/:id_usuario", async (req, res) => {
   }
 });
 
-// Actualizar una orden
-router.put("/:id_usuario/:id", async (req, res) => {
+// Actualizar una orden por usuario y número de orden
+router.put("/:id_usuario/:numero_orden", async (req, res) => {
   try {
-    const { id_usuario, id } = req.params;
-    const ordenActualizada = req.body;
-    await Orden.findOneAndUpdate({ _id: id, id_usuario }, ordenActualizada);
+    const { id_usuario, numero_orden } = req.params;
+    const estado = req.body;
+    await Orden.findOneAndUpdate({ id_usuario, numero_orden }, estado);
     res.send("Orden actualizada correctamente");
   } catch (error) {
     logger.error(`Error en Ruta change by ID: ${error}`);
@@ -34,11 +32,11 @@ router.put("/:id_usuario/:id", async (req, res) => {
   }
 });
 
-// Eliminar una orden
-router.delete("/:id_usuario/:id", async (req, res) => {
+// Eliminar una orden por usuario y número de orden
+router.delete("/:id_usuario/:numero_orden", async (req, res) => {
   try {
-    const { id_usuario, id } = req.params;
-    await Orden.findOneAndDelete({ _id: id, id_usuario });
+    const { id_usuario, numero_orden } = req.params;
+    await Orden.findOneAndDelete({ id_usuario, numero_orden });
     res.send("Orden eliminada correctamente");
   } catch (error) {
     logger.error(`Error en Ruta delete by Id: ${error}`);
@@ -46,11 +44,11 @@ router.delete("/:id_usuario/:id", async (req, res) => {
   }
 });
 
-// Obtener una orden por ID
-router.get("/:id_usuario/:id", async (req, res) => {
+// Obtener una orden por ID y número de orden
+router.get("/:id_usuario/:numero_orden/:id", async (req, res) => {
   try {
-    const { id_usuario, id } = req.params;
-    const orden = await Orden.findOne({ _id: id, id_usuario });
+    const { id_usuario, numero_orden, id } = req.params;
+    const orden = await Orden.findOne({ _id: id, id_usuario, numero_orden });
     if (!orden) {
       return res.status(404).json({ error: "Orden no encontrada" });
     }

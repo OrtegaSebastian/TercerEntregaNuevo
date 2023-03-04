@@ -6,32 +6,20 @@ const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
 const {Orden} = require("../config/mongoconf")
 
-
 router.post("/", async (req, res) => {
   let nuevaOrden; // Definimos una variable vacía para poder accederla fuera del bloque condicional
   
   try {
-    const { id_user, productos } = req.body;
+    const { id_usuario, productos } = req.body;
     
     // Buscar si existe un carrito activo para el usuario
-    let carrito = await Carrito.findOne({ id_user, estado: "activo" });
+    let carrito = await Carrito.findOne({ id_usuario, estado: "activo" });
     
     // Si no hay un carrito activo, se crea uno nuevo
     if (!carrito) {
       // Agrega una verificación adicional para crear un nuevo carrito
-      const nuevoCarrito = new Carrito({ id_user, estado: "activo", productos: [] });
+      const nuevoCarrito = new Carrito({ id_usuario, estado: "activo", productos: [] });
       carrito = await nuevoCarrito.save();
-
-      // Crear una nueva orden con el ID del carrito y otros datos necesarios
-      nuevaOrden = new Orden({
-        id_usuario: id_user,
-        id_carrito: carrito._id,
-        productos: productos,
-        totalCompra: req.body.totalCompra,
-        direccion: req.body.direccion,
-      });
-      console.log(nuevaOrden)
-      await nuevaOrden.save();
     }
     
     // Agregar los productos al carrito
@@ -54,6 +42,17 @@ router.post("/", async (req, res) => {
 
     // Guardar los cambios en el carrito
     await carrito.save();
+    
+    // Crear una nueva orden con el ID del carrito y otros datos necesarios
+    nuevaOrden = new Orden({
+      id_usuario: id_usuario,
+      id_carrito: carrito._id,
+      productos: productos,
+      totalCompra: req.body.totalCompra,
+      direccion: req.body.direccion,
+    });
+    await nuevaOrden.save();
+
     console.log(nuevaOrden) // Podemos imprimir aquí el valor de nuevaOrden si se creó
     res.send("Productos agregados al carrito");
   } catch (error) {
@@ -61,6 +60,7 @@ router.post("/", async (req, res) => {
     res.send({ error: true });    
   }
 });
+
 
 
 

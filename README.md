@@ -135,9 +135,17 @@ Después, se crea un servidor HTTP con http.createServer y se establece una cone
 
 Finalmente, se inicializa socket.io para habilitar la funcionalidad de chat en tiempo real y se configuran los eventos de conexión y desconexión del socket.
 
-Algunas Ayudas para facilitar su prueba, unicamente una vez logueado el usuario, caso contrario no podrá hacerlo :
 
-Código Dummy:
+## Algunas Ayudas para facilitar su prueba, unicamente una vez logueado el usuario, caso contrario no podrá hacerlo :
+
+METODO GET
+http://localhost:8080/
+
+![App Screenshot](https://imgur.com/a/lqqey2c)     como se utiliza esto si quiero subir imagenes am i readme no lo comprendo
+
+
+
+Código Dummy para realizar solicitudes a los endpoints con los métodos implementados POST , GET , PUT , DELETE :
 
 -Productos(http://localhost:8080/productos):
                                         {
@@ -152,32 +160,37 @@ Código Dummy:
                                         "categoria": "Electrónica"
                                         }
 
+
+
 -Carritos(http://localhost:8080/carrito):
-                                       {
-                                        "id_user": "63e189701567b5fc9781df90",
-                                        "productos": [
-                                        {
-                                        "id_prod": "001",
-                                        "nombre": "Camiseta",
-                                        "descripcion": "Camiseta de algodón",
-                                        "codigo": "CM001",
-                                        "imgUrl": "https://example.com/camiseta.jpg",
-                                        "precio": 20.99,
-                                        "cantidad": 2,
-                                        "categoria": "Ropa"
-                                        },
-                                        {
-                                        "id_prod": "002",
-                                        "nombre": "Pantalón",
-                                        "descripcion": "Pantalón de mezclilla",
-                                        "codigo": "PT001",
-                                        "imgUrl": "https://example.com/pantalon.jpg",
-                                        "precio": 45.99,
-                                        "cantidad": 1,
-                                        "categoria": "Ropa"
-                                        }
-                                        ]
-                                        }
+                                {
+                                "id_usuario": "63e189701567b5fc9781df90",
+                                "productos": [
+                                {
+                                "id_prod": "001",
+                                "nombre": "Camiseta",
+                                "descripcion": "Camiseta de algodón",
+                                "codigo": "CM001",
+                                "imgUrl": "https://example.com/camiseta.jpg",
+                                "precio": 20.99,
+                                "cantidad": 2,
+                                "categoria": "Ropa"
+                                },
+                                {
+                                "id_prod": "002",
+                                "nombre": "Pantalón",
+                                "descripcion": "Pantalón de mezclilla",
+                                "codigo": "PT001",
+                                "imgUrl": "https://example.com/pantalon.jpg",
+                                "precio": 45.99,
+                                "cantidad": 1,
+                                "categoria": "Ropa"
+                                }
+                                ],
+                                "totalCompra": 87.97,
+                                "direccion": "Calle Falsa 123"
+                                }
+
 
 
 -Chat(http://localhost:8080/chat):
@@ -187,8 +200,11 @@ Código Dummy:
         "cuerpo": "Hola, ¿cómo están?Espero que muy bien",
         }
 
--Ordenes(http://localhost:8080/ordenes):     
-
+//tenga en cuenta reemplazar id_usuario y numero_orden por los datos que tenga en su base de datos para poder hacer la consulta
+-Ordenes(http://localhost:8080/ordenes/:id_usuario/:numero_orden):     
+                                                {
+                        "estado":"terminada"
+                }
 
 
 
