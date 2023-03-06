@@ -52,8 +52,7 @@ router.post("/", async (req, res) => {
       direccion: req.body.direccion,
     });
     await nuevaOrden.save();
-
-    console.log(nuevaOrden) // Podemos imprimir aquí el valor de nuevaOrden si se creó
+  
     res.send("Productos agregados al carrito");
   } catch (error) {
     console.error(error); 
