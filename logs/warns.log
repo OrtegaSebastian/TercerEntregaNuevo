@@ -1832,3 +1832,8 @@
 [2023-03-05T09:58:05.675] [WARN] default - Ruta Inexistente: Método GET Ruta: /style.css
 [2023-03-05T09:58:05.685] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/chat.js
 [2023-03-05T09:58:05.882] [WARN] default - Ruta Inexistente: Método GET Ruta: /favicon.ico
+[2023-03-05T10:26:43.245] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-03-05T10:26:49.770] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/registro.js
+[2023-03-05T10:26:49.786] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/productos.js
+[2023-03-05T10:26:50.059] [WARN] default - Ruta Inexistente: Método GET Ruta: /public/scripts/carrito.js
+[2023-03-06T16:02:19.679] [WARN] default - Ruta Inexistente: Método POST Ruta: /

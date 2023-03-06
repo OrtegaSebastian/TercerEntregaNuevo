@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const logger = require('../config/log4js')
+mongoose.set('strictQuery', true)
 
 
 function conectarDB(url, cb) {

@@ -1,3 +1,6 @@
+//TODO ESTE CODIGO ESTA COMENTADO YA QUE SI NO SE VA A EJECUTRAR CADA VEZ 
+//HAY QUE REEMPLAZAR EL CORREO AL PROBARLO.
+
 // const  nodemailer  = require("nodemailer") ;
 
 // const TEST_MAIL = 'jaylan97@ethereal.email';

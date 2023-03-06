@@ -118,7 +118,7 @@ const agregarProductoAlCarrito = async () => {
     };
 
     try {
-        const res = await fetch("/api/carrito", {
+        const res = await fetch("/carrito", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

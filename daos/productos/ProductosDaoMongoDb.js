@@ -16,13 +16,6 @@ class DAOProdMongo extends ContenedorMongoDb {
   }
   
 }
-/*
-      "nombre":"prod1" ,
-      "descripcion": "desc1",
-      "codigo":"123asd",
-      "imgUrl":"notengo",
-      "precio":"1000",
-      "cantidad": "200" 
-*/
+
 
 module.exports = DAOProdMongo;
