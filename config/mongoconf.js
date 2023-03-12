@@ -57,7 +57,7 @@ nombre: String,
 descripcion: String,
 codigo: String,
 imgUrl: String,
-precio: String,
+precio: Number,
 cantidad: String,
 categoria:String
 });
@@ -72,22 +72,22 @@ timestamp: { type: Date, default: Date.now },
 
 // Creamos el modelo de orden
 const Orden = mongoose.model("Orden",{
-  id_usuario: { type: String, required: true },
-  id_carrito: { type: mongoose.Schema.Types.ObjectId, ref: "Carrito", required: true },
+  id_usuario: { type: String},
+  id_carrito: { type: mongoose.Schema.Types.ObjectId, ref: "Carrito"},
   productos: [
     {
-      id_prod: { type: String, required: true },
-      nombre: { type: String, required: true },
-      descripcion: { type: String, required: true },
-      codigo: { type: String, required: true },
-      imgUrl: { type: String, required: true },
-      precio: { type: Number, required: true },
-      cantidad: { type: Number, required: true },
-      categoria: { type: String, required: true },
+      id_prod: { type: String},
+      nombre: { type: String },
+      descripcion: { type: String,},
+      codigo: { type: String,},
+      imgUrl: { type: String, },
+      precio: { type: Number,  },
+      cantidad: { type: Number,  },
+      categoria: { type: String,  },
     },
   ],
-  totalCompra: { type: Number, required: true },
-  direccion: { type: Object, required: true },
+  totalCompra: { type: Number},
+  direccion: { type: Object },
   estado: { type: String, default: "pendiente" },
   timestamp: { type: Date, default: Date.now },
 });

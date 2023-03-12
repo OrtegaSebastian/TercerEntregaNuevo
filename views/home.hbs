@@ -62,59 +62,63 @@
         </tr>
       </thead>
       <tbody>
-        <form action="/carrito" method="post">
-        {{#each productos}}
-        <tr>
-          <td>{{this.nombre}}</td>
-          <td>{{this.descripcion}}</td>
-          <td>{{this.codigo}}</td>
-          <td>{{this.precio}}</td>
-          <td>{{this.categoria}}</td>
-          <td>{{this.cantidad}}</td>
-          <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
-          <td><button class="btn btn-success" method="POST" onclick="agregarProductoAlCarrito({{id}})">Agregar</button></td>
-        </tr>
-        </form>
-        {{/each}}
+      {{#each productos}}
+      <tr>
+        <td>{{this.nombre}}</td>
+        <td>{{this.descripcion}}</td>
+        <td>{{this.codigo}}</td>
+        <td>{{this.precio}}</td>
+        <td>{{this.categoria}}</td>
+        <td>{{this.cantidad}}</td>
+        <td><img src="{{imgUrl}}" alt="Imagen del producto"></td>
+        <td>
+        <form action="/carrito" method="post" onsubmit="agregarProductoAlCarrito(event)">
+        <input type="hidden" name="producto_id" value="{{this.id}}">
+        <button type="submit" class="btn btn-success">Agregar</button>
+</form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
         
       </tbody>
     </table>
   </div>
 
- <!-- CARRITO -->
-  <div class="container mt-3">
-    <h3>Carrito:</h3>
-    <table class="table table-striped">
-      <thead class="thead-inverse">
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Total</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each carrito}}
-        <tr>
-          <td>{{nombre}}</td>
-          <td>{{cantidad}}</td>
-          <td>{{total}}</td>
-          <td><button class="btn btn-danger" onclick="eliminarProducto({{id}})">Eliminar</button></td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-    <h3>Total: {{totalCarrito}}</h3>
-  </div>
+<!-- CARRITO -->
+<div class="container mt-3">
+  <h3>Carrito:</h3>
+  <table class="table table-striped">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each carrito}}
+      <tr>
+        <td>{{nombre}}</td>
+        <td>{{cantidad}}</td>
+        <td>{{total}}</td>
+        <td><button class="btn btn-danger" onclick="eliminarProducto({{id}})">Eliminar</button></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <h3>Total: {{totalCarrito}}</h3>
+</div>
 
 
 
 
 
 
-<script src="../public/scripts/registro.js"></script>
-<script src="../public/scripts/productos.js"></script>
-<script src="../public/scripts/carrito.js"></script>
+<script src="/scripts/registro.js"></script>
+<script src="/scripts/productos.js"></script>
+<script src="/scripts/carrito.js"></script>
 
 </body>
 

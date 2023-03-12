@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 //CODIGOS INTERNACIONALES -----------------------------------
 const fetchCountrycodigos = async () => {
   try {
-    const res = await fetch("../../helpers/countrycodigos.json");
+    const res = await fetch("../helpers/countrycodigos.json");
     const data = await res.json();
     cargarcodigos(data);
   } catch (error) {

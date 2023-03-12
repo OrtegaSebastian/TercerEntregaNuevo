@@ -1,7 +1,7 @@
 const socketIo = require('socket.io')
 const {
     Chat
-} = require('../../config/mongoconf')
+} = require('../config/mongoconf')
 
 let io  
 let socket

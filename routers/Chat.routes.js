@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Chat } = require('../config/mongoconf');
 const ChatManager = require('../daos/chat/ChatDaoMongo');
 const { ContenedorMongoDb } = require('../contenedores/mongoContain');
-const { getIo } = require("../public/scripts/chat");
+const { getIo } = require("../scripts/chat");
 
 const router = express.Router();
 const chatManager = new ChatManager();

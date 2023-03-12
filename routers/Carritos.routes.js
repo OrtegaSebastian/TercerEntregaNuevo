@@ -5,6 +5,8 @@ const {Carrito} = require('../config/mongoconf')
 const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
 const {Orden} = require("../config/mongoconf")
+const { Productos } = require("../config/mongoconf");
+
 
 router.post("/", async (req, res) => {
   let nuevaOrden; // Definimos una variable vacía para poder accederla fuera del bloque condicional
@@ -22,43 +24,52 @@ router.post("/", async (req, res) => {
       carrito = await nuevoCarrito.save();
     }
     
-    // Agregar los productos al carrito
-    productos.forEach(producto => {
-      const { id_prod, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
-      const timestamp = new Date();
-      
-      carrito.productos.push({
-        id_prod,
-        timestamp,
-        nombre,
-        descripcion,
-        codigo,
-        imgUrl,
-        precio,
-        cantidad,
-        categoria
+    // Verificar si hay productos para agregar al carrito
+    if (productos && productos.length > 0) {
+      // Agregar los productos al carrito
+      productos.forEach(producto => {
+        const { id, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
+        const timestamp = new Date();
+        
+        carrito.productos.push({
+          id,
+          timestamp,
+          nombre,
+          descripcion,
+          codigo,
+          imgUrl,
+          precio,
+          cantidad,
+          categoria
+        });
       });
-    });
-
-    // Guardar los cambios en el carrito
-    await carrito.save();
+  
+      // Guardar los cambios en el carrito
+      await carrito.save();
+    }
     
     // Crear una nueva orden con el ID del carrito y otros datos necesarios
     nuevaOrden = new Orden({
       id_usuario: id_usuario,
       id_carrito: carrito._id,
-      productos: productos,
+      productos: productos || [], // Si no hay productos, se asigna un array vacío
       totalCompra: req.body.totalCompra,
       direccion: req.body.direccion,
     });
     await nuevaOrden.save();
-  
+    console.log("carro",carrito)
+    console.log("orden",nuevaOrden)
+    console.log("Productos",productos)
+    console.log(req.body)
     res.send("Productos agregados al carrito");
   } catch (error) {
     console.error(error); 
     res.send({ error: true });    
   }
 });
+
+
+
 
 
 
@@ -76,6 +87,18 @@ router.delete("/:id", async (req, res) => {
     res.send({ error: true });
   }
 });
+
+router.get("/", async (req, res) => {
+  try {
+    const userId = req.user._id; // Obtén el ID del usuario logueado
+    const carritos = await Carrito.find({ userId }); // Encuentra todos los carritos pertenecientes al usuario
+    res.send(carritos);
+  } catch (error) {
+    res.send({ error: true });
+  }
+});
+
+
 
 router.get("/:id/", async (req, res) => {
   try {
