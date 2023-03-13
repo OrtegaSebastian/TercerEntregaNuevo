@@ -1,18 +1,18 @@
-
 const prodCarrito = document.getElementById("prodCarrito");
+const selectCarrito = document.getElementById("selectCarrito");
 
 let idCarrito;
 
 document.addEventListener("DOMContentLoaded", (e) => {
   fetchUsuario();
-});
 
-if (e.target.matches(".list-group-item .btn-danger")) {
-  fetchEliminarProducto(e.target.parentElement);
-}
+  if (e.target.matches(".list-group-item .btn-danger")) {
+    fetchEliminarProducto(e.target.parentElement);
+  }
 
-selectCarrito.addEventListener("change", () => {
-  pintarCarrito();
+  selectCarrito.addEventListener("change", () => {
+    pintarCarrito();
+  });
 });
 
 //Traer el ID del Usuario
