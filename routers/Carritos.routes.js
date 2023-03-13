@@ -9,64 +9,64 @@ const { Productos } = require("../config/mongoconf");
 
 
 router.post("/", async (req, res) => {
-  let nuevaOrden; // Definimos una variable vacía para poder accederla fuera del bloque condicional
-  
+  let nuevaOrden;
+
   try {
-    const { id_usuario, productos } = req.body;
-    
-    // Buscar si existe un carrito activo para el usuario
+    const {id_usuario} = req.user
+    const {Productos } = req.body;
+
     let carrito = await Carrito.findOne({ id_usuario, estado: "activo" });
-    
-    // Si no hay un carrito activo, se crea uno nuevo
+
     if (!carrito) {
-      // Agrega una verificación adicional para crear un nuevo carrito
-      const nuevoCarrito = new Carrito({ id_usuario, estado: "activo", productos: [] });
+      const nuevoCarrito = new Carrito({ id_usuario, estado: "activo", Productos: [] });
       carrito = await nuevoCarrito.save();
     }
-    
-    // Verificar si hay productos para agregar al carrito
-    if (productos && productos.length > 0) {
-      // Agregar los productos al carrito
-      productos.forEach(producto => {
+
+    if (Productos && Productos.length > 0) {
+      const productosEnCarrito = [];
+
+      for (let i = 0; i < Productos.length; i++) {
+        const producto = Productos[i];
         const { id, nombre, descripcion, codigo, imgUrl, precio, cantidad, categoria } = producto;
-        const timestamp = new Date();
-        
-        carrito.productos.push({
+
+        const productoEnCarrito = {
           id,
-          timestamp,
+          timestamp: new Date(),
           nombre,
           descripcion,
           codigo,
           imgUrl,
           precio,
           cantidad,
-          categoria
-        });
-      });
-  
-      // Guardar los cambios en el carrito
+          categoria,
+        };
+
+        productosEnCarrito.push(productoEnCarrito);
+      }
+
+      carrito.Productos.push(...productosEnCarrito);
       await carrito.save();
     }
-    
-    // Crear una nueva orden con el ID del carrito y otros datos necesarios
+
     nuevaOrden = new Orden({
-      id_usuario: id_usuario,
+      id_usuario,
       id_carrito: carrito._id,
-      productos: productos || [], // Si no hay productos, se asigna un array vacío
+      producto: carrito.Productos,
       totalCompra: req.body.totalCompra,
       direccion: req.body.direccion,
     });
+
     await nuevaOrden.save();
-    console.log("carro",carrito)
-    console.log("orden",nuevaOrden)
-    console.log("Productos",productos)
-    console.log(req.body)
+   
+
     res.send("Productos agregados al carrito");
   } catch (error) {
-    console.error(error); 
-    res.send({ error: true });    
+    console.error(error);
+    res.send({ error: true });
   }
 });
+
+
 
 
 
