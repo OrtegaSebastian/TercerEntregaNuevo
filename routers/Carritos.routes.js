@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
     console.log("orden",nuevaOrden)
     console.log("Productos",productos)
     console.log(req.body)
-    res.send("Productos agregados al carrito");
+    // res.send("Productos agregados al carrito");
   } catch (error) {
     console.error(error); 
     res.send({ error: true });    
