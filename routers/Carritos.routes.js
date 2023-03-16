@@ -6,22 +6,22 @@ const { ContenedorMongoDb } = require("../contenedores/mongoContain");
 const mongoose = require('mongoose');
 const {Orden} = require("../config/mongoconf")
 const { Productos } = require("../config/mongoconf");
-
+const {username} = require('../config/mongoconf')
 
 
 router.post("/", async (req, res) => {
   let nuevaOrden; // Definimos una variable vacía para poder accederla fuera del bloque condicional
   
   try {
-    const { id_usuario, productos } = req.body;
+    const { username, productos } = req.body;
     
     // Buscar si existe un carrito activo para el usuario
-    let carrito = await Carrito.findOne({ id_usuario, estado: "activo" });
+    let carrito = await Carrito.findOne({ username, estado: "activo" });
     
     // Si no hay un carrito activo, se crea uno nuevo
     if (!carrito) {
       // Agrega una verificación adicional para crear un nuevo carrito
-      const nuevoCarrito = new Carrito({ id_usuario, estado: "activo", productos: [] });
+      const nuevoCarrito = new Carrito({ username, estado: "activo", productos: [] });
       carrito = await nuevoCarrito.save();
     }
     
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
     
     // Crear una nueva orden con el ID del carrito y otros datos necesarios
     nuevaOrden = new Orden({
-      id_usuario: id_usuario,
+      username: username,
       id_carrito: carrito._id,
       productos: productos || [], // Si no hay productos, se asigna un array vacío
       totalCompra: req.body.totalCompra,

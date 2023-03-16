@@ -13,11 +13,11 @@
     try {
       const productos = await Productos.find().lean();
       if (productos.length > 0) {
-        res.render("home", {
+        res.render("productos", {
           productos: productos
         });
       } else {
-        res.render("home", {
+        res.render("productos", {
           productos: []
         });
       }

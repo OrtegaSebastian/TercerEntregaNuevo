@@ -1,22 +1,258 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Productos por categoría</title>
-    <link rel="stylesheet" href="/views/style.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Productos por categoría: {{categoria}}</h1>
-      {{#if productos}}
-        <ul>
-            {{#each productos}}
-      <li class="producto">{{nombre}} - {{descripcion}} - {{imgUrl}}{{precio}}</li>
-    {{/each}}
-
-            </ul>
-      {{else}}
-        <p>No se encontraron productos en esta categoría.</p>
-      {{/if}}    
+    <script src="../scripts/productos.js"></script>
+  <script src="../scripts/carrito.js"></script>
+ <body>
+  <!-- BARRA NAVEGACIÓN -->
+  <div class="container w-75 p-2 border mt-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Mi sitio web</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/productos">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/carrito">Carrito</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cuenta">Mi cuenta</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Desloguear</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Bienvenid@, {{nombre}}
+      </span>
     </div>
-  </body>
+  </nav>
+</div>
+
+  <!-- PRODUCTOS BD -->
+
+<div class="container mt-3">
+  <h3>Productos disponibles:</h3>
+  <table class="table table-striped">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Código</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Imagen</th>
+        <th>Agregar al carrito</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each productos}}
+      <tr>
+        <td>{{this.nombre}}</td>
+        <td>{{this.descripcion}}</td>
+        <td>{{this.codigo}}</td>
+        <td>{{this.precio}}</td>
+        <td>{{this.stock}}</td>
+        <td><img src="{{this.imgUrl}}" alt="Imagen del producto"></td>
+        <td>
+          <form action="/carrito" method="post" onsubmit="agregarProductoAlCarrito(event)">
+            <input type="hidden" name="producto_id" value="{{this.id}}">
+            <div class="form-group row">
+              <label for="cantidad" class="col-sm-3 col-form-label">Cantidad:</label>
+              <div class="col-sm-9">
+                <input type="number" class="form-control" name="cantidad" id="cantidad" value="1" min="1" max="{{this.stock}}">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">Agregar</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+  <script>
+    // función que se ejecuta al enviar el formulario de agregar al carrito
+ function agregarProductoAlCarrito(event) {
+  event.preventDefault(); // prevenir comportamiento default del formulario
+
+  const form = event.target; // obtener formulario enviado
+  const productoId = form.producto_id.value; // obtener ID del producto
+  const cantidad = form.cantidad.value; // obtener cantidad de producto
+
+  // enviar petición POST para agregar producto al carrito
+  fetch('/carrito', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({producto_id: productoId, cantidad: cantidad})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert('Ocurrió un error al agregar el producto al carrito');
+    } else {
+      alert('Producto agregado al carrito!');
+    }
+  })
+  .catch(err => console.error(err));
+}
+// función que se ejecuta al cargar la página de carrito
+export function cargarCarrito() {
+  // enviar petición GET para obtener información del carrito
+  fetch('/carrito')
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert('Ocurrió un error al cargar el carrito');
+    } else {
+      // mostrar información del carrito en el front-end
+      const carritoTable = document.querySelector('#carrito-table');
+      carritoTable.innerHTML = ''; // vaciar contenido actual de la tabla
+      let totalCompra = 0;
+
+      data.productos.forEach(producto => {
+        totalCompra += producto.precio * producto.cantidad;
+        carritoTable.innerHTML += `
+          <tr>
+            <td>${producto.nombre}</td>
+            <td>${producto.descripcion}</td>
+            <td>${producto.codigo}</td>
+            <td>${producto.precio}</td>
+            <td>${producto.cantidad}</td>
+            <td>${producto.precio * producto.cantidad}</td>
+            <td>
+              <button onclick="eliminarProductoDelCarrito('${producto.id}')">Eliminar</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // mostrar total de la compra
+      const totalCompraSpan = document.querySelector('#total-compra');
+      totalCompraSpan.innerText = totalCompra;
+    }
+  })
+  .catch(err => console.error(err));
+}
+
+// función que se ejecuta al enviar el formulario de comprar carrito
+export function comprarCarrito(event) {
+  event.preventDefault(); // prevenir comportamiento default del formulario
+
+  const form = event.target; // obtener formulario enviado
+  const direccion = form.direccion.value; // obtener dirección de envío
+
+  // enviar petición POST para comprar el carrito
+  fetch('/carrito/comprar', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({direccion: direccion})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert('Ocurrió un error al comprar el carrito');
+    } else {
+      alert('Compra realizada con éxito!');
+      cargarCarrito(); // volver a cargar el carrito para mostrar que está vacío
+    }
+  })
+  .catch(err => console.error(err));
+}
+
+// función
+// Manejar el evento del botón "Eliminar" en la tabla de productos del carrito
+export function eliminarProductoDelCarrito(event) {
+  event.preventDefault();
+  
+  const productoId = event.target.dataset.productoId;
+  
+  fetch(`/carrito/${productoId}`, { method: "DELETE" })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      // Actualizar la tabla de productos del carrito en el frontend
+      mostrarProductosEnCarrito(data.productos);
+      // Actualizar la cantidad de productos en el botón del carrito
+      actualizarCantidadProductosEnCarrito(data.productos);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+// Manejar el evento del botón "Comprar" en el carrito
+export function comprarProductos(event) {
+  event.preventDefault();
+  
+  const direccion = document.getElementById("direccion").value;
+  
+  fetch("/carrito/comprar", { method: "POST", body: JSON.stringify({ direccion }) })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      alert(`Compra realizada con éxito! ID de la orden: ${data.ordenId}`);
+      // Redirigir al usuario a la página principal
+      window.location.href = "/";
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+// Función que muestra los productos en la tabla del carrito
+export function mostrarProductosEnCarrito(productos) {
+  const tablaProductos = document.getElementById("tabla-productos");
+  
+  let html = "";
+  
+  productos.forEach(producto => {
+    html += `
+      <tr>
+        <td>${producto.nombre}</td>
+        <td>${producto.descripcion}</td>
+        <td>${producto.codigo}</td>
+        <td>${producto.precio}</td>
+        <td>${producto.cantidad}</td>
+        <td><img src="${producto.imgUrl}" alt="Imagen del producto"></td>
+        <td><button class="btn btn-danger btn-sm" data-producto-id="${producto.id}" onclick="eliminarProductoDelCarrito(event)">Eliminar</button></td>
+      </tr>
+    `;
+  });
+  
+  tablaProductos.innerHTML = html;
+}
+
+// Función que actualiza la cantidad de productos en el botón del carrito
+function actualizarCantidadProductosEnCarrito(productos) {
+  const cantidadProductos = productos.reduce((total, producto) => total + producto.cantidad, 0);
+  
+  const botonCarrito = document.getElementById("boton-carrito");
+  botonCarrito.innerHTML = `Carrito (${cantidadProductos})`;
+}
+
+
+  </script>
 </html>
